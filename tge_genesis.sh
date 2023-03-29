@@ -6,6 +6,7 @@ cp tmp_genesis.json home/config/genesis.json
 
 # TODO!!!!!!!!!
 ADMIN_ADDRESS="neutron1r49r67ufp37xnqqtpvetrnd4akm2xfkmg0uqmw"
+MAIN_DAO_ADDRESS="neutron1r49r67ufp37xnqqtpvetrnd4akm2xfkmg0uqmw"
 
 BINARY=${BINARY:-neutrond}
 CHAINID=${CHAINID:-test-1}
@@ -48,6 +49,14 @@ function generate_contract_address() {
   echo $CONTRACT_ADDRESS
 }
 
+function instantiate_contract() {
+  CODE_ID=$1
+  INIT_MSG=$2
+  LABEL=$3
+  echo $INIT_MSG
+  $BINARY add-wasm-message instantiate-contract $CODE_ID "$INIT_MSG" --label "$LABEL" --run-as "$ADMIN_ADDRESS" --admin "$MAIN_DAO_ADDRESS" --home ./home
+}
+
 echo "Initializing dao contract in genesis..."
 
 # Uploading contracts
@@ -78,7 +87,7 @@ USDC_LP_VESTING_CONTRACT_ADDRESS=$(generate_contract_address $LP_VESTING_CONTRAC
 ATOM_LP_VESTING_CONTRACT_ADDRESS=$(generate_contract_address $LP_VESTING_CONTRACT_BINARY_ID) && ((INSTANCE_ID_COUNTER++))
 CREDITS_VAULT_CONTRACT_ADDRESS=$(generate_contract_address $CREDITS_VAULT_CONTRACT_BINARY_ID) && ((INSTANCE_ID_COUNTER++))
 LOCKDROP_VAULT_CONTRACT_ADDRESS=$(generate_contract_address $LOCKDROP_VAULT_CONTRACT_BINARY_ID) && ((INSTANCE_ID_COUNTER++))
-# SEQUENCE IS IMPORTANT HERE
+# ORDER IS IMPORTANT HERE
 ASTROPORT_SATELLITE_CONTRACT_ADDRESS=$(generate_contract_address $ASTROPORT_SATELLITE_CONTRACT_BINARY_ID) && ((INSTANCE_ID_COUNTER++))
 ASTROPORT_GENERATOR_CONTRACT_ADDRESS=$(generate_contract_address $ASTROPORT_GENERATOR_CONTRACT_BINARY_ID) && ((INSTANCE_ID_COUNTER++))
 ASTROPORT_FACTORY_CONTRACT_ADDRESS=$(generate_contract_address $ASTROPORT_FACTORY_CONTRACT_BINARY_ID) && ((INSTANCE_ID_COUNTER++))
@@ -87,6 +96,38 @@ ASTROPORT_USDC_LP_TOKEN_CONTRACT_ADDRESS=$(generate_contract_address $ASTROPORT_
 ASTROPORT_ATOM_PAIR_CONTRACT_ADDRESS=$(generate_contract_address $ASTROPORT_PAIR_CONTRACT_BINARY_ID) && ((INSTANCE_ID_COUNTER++))
 ASTROPORT_ATOM_LP_TOKEN_CONTRACT_ADDRESS=$(generate_contract_address $ASTROPORT_TOKEN_CONTRACT_BINARY_ID) && ((INSTANCE_ID_COUNTER++))
 
+
+LOCKDROP_INIT_TIMESTAMP=1234567890
+LOCKDROP_LOCK_WINDOW=123
+LOCKDROP_WITHDRAWAL_WINDOW=100
+LOCKDROP_MIN_LOCK_DURATION=7889400
+LOCKDROP_MAX_LOCK_DURATION=31557600
+LOCKDROP_MAX_POSITIONS_PER_USER=1000
+LOCKDROP_LOCKUP_REWARDS_INFO='[
+  {"duration": '$LOCKDROP_MIN_LOCK_DURATION', "coefficient": "0"},
+  {"duration": 11834100, "coefficient": "0.25"},
+  {"duration": 15778800, "coefficient": "0.5"},
+  {"duration": 19723500, "coefficient": "1"},
+  {"duration": 23668200, "coefficient": "2"},
+  {"duration": 27612900, "coefficient": "4"},
+  {"duration": '$LOCKDROP_MAX_LOCK_DURATION', "coefficient": "8"}
+]'
+
+LOCKDROP_INIT_MSG='{
+  "owner": "'"$MAIN_DAO_ADDRESS"'",
+  "credits_contract": "'"$CREDITS_CONTRACT_ADDRESS"'",
+  "auction_contract": "'"$AUCTION_CONTRACT_ADDRESS"'",
+  "init_timestamp": '$LOCKDROP_INIT_TIMESTAMP',
+  "lock_window": '$LOCKDROP_LOCK_WINDOW',
+  "withdrawal_window": '$LOCKDROP_WITHDRAWAL_WINDOW',
+  "min_lock_duration": '$LOCKDROP_MIN_LOCK_DURATION',
+  "max_lock_duration": '$LOCKDROP_MAX_LOCK_DURATION',
+  "max_positions_per_user": '$LOCKDROP_MAX_POSITIONS_PER_USER',
+  "lockup_rewards_info": '$LOCKDROP_LOCKUP_REWARDS_INFO'
+}'
+
+# Instantiate contracts
+instantiate_contract $LOCKDROP_CONTRACT_BINARY_ID "$LOCKDROP_INIT_MSG" "TGE_NEUTRON_LOCKDROP"
 
 echo "LOCKDROP_CONTRACT_ADDRESS:" $LOCKDROP_CONTRACT_ADDRESS
 echo "AUCTION_CONTRACT_ADDRESS:" $AUCTION_CONTRACT_ADDRESS
