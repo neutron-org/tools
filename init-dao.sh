@@ -102,13 +102,44 @@ DAO_NAME=Neutron
 DAO_ITEMS=null
 DAO_PROPOSAL_SINGLE_LABEL=proposal single
 DAO_PROPOSAL_MULTIPLE_LABEL=proposal multiple
-DAO_PROPOSAL_OERRULE_LABEL=proposal overrule
+DAO_PROPOSAL_OVERRULE_LABEL=proposal overrule
 DAO_VOTING_REGISTRY_LABEL=neutron voting registry
+
+## Voting vault
+NEUTRON_VAULT_NAME=vault
+NEUTRON_VAULT_DESCRIPTION=simple voting vault for testing purposes
+
+
+## Lockdrop vault
+LOCKDROP_VAULT_NAME=vault
+LOCKDROPLOCKDROP_VAULT_DESCRIPTION=simple voting vault for testing purposes
+
+## Basic vault
+NEUTRON_VAULT_NAME=vault
+NEUTRON_VAULT_DESCRIPTION=simple voting vault for testing purposes
 
 ## Reserve
 RESERVE_DISTRIBUTION_RATE=0
 RESERVE_MIN_PERIOD=10
 RESERVE_VESTING_DENOMINATOR=1
+
+## Grants subdao
+GRANTS_SUBDAO_CORE_LABEL=neutron grants subdao
+GRANTS_SUBDAO_CORE_URI=subdao.neutron.org
+GRANTS_SUBDAO_CORE_DESCRIPTION=neutron grants subdao
+GRANTS_SUBDAO_VOTING_MODULE_LABEL=grants voting module
+GRANTS_SUBDAO_PROPOSAL_LABEL=grants single proposal
+
+## Timelock
+GRANTS_SUBDAO_TIMELOCK_DURAATION=10
+
+## Security subdao
+SECURITY_SUBDAO_CORE_LABEL=neutron grants subdao
+SECURITY_SUBDAO_CORE_NAME=GRANTS
+SECURITY_SUBDAO_CORE_DESCRIPTION=subdao that secures neutron
+SECURITY_SUBDAO_PROPOSAL_LABEL=security subdao single proposal
+SECURITY_SUBDAO_PREPROPOSAL_LABEL=security prerpopose
+
 
 echo "Initializing dao contract in genesis..."
 
@@ -343,7 +374,7 @@ DAO_INIT='{
         "core_module": {}
       },
       "code_id": '"$PROPOSAL_CONTRACT_BINARY_ID"',
-      "label": "$DAO_PROPOSAL_MULTIPLE_LABEL",
+      "label": "'"$DAO_PROPOSAL_MULTIPLE_LABEL"'",
       "msg": "'"$PROPOSAL_OVERRULE_INIT_MSG_BASE64"'"
     }
   ],
@@ -362,11 +393,11 @@ RESERVE_INIT='{
   "main_dao_address": "'"$ADMIN_ADDRESS"'",
   "security_dao_address": "'"$ADMIN_ADDRESS"'",
   "denom": "'"$STAKEDENOM"'",
-  "distribution_rate": "0",
-  "min_period": 10,
+  "distribution_rate": "'"$RESERVE_DISTRIBUTION_RATE"'",
+  "min_period": '"$RESERVE_MIN_PERIOD"',
   "distribution_contract": "'"$DISTRIBUTION_CONTRACT_ADDRESS"'",
   "treasury_contract": "'"$TREASURY_CONTRACT_ADDRESS"'",
-  "vesting_denominator": "1"
+  "vesting_denominator": "'"$RESERVE_VESTING_DENOMINATOR"'"
 }'
 
 DISTRIBUTION_INIT='{
@@ -388,19 +419,20 @@ NEUTRON_VAULT_INIT='{
       "addr": "'"$ADMIN_ADDRESS"'"
     }
   },
-  "name": "voting vault",
+  "name": "'"$NEUTRON_VAULT_NAME"'",
   "denom": "'"$STAKEDENOM"'",
-  "description": "a simple voting vault for testing purposes"
+  "description": "'"$NEUTRON_VAULT_DESCRIPTION"'"
 }'
-# since the lockdrop_contract is still a mock, the address is a random valid one just to pass instantiation
+# since the lockdrop_contract is still a mock, the address is a random valid one just to pass instantiation TODO: get rid of mock
+
 LOCKDROP_VAULT_INIT='{
   "owner": {
     "address": {
       "addr": "'"$ADMIN_ADDRESS"'"
     }
   },
-  "name": "lockdrop vault",
-  "description": "a lockdrop vault for testing purposes",
+  "name": "'"$LOCKDROP_VAULT_NAME"'",
+  "description": "'"$LOCKDROP_VAULT_DESCRIPTION"'",
   "lockdrop_contract": "neutron17zayzl5d0daqa89csvv8kqayxzke6jd6zh00tq"
 }'
 
@@ -456,8 +488,8 @@ SECURITY_SUBDAO_PROPOSAL_INIT_MSG='{
 SECURITY_SUBDAO_PROPOSAL_INIT_MSG_BASE64=$(echo "$SECURITY_SUBDAO_PROPOSAL_INIT_MSG" | base64 | tr -d "\n")
 
 SECURITY_SUBDAO_CORE_INIT_MSG='{
-  "name": "Security subdao",
-  "description": "Makes the whole Neutron secure",
+  "name": "'"$SECURITY_SUBDAO_CORE_NAME"'",
+  "description": "'"$SECURITY_SUBDAO_CORE_DESCRIPTION"'",
   "vote_module_instantiate_info": {
     "admin": {
       "address": {
@@ -465,7 +497,7 @@ SECURITY_SUBDAO_CORE_INIT_MSG='{
       }
     },
     "code_id": '"$CW4_VOTING_CONTRACT_BINARY_ID"',
-    "label": "Security subDAO vote module",
+    "label": "",
     "msg": "'"$CW4_VOTE_INIT_MSG_BASE64"'"
   },
   "proposal_modules_instantiate_info": [
@@ -480,7 +512,7 @@ SECURITY_SUBDAO_CORE_INIT_MSG='{
       "msg": "'"$SECURITY_SUBDAO_PROPOSAL_INIT_MSG_BASE64"'"
     }
   ],
-  "dao_uri": "security.subdao.org",
+  "dao_uri": "'"$SECURITY_SUBDAO_CORE_URI"'",
   "main_dao": "'"$DAO_CONTRACT_ADDRESS"'",
   "security_dao": "'"$SECURITY_SUBDAO_CORE_CONTRACT_ADDRESS"'"
 }'
@@ -488,7 +520,7 @@ SECURITY_SUBDAO_CORE_INIT_MSG='{
 # GRANTS_SUBDAO
 
 GRANTS_SUBDAO_TIMELOCK_INIT_MSG='{
-  "timelock_duration": 20
+  "timelock_duration": '"$GRANTS_SUBDAO_TIMELOCK_DURAATION"'
 }'
 GRANTS_SUBDAO_TIMELOCK_INIT_MSG_BASE64=$(echo "$GRANTS_SUBDAO_TIMELOCK_INIT_MSG" | base64 | tr -d "\n")
 
@@ -501,7 +533,7 @@ GRANTS_SUBDAO_PRE_PROPOSE_INIT_MSG='{
       }
     },
     "code_id": '"$SUBDAO_TIMELOCK_BINARY_ID"',
-    "label": "subDAO timelock contract",
+    "label": "'"$GRANTS_DUBDAO_TIMELOCK_LABEL"'",
     "msg": "'"$GRANTS_SUBDAO_TIMELOCK_INIT_MSG_BASE64"'"
   }
 }'
@@ -537,8 +569,8 @@ GRANTS_SUBDAO_PROPOSAL_INIT_MSG='{
 GRANTS_SUBDAO_PROPOSAL_INIT_MSG_BASE64=$(echo "$GRANTS_SUBDAO_PROPOSAL_INIT_MSG" | base64 | tr -d "\n")
 
 GRANTS_SUBDAO_CORE_INIT_MSG='{
-  "name": "Grants subdao",
-  "description": "Bootstraps the Neutron ecosystem",
+  "name": "'"$GRANTS_SUBDAO"'",
+  "description": "'"$GRANTS_SUBDAO_CORE_DESCRIPTION"'",
   "vote_module_instantiate_info": {
     "admin": {
       "address": {
@@ -546,7 +578,7 @@ GRANTS_SUBDAO_CORE_INIT_MSG='{
       }
     },
     "code_id": '"$CW4_VOTING_CONTRACT_BINARY_ID"',
-    "label": "Security subDAO vote module",
+    "label": "'"$GRANTS_SUBDAO_VOTING_MODULE_LABEL"'",
     "msg": "'"$CW4_VOTE_INIT_MSG_BASE64"'"
   },
   "proposal_modules_instantiate_info": [
@@ -557,11 +589,11 @@ GRANTS_SUBDAO_CORE_INIT_MSG='{
         }
       },
       "code_id": '"$SUBDAO_PROPOSAL_BINARY_ID"',
-      "label": "Grants_subDAO_Neutron_proposal-single",
+      "label": "'"$GRANTS_SUBDAO_PROPOSAL_LABEL"'",
       "msg": "'"$GRANTS_SUBDAO_PROPOSAL_INIT_MSG_BASE64"'"
     }
   ],
-  "dao_uri": "grants.subdao.org",
+  "dao_uri": "'"$GRANTS_SUBDAO_CORE_URI"'",
   "main_dao": "'"$DAO_CONTRACT_ADDRESS"'",
   "security_dao": "'"$SECURITY_SUBDAO_CORE_CONTRACT_ADDRESS"'"
 }'
@@ -593,8 +625,6 @@ ADD_SUBDAOS_MSG='{
     "to_remove": []
   }
 }'
-
-#echo "CORE_CONTRACT_ADDRESS:" $DAO_CONTRACT_ADDRESS
 
 $BINARY add-wasm-message execute "$DAO_CONTRACT_ADDRESS" "$ADD_SUBDAOS_MSG" --run-as "$DAO_CONTRACT_ADDRESS" --home "$CHAIN_DIR"
 
