@@ -500,7 +500,7 @@ SECURITY_SUBDAO_CORE_INIT_MSG='{
       }
     },
     "code_id": '"$CW4_VOTING_CONTRACT_BINARY_ID"',
-    "label": '"$SECURITY_SUBDAO_VOTE_LABEL"',
+    "label": "'"$SECURITY_SUBDAO_VOTE_LABEL"'",
     "msg": "'"$CW4_VOTE_INIT_MSG_BASE64"'"
   },
   "proposal_modules_instantiate_info": [
