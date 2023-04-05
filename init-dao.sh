@@ -47,8 +47,8 @@ PRE_PROPOSAL_SINGLE_LABEL=neutron
 ## propose singe params
 # revoting
 PROPOSAL_ALLOW_REVOTING=false
-# contract lable
-PROPOSAL_SINGLE_LABEL=neutron
+# contract label (UNUSED!)
+# PROPOSAL_SINGLE_LABEL=neutron
 # if only users w voting power can execute passed proposals
 PROPOSAL_SINGLE_ONLY_MEMBERS_EXECUTE=false
 # max voting period
@@ -59,8 +59,6 @@ PROPOSAL_SINGLE_CLOSE_PROPOSAL_ON_EXECUTION_FAILURE=false
 PROPOSAL_SINGLE_QUORUM=0.20
 # % of votes should vote for the proposal to pass [float] <1
 PROPOSAL_SINGLE_THRESHOLD=0.5
-# if proposal will be closed on execution fail
-PROPOSAL_SINGLE_CLOSE_PROPOSAL_ON_EXECUTION_FAILURE=false
 
 ## propose multiple params
 # revoting
@@ -72,8 +70,6 @@ PROPOSAL_MULTIPLE_ONLY_MEMBERS_EXECUTE=false
 # max voting period
 PROPOSAL_MULTIPLE_ONLY_MAX_VOTING_PERIOD=33333
 # if proposal will be closed on execution fail [bool]
-PROPOSAL_MULTIPLE_CLOSE_PROPOSAL_ON_EXECUTION_FAILURE=false
-# proposal will be closed on execution fail
 PROPOSAL_MULTIPLE_CLOSE_PROPOSAL_ON_EXECUTION_FAILURE=false
 
 ## Propose overrule params
@@ -133,6 +129,7 @@ GRANTS_SUBDAO_PROPOSAL_LABEL="grants single proposal"
 
 ## Timelock
 GRANTS_SUBDAO_TIMELOCK_DURATION=10
+GRANTS_SUBDAO_TIMELOCK_LABEL="subDAO timelock contract"
 
 ## Security subdao
 SECURITY_SUBDAO_CORE_LABEL="neutron grants subdao"
@@ -140,6 +137,8 @@ SECURITY_SUBDAO_CORE_NAME="GRANTS"
 SECURITY_SUBDAO_CORE_DESCRIPTION="subdao that secures neutron"
 SECURITY_SUBDAO_PROPOSAL_LABEL="security subdao single proposal"
 SECURITY_SUBDAO_PREPROPOSAL_LABEL="security prerpopose"
+SECURITY_SUBDAO_VOTE_LABEL="SECURITY_SUBDAO_CORE_INIT_MSG" # TODO
+SECURITY_SUBDAO_CORE_URI="security.subdao.org"
 
 echo "Initializing dao contract in genesis..."
 
@@ -229,7 +228,7 @@ PRE_PROPOSE_INIT_MSG='{
      "amount": "'"$PRE_PROPOSAL_SINGLE_AMOUNT"'",
      "refund_policy":"'"$PRE_PROPOSAL_SINGLE_REFUND_POLICY"'"
    },
-   "open_proposal_submission": '"$PRE_PROPOSAL_SINGLE_REFUND_POLICY"'
+   "open_proposal_submission": '"$PRE_PROPOSAL_SINGLE_OPEN_PROPOSAL_SUBMISSION"'
 }'
 PRE_PROPOSE_INIT_MSG_BASE64=$(echo "$PRE_PROPOSE_INIT_MSG" | base64 | tr -d "\n")
 
@@ -285,7 +284,7 @@ PROPOSAL_MULTIPLE_INIT_MSG='{
    },
    "only_members_execute":'"$PROPOSAL_MULTIPLE_ONLY_MEMBERS_EXECUTE"',
    "max_voting_period":{
-      "time":'"$PROPOSAL_SINGLE_ONLY_MAX_VOTING_PERIOD"'
+      "time":'"$PROPOSAL_MULTIPLE_ONLY_MAX_VOTING_PERIOD"'
    },
    "close_proposal_on_execution_failure":'"$PROPOSAL_MULTIPLE_CLOSE_PROPOSAL_ON_EXECUTION_FAILURE"',
    "voting_strategy":{
@@ -501,7 +500,7 @@ SECURITY_SUBDAO_CORE_INIT_MSG='{
       }
     },
     "code_id": '"$CW4_VOTING_CONTRACT_BINARY_ID"',
-    "label": "",
+    "label": '"$SECURITY_SUBDAO_VOTE_LABEL"',
     "msg": "'"$CW4_VOTE_INIT_MSG_BASE64"'"
   },
   "proposal_modules_instantiate_info": [
@@ -537,7 +536,7 @@ GRANTS_SUBDAO_PRE_PROPOSE_INIT_MSG='{
       }
     },
     "code_id": '"$SUBDAO_TIMELOCK_BINARY_ID"',
-    "label": "'"$GRANTS_DUBDAO_TIMELOCK_LABEL"'",
+    "label": "'"$GRANTS_SUBDAO_TIMELOCK_LABEL"'",
     "msg": "'"$GRANTS_SUBDAO_TIMELOCK_INIT_MSG_BASE64"'"
   }
 }'
