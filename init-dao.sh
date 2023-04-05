@@ -118,10 +118,10 @@ LOCKDROPLOCKDROP_VAULT_DESCRIPTION=simple voting vault for testing purposes
 NEUTRON_VAULT_NAME=vault
 NEUTRON_VAULT_DESCRIPTION=simple voting vault for testing purposes
 
-## Reserve
-RESERVE_DISTRIBUTION_RATE=0
-RESERVE_MIN_PERIOD=10
-RESERVE_VESTING_DENOMINATOR=1
+## Treasury (should be renamed to reserve, pr is not merged yet)
+DISTRIBUTION_RATE=0
+MIN_PERIOD=10
+VESTING_DENOMINATOR=1
 
 ## Grants subdao
 GRANTS_SUBDAO_CORE_LABEL=neutron grants subdao
@@ -165,6 +165,7 @@ LOCKDROP_VAULT_CONTRACT_BINARY_ID=$(store_binary        "$LOCKDROP_VAULT_CONTRAC
 # TREASURY & RESERVE
 TREASURY_CONTRACT_BINARY_ID=$(store_binary              "$TREASURY_CONTRACT")
 DISTRIBUTION_CONTRACT_BINARY_ID=$(store_binary          "$DISTRIBUTION_CONTRACT")
+RESERVE_CONTRACT_ADDRESS=$(store_binary                 "$RESERVE_CONTRACT")
 # SUBDAOS
 SUBDAO_CORE_BINARY_ID=$(store_binary                    "$SUBDAO_CORE_CONTRACT")
 SUBDAO_TIMELOCK_BINARY_ID=$(store_binary                "$SUBDAO_TIMELOCK_CONTRACT")
@@ -389,15 +390,15 @@ DAO_INIT='{
 }'
 
 # TREASURY & RESERVE
-RESERVE_INIT='{
+TREASURY_INIT='{
   "main_dao_address": "'"$ADMIN_ADDRESS"'",
   "security_dao_address": "'"$ADMIN_ADDRESS"'",
   "denom": "'"$STAKEDENOM"'",
-  "distribution_rate": "'"$RESERVE_DISTRIBUTION_RATE"'",
-  "min_period": '"$RESERVE_MIN_PERIOD"',
+  "distribution_rate": "'"$DISTRIBUTION_RATE"'",
+  "min_period": '"$MIN_PERIOD"',
   "distribution_contract": "'"$DISTRIBUTION_CONTRACT_ADDRESS"'",
-  "treasury_contract": "'"$TREASURY_CONTRACT_ADDRESS"'",
-  "vesting_denominator": "'"$RESERVE_VESTING_DENOMINATOR"'"
+  "reserve_contract": "'"$RESERVE_CONTRACT_ADDRESS"'",
+  "vesting_denominator": "'"$VESTING_DENOMINATOR"'"
 }'
 
 DISTRIBUTION_INIT='{
@@ -406,7 +407,7 @@ DISTRIBUTION_INIT='{
   "denom": "'"$STAKEDENOM"'"
 }'
 
-TREASURY_INIT='{
+RESERVE_INIT='{
   "main_dao_address": "'"$ADMIN_ADDRESS"'",
   "security_dao_address": "'"$SECURITY_SUBDAO_CORE_CONTRACT_ADDRESS"'",
   "denom": "'"$STAKEDENOM"'"
@@ -629,4 +630,4 @@ ADD_SUBDAOS_MSG='{
 $BINARY add-wasm-message execute "$DAO_CONTRACT_ADDRESS" "$ADD_SUBDAOS_MSG" --run-as "$DAO_CONTRACT_ADDRESS" --home "$CHAIN_DIR"
 
 sed -i -e 's/\"admins\":.*/\"admins\": [\"'"$DAO_CONTRACT_ADDRESS"'\"]/g' "$CHAIN_DIR/config/genesis.json"
-sed -i -e 's/\"reserve_address\":.*/\"reserve_address\":\"'"$RESERVE_CONTRACT_ADDRESS"'\"/g' "$CHAIN_DIR/config/genesis.json"
+sed -i -e 's/\"treasury_address\":.*/\"treasury_address\":\"'"$TREASURY_CONTRACT_ADDRESS"'\"/g' "$CHAIN_DIR/config/genesis.json"
