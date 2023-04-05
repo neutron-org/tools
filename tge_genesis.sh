@@ -2,23 +2,24 @@
 set -e
 
 # TODO!!!!!!!!
-cp tmp_genesis.json home/config/genesis.json
+cp genesis.json home/config/genesis.json
 
 # TODO!!!!!!!!!
-ADMIN_ADDRESS="neutron1r49r67ufp37xnqqtpvetrnd4akm2xfkmg0uqmw"
-MAIN_DAO_ADDRESS="neutron1r49r67ufp37xnqqtpvetrnd4akm2xfkmg0uqmw"
-ASTROPORT_MULTISIG_ADDRESS="neutron1r49r67ufp37xnqqtpvetrnd4akm2xfkmg0uqmw"
-MANAGER="neutron1r49r67ufp37xnqqtpvetrnd4akm2xfkmg0uqmw"
+ADMIN_ADDRESS="neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2"
+MAIN_DAO_ADDRESS="neutron1yyca08xqdgvjz0psg56z67ejh9xms6l436u8y58m82npdqqhmmtqxfjftn"
+RESERVE_CONTRACT_ADDRESS="neutron1qyygux5t4s3a3l25k8psxjydhtudu5lnt0tk0szm8q4s27xa980s27p0kg"
+ASTROPORT_MULTISIG_ADDRESS="neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2"
+MANAGER="neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2"
 
 BINARY=${BINARY:-neutrond}
 CHAINID=${CHAINID:-test-1}
 STAKEDENOM=${STAKEDENOM:-untrn}
-TGE_CONTRACTS_BINARIES_DIR=${TGE_CONTRACTS_BINARIES_DIR:-../neutron-tge-contracts/artifacts}
+TGE_CONTRACTS_BINARIES_DIR=${TGE_CONTRACTS_BINARIES_DIR:-./artifacts}
 DAO_CONTRACTS_BINARIES_DIR=${DAO_CONTRACTS_BINARIES_DIR:-../neutron-dao/artifacts}
-ASTROPORT_CONTRACTS_BINARIES_DIR=${ASTROPORT_CONTRACTS_BINARIES_DIR:-../../astroport/astroport-core/artifacts} # TODO
+ASTROPORT_CONTRACTS_BINARIES_DIR=${ASTROPORT_CONTRACTS_BINARIES_DIR:-./artifacts} # TODO
 GENESIS_PATH=${GENESIS_PATH:-./genesis.json}
 
-INSTANCE_ID_COUNTER=1
+INSTANCE_ID_COUNTER=25
 
 
 LOCKDROP_BINARY=$TGE_CONTRACTS_BINARIES_DIR/neutron_lockdrop-aarch64.wasm
@@ -27,13 +28,13 @@ CREDITS_BINARY=$TGE_CONTRACTS_BINARIES_DIR/credits-aarch64.wasm
 AIRDROP_BINARY=$TGE_CONTRACTS_BINARIES_DIR/cw20_merkle_airdrop-aarch64.wasm
 PRICE_FEED_BINARY=$TGE_CONTRACTS_BINARIES_DIR/neutron_price_feed-aarch64.wasm
 TWAP_ORACLE_BINARY=$TGE_CONTRACTS_BINARIES_DIR/astroport_oracle-aarch64.wasm
-LP_VESTING_BINARY=$TGE_CONTRACTS_BINARIES_DIR/neutron_lockdrop-aarch64.wasm # TODO
+LP_VESTING_BINARY=$TGE_CONTRACTS_BINARIES_DIR/vesting_lp-aarch64.wasm
 
 CREDITS_VAULT_BINARY=$DAO_CONTRACTS_BINARIES_DIR/credits_vault-aarch64.wasm
 LOCKDROP_VAULT_BINARY=$DAO_CONTRACTS_BINARIES_DIR/lockdrop_vault-aarch64.wasm
 
-ASTROPORT_SATELLITE_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_factory-aarch64.wasm # TODO
-ASTROPORT_GENERATOR_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_generator-aarch64.wasm # TODO
+ASTROPORT_SATELLITE_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astro_satellite.wasm
+ASTROPORT_GENERATOR_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_generator-aarch64.wasm
 ASTROPORT_FACTORY_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_factory-aarch64.wasm
 ASTROPORT_PAIR_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_pair-aarch64.wasm
 ASTROPORT_TOKEN_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_token-aarch64.wasm
@@ -116,7 +117,7 @@ ASTROPORT_SATELLITE_INIT_MSG='{
   "astro_denom": "TODO",
   "transfer_channel": "TODO",
   "main_controller": "TODO",
-  "main_make": "TODO",
+  "main_maker": "TODO",
   "timeout": 100
 }'
 
@@ -157,10 +158,12 @@ ASTROPORT_FACTORY_INIT_MSG='{
 # Instantiate Astroport contracts
 instantiate_contract $ASTROPORT_SATELLITE_CONTRACT_BINARY_ID "$ASTROPORT_SATELLITE_INIT_MSG" "ASTROPORT_SATELLITE" "$ASTROPORT_MULTISIG_ADDRESS"
 instantiate_contract $ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_BINARY_ID "$ASTROPORT_NATIVE_COIN_REGISTRY_INIT_MSG" "ASTROPORT_NATIVE_COIN_REGISTRY" "$ASTROPORT_SATELLITE_CONTRACT_ADDRESS"
+neutrond debug generate-contract-address 26 $ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_BINARY_ID
+echo $ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_BINARY_ID
 execute_contract $ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_ADDRESS "$SET_UNTRN_PRECISION_MSG" "$ASTROPORT_SATELLITE_CONTRACT_ADDRESS"
 instantiate_contract $ASTROPORT_FACTORY_CONTRACT_BINARY_ID "$ASTROPORT_FACTORY_INIT_MSG" "ASTROPORT_FACTORY" "$ASTROPORT_SATELLITE_CONTRACT_ADDRESS"
 
-LOCKDROP_INIT_TIMESTAMP=1234567890
+LOCKDROP_INIT_TIMESTAMP=16806933370
 LOCKDROP_LOCK_WINDOW=123
 LOCKDROP_WITHDRAWAL_WINDOW=100
 LOCKDROP_MIN_LOCK_DURATION=7889400
@@ -189,21 +192,18 @@ LOCKDROP_INIT_MSG='{
   "max_positions_per_user": '$LOCKDROP_MAX_POSITIONS_PER_USER',
   "lockup_rewards_info": '$LOCKDROP_LOCKUP_REWARDS_INFO'
 }'
-LOCKDROP_UPDATE_CONFIG_MSG='{
-  "generator_address": "'"$ASTROPORT_GENERATOR_CONTRACT_ADDRESS"'"
-}'
 
 #TODO
 AUCTION_INIT_MSG='{
   "owner": "'"$MAIN_DAO_ADDRESS"'",
   "denom_manager": "'"$MANAGER"'",
   "lockdrop_contract_address": "'"$LOCKDROP_CONTRACT_ADDRESS"'",
-  "reserve_contract_address": "TODO",
-  "vesting_uscd_contract_address": "'"$USDC_LP_VESTING_CONTRACT_ADDRESS"'",
+  "reserve_contract_address": "'"$RESERVE_CONTRACT_ADDRESS"'",
+  "vesting_usdc_contract_address": "'"$USDC_LP_VESTING_CONTRACT_ADDRESS"'",
   "vesting_atom_contract_address": "'"$ATOM_LP_VESTING_CONTRACT_ADDRESS"'",
   "price_feed_contract": "'"$PRICE_FEED_CONTRACT_ADDRESS"'",
   "lp_tokens_lock_window": 100,
-  "init_timestamp": 100,
+  "init_timestamp": 16806933370,
   "deposit_window": 100,
   "withdrawal_window": 100,
   "max_exchange_rate_age": 111,
@@ -217,18 +217,37 @@ CREDITS_INIT_MSG='{
 }'
 WHEN_WITHDRAWABLE=1000 #TODO
 CREDITS_UPDATE_CONFIG_MSG='{
-  "airdrop_address": "'"$AIDROP_CONTRACT_ADDRESS"'",
-  "lockdrop_address": "'"$LOCKDROP_CONTRACT_ADDRESS"'",
-  "when_withdrawable": '$WHEN_WITHDRAWABLE'
+  "update_config": {
+    "config": {
+      "airdrop_address": "'"$AIDROP_CONTRACT_ADDRESS"'",
+      "lockdrop_address": "'"$LOCKDROP_CONTRACT_ADDRESS"'",
+      "when_withdrawable": "'"$WHEN_WITHDRAWABLE"'"
+    }
+  }
 }'
 
 #TODO
 AIRDROP_INIT_MSG='{
-  "credits_address": "'"$CREDITS_CONTRACT_ADDRESS"'"
+  "credits_address": "'"$CREDITS_CONTRACT_ADDRESS"'",
+  "reserve_address": "'"$RESERVE_CONTRACT_ADDRESS"'",
+  "merkle_root": "634de21cde1044f41d90373733b0f0fb1c1c71f9652b905cdf159e73c4cf0d37",
+  "airdrop_start": "9749243947",
+  "vesting_start": "24242342422",
+  "vesting_duration_seconds": 131
 }'
 
 #TODO
-PRICE_FEED_INIT_MSG='{}'
+PRICE_FEED_INIT_MSG='{
+      "client_id": "client-01",
+      "oracle_script_id": "100",
+      "ask_count": "123",
+      "min_count": "31432",
+      "fee_limit": [],
+      "prepare_gas": "31",
+      "execute_gas": "122",
+      "multiplier": "12312",
+      "symbols": []
+}'
 
 USDC_TWAP_INIT_MSG='{
   "factory_contract": "'"$ASTROPORT_FACTORY_CONTRACT_ADDRESS"'",
@@ -255,21 +274,20 @@ ATOM_LP_VESTING_INIT_MSG='{
 CREDITS_VAULT_INIT_MSG='{
   "credits_contract_address": "'"$CREDITS_CONTRACT_ADDRESS"'",
   "description": "Credits Contract Vault",
-  "owner": "'"$MAIN_DAO_ADDRESS"'",
-  "manager": ["'"$MANAGER"'"]
+  "owner": {"address": {"addr": "'"$MAIN_DAO_ADDRESS"'"}},
+  "manager": "'"$MANAGER"'"
 }'
 
 LOCKDROP_VAULT_INIT_MSG='{
   "lockdrop_contract": "'"$LOCKDROP_CONTRACT_ADDRESS"'",
   "description": "Lockdrop Contract Vault",
-  "owner": "'"$MAIN_DAO_ADDRESS"'",
-  "manager": ["'"$MANAGER"'"],
+  "owner": {"address": {"addr": "'"$MAIN_DAO_ADDRESS"'"}},
+  "manager": "'"$MANAGER"'",
   "name": "Lockdrop Vault"
 }'
 
 # Instantiate TGE contracts
 instantiate_contract $LOCKDROP_CONTRACT_BINARY_ID "$LOCKDROP_INIT_MSG" "TGE_NEUTRON_LOCKDROP" "$MAIN_DAO_ADDRESS"
-execute_contract $LOCKDROP_CONTRACT_ADDRESS "$LOCKDROP_UPDATE_CONFIG_MSG" "$MAIN_DAO_ADDRESS"
 instantiate_contract $AUCTION_CONTRACT_BINARY_ID "$AUCTION_INIT_MSG" "TGE_NEUTRON_AUCTION" "$MAIN_DAO_ADDRESS"
 instantiate_contract $CREDITS_CONTRACT_BINARY_ID "$CREDITS_INIT_MSG" "TGE_NEUTRON_CREDITS" "$MAIN_DAO_ADDRESS"
 execute_contract $CREDITS_CONTRACT_ADDRESS "$CREDITS_UPDATE_CONFIG_MSG" "$MAIN_DAO_ADDRESS"
