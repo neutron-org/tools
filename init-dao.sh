@@ -42,6 +42,7 @@ PRE_PROPOSAL_SINGLE_AMOUNT=1000
 PRE_PROPOSAL_SINGLE_REFUND_POLICY=always
 # open proposal submission [bool]
 PRE_PROPOSAL_SINGLE_OPEN_PROPOSAL_SUBMISSION=false
+PRE_PROPOSAL_SINGLE_LABEL=neutron
 
 ## propose singe params
 # revoting
@@ -112,7 +113,7 @@ NEUTRON_VAULT_DESCRIPTION="simple voting vault for testing purposes"
 
 ## Lockdrop vault
 LOCKDROP_VAULT_NAME="vault"
-LOCKDROPLOCKDROP_VAULT_DESCRIPTION="simple voting vault for testing purposes"
+LOCKDROP_VAULT_DESCRIPTION="simple voting vault for testing purposes"
 
 ## Basic vault
 NEUTRON_VAULT_NAME="vault"
@@ -244,7 +245,7 @@ PROPOSAL_SINGLE_INIT_MSG='{
             },
             "code_id": '"$PRE_PROPOSAL_CONTRACT_BINARY_ID"',
             "msg": "'"$PRE_PROPOSE_INIT_MSG_BASE64"'",
-            "label":"'"$PROPOSE_PROPOSAL_SINGLE_LABEL"'"
+            "label":"'"$PRE_PROPOSAL_SINGLE_LABEL"'"
          }
       }
    },
@@ -326,13 +327,13 @@ PROPOSAL_OVERRULE_INIT_MSG='{
    "close_proposal_on_execution_failure":'"$PROPOSAL_OVERRULE_CLOSE_PROPOSAL_ON_EXECUTION_FAILURE"',
    "threshold":{
      "threshold_quorum":{
-              "quorum":{
-               "percent":"'"$PROPOSAL_OVERRULE_QUORUM"'"
-              },
-              "threshold":{
-                 "percent":"'"$PROPOSAL_OVERRULE_THRESHOLD"'"
-              }
-           }
+       "quorum":{
+         "percent":"'"$PROPOSAL_OVERRULE_QUORUM"'"
+       },
+       "threshold":{
+         "percent":"'"$PROPOSAL_OVERRULE_THRESHOLD"'"
+       }
+     }
    }
 }'
 PROPOSAL_OVERRULE_INIT_MSG_BASE64=$(echo "$PROPOSAL_OVERRULE_INIT_MSG" | base64 | tr -d "\n")
@@ -377,7 +378,7 @@ DAO_INIT='{
         "core_module": {}
       },
       "code_id": '"$PROPOSAL_CONTRACT_BINARY_ID"',
-      "label": "'"$DAO_PROPOSAL_MULTIPLE_LABEL"'",
+      "label": "'"$DAO_PROPOSAL_OVERRULE_LABEL"'",
       "msg": "'"$PROPOSAL_OVERRULE_INIT_MSG_BASE64"'"
     }
   ],
