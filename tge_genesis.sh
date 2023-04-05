@@ -13,7 +13,7 @@ RESERVE_CONTRACT_ADDRESS="neutron1qyygux5t4s3a3l25k8psxjydhtudu5lnt0tk0szm8q4s27
 ASTROPORT_MULTISIG_ADDRESS="neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2"
 MANAGER="neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2"
 
-# CONTRACT INIT PARAMS
+# ------------------------------------------------CONTRACT INIT PARAMS-------------------------------------------------
 LOCKDROP_INIT_TIMESTAMP=16806933370
 LOCKDROP_LOCK_WINDOW=123
 LOCKDROP_WITHDRAWAL_WINDOW=100
@@ -36,6 +36,20 @@ AIRDROP_MERKLE_ROOT="634de21cde1044f41d90373733b0f0fb1c1c71f9652b905cdf159e73c4c
 AIRDROP_START="23429347293"
 AIRDROP_VESTING_START="27462834628"
 AIRDROP_DURATION_SECONDS=131
+
+PRICE_FEED_CLIENT_ID="client-01"
+PRICE_FEED_ORACLE_SCRIPT_ID="100"
+PRICE_FEED_ASK_COUNT="123"
+PRICE_FEED_MIN_COUNT="31432"
+PRICE_FEED_FEE_LIMIT="[]"
+PRICE_FEED_PREPARE_GAS="31"
+PRICE_FEED_EXECUTE_GAS="122"
+PRICE_FEED_MULTIPLIER="12312"
+PRICE_FEED_SYMBOLS="[]"
+
+TWAP_UPDATE_PERIOD=86400
+
+#----------------------------------------------------------------------------------------------------------------------
 
 
 BINARY=${BINARY:-neutrond}
@@ -252,27 +266,26 @@ AIRDROP_INIT_MSG='{
   "vesting_duration_seconds": '$AIRDROP_DURATION_SECONDS'
 }'
 
-#TODO
 PRICE_FEED_INIT_MSG='{
-      "client_id": "client-01",
-      "oracle_script_id": "100",
-      "ask_count": "123",
-      "min_count": "31432",
-      "fee_limit": [],
-      "prepare_gas": "31",
-      "execute_gas": "122",
-      "multiplier": "12312",
-      "symbols": []
+      "client_id": "'"$PRICE_FEED_CLIENT_ID"'",
+      "oracle_script_id": "'"$PRICE_FEED_ORACLE_SCRIPT_ID"'",
+      "ask_count": "'"$PRICE_FEED_ASK_COUNT"'",
+      "min_count": "'"$PRICE_FEED_MIN_COUNT"'",
+      "fee_limit": '$PRICE_FEED_FEE_LIMIT',
+      "prepare_gas": "'"$PRICE_FEED_PREPARE_GAS"'",
+      "execute_gas": "'"$PRICE_FEED_EXECUTE_GAS"'",
+      "multiplier": "'"$PRICE_FEED_MULTIPLIER"'",
+      "symbols": '$PRICE_FEED_SYMBOLS'
 }'
 
 USDC_TWAP_INIT_MSG='{
   "factory_contract": "'"$ASTROPORT_FACTORY_CONTRACT_ADDRESS"'",
-  "period": 86400,
+  "period": '$TWAP_UPDATE_PERIOD',
   "manager": "'"$MANAGER"'"
 }'
 ATOM_TWAP_INIT_MSG='{
   "factory_contract": "'"$ASTROPORT_FACTORY_CONTRACT_ADDRESS"'",
-  "period": 86400,
+  "period": '$TWAP_UPDATE_PERIOD',
   "manager": "'"$MANAGER"'"
 }'
 
