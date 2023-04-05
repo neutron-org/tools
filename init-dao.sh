@@ -33,6 +33,8 @@ SUBDAO_PROPOSAL_CONTRACT=$CONTRACTS_BINARIES_DIR/cwd_subdao_proposal_single.wasm
 CW4_VOTING_CONTRACT=$CONTRACTS_BINARIES_DIR/cw4_voting.wasm
 CW4_GROUP_CONTRACT=$CONTRACTS_BINARIES_DIR/cw4_group.wasm
 
+echo "Add consumer section..."
+$BINARY add-consumer-section --home "$CHAIN_DIR"
 ### PARAMETERS SECTION
 
 ##pre propose single parameters
@@ -121,6 +123,7 @@ MIN_PERIOD=10
 VESTING_DENOMINATOR=1
 
 ## Grants subdao
+GRANTS_SUBDAO_CORE_NAME="GRANTS"
 GRANTS_SUBDAO_CORE_LABEL="neutron grants subdao"
 GRANTS_SUBDAO_CORE_URI="subdao.neutron.org"
 GRANTS_SUBDAO_CORE_DESCRIPTION="neutron grants subdao"
@@ -137,7 +140,7 @@ SECURITY_SUBDAO_CORE_NAME="GRANTS"
 SECURITY_SUBDAO_CORE_DESCRIPTION="subdao that secures neutron"
 SECURITY_SUBDAO_PROPOSAL_LABEL="security subdao single proposal"
 SECURITY_SUBDAO_PREPROPOSAL_LABEL="security prerpopose"
-SECURITY_SUBDAO_VOTE_LABEL="SECURITY_SUBDAO_CORE_INIT_MSG" # TODO
+SECURITY_SUBDAO_VOTE_LABEL="security subdao voting module" # TODO
 SECURITY_SUBDAO_CORE_URI="security.subdao.org"
 
 echo "Initializing dao contract in genesis..."
@@ -203,7 +206,7 @@ TREASURY_CONTRACT_ADDRESS=$($BINARY debug generate-contract-address "$INSTANCE_I
 
 # SUBDAOS
 SECURITY_SUBDAO_CORE_CONTRACT_ADDRESS=$($BINARY debug generate-contract-address "$INSTANCE_ID_COUNTER"      "$SUBDAO_CORE_BINARY_ID") && (( INSTANCE_ID_COUNTER++ ))
-SECURITY_SUBDAO_PRE_PROPOSE_CONTRACT_ADDRESS=$($BINARY debug generate-contract-address "$INSTANCE_ID_COUNTER"  "$PRE_PROPOSAL_CONTRACT_BINARY_ID") && (( INSTANCE_ID_COUNTER++ ))
+SECURITY_SUBDAO_PRE_PROPOSE_CONTRACT_ADDRESS=$($BINARY debug generate-contract-address "$INSTANCE_ID_COUNTER" "$PRE_PROPOSAL_CONTRACT_BINARY_ID") && (( INSTANCE_ID_COUNTER++ ))
 SECURITY_SUBDAO_PROPOSAL_CONTRACT_ADDRESS=$($BINARY debug generate-contract-address "$INSTANCE_ID_COUNTER"  "$SUBDAO_PROPOSAL_BINARY_ID") && (( INSTANCE_ID_COUNTER++ ))
 SECURITY_SUBDAO_VOTING_CONTRACT_ADDRESS=$($BINARY debug generate-contract-address "$INSTANCE_ID_COUNTER"    "$CW4_VOTING_CONTRACT_BINARY_ID") && (( INSTANCE_ID_COUNTER++ ))
 SECURITY_SUBDAO_GROUP_CONTRACT_ADDRESS=$($BINARY debug generate-contract-address "$INSTANCE_ID_COUNTER"     "$CW4_GROUP_CONTRACT_BINARY_ID") && (( INSTANCE_ID_COUNTER++ ))
@@ -572,7 +575,7 @@ GRANTS_SUBDAO_PROPOSAL_INIT_MSG='{
 GRANTS_SUBDAO_PROPOSAL_INIT_MSG_BASE64=$(echo "$GRANTS_SUBDAO_PROPOSAL_INIT_MSG" | base64 | tr -d "\n")
 
 GRANTS_SUBDAO_CORE_INIT_MSG='{
-  "name": "'"$GRANTS_SUBDAO"'",
+  "name": "'"$GRANTS_SUBDAO_CORE_NAME"'",
   "description": "'"$GRANTS_SUBDAO_CORE_DESCRIPTION"'",
   "vote_module_instantiate_info": {
     "admin": {
@@ -633,4 +636,5 @@ $BINARY add-wasm-message execute "$DAO_CONTRACT_ADDRESS" "$ADD_SUBDAOS_MSG" --ru
 
 sed -i -e 's/\"admins\":.*/\"admins\": [\"'"$DAO_CONTRACT_ADDRESS"'\"]/g' "$CHAIN_DIR/config/genesis.json"
 sed -i -e 's/\"treasury_address\":.*/\"treasury_address\":\"'"$TREASURY_CONTRACT_ADDRESS"'\"/g' "$CHAIN_DIR/config/genesis.json"
-sed -i -e 's/\"security_address\":.*/\"security_address\":\"'"$SECURITY_SUBDAO_CORE_CONTRACT_ADDRESS"'\",/g' "$CHAIN_DIR/config/genesis.json"
+sed -i -e 's/\"security_address\":.*/\"security_address\":\"'"$DAO_CONTRACT_ADDRESS"'\",/g' "$CHAIN_DIR/config/genesis.json"
+sed -i -e 's/\"limit\":.*/\"limit\":5/g' "$CHAIN_DIR/config/genesis.json"
