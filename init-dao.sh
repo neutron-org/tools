@@ -97,7 +97,7 @@ PROPOSAL_OVERRULE_CLOSE_PROPOSAL_ON_EXECUTION_FAILURE=false
 VOTING_REGISTRY_MANAGER=null
 
 ## DAO
-DAO_DECSRIPTION=awesome neutron dao
+DAO_DESCRIPTION=awesome neutron dao
 DAO_NAME=Neutron
 DAO_ITEMS=null
 DAO_PROPOSAL_SINGLE_LABEL=proposal single
@@ -131,7 +131,7 @@ GRANTS_SUBDAO_VOTING_MODULE_LABEL=grants voting module
 GRANTS_SUBDAO_PROPOSAL_LABEL=grants single proposal
 
 ## Timelock
-GRANTS_SUBDAO_TIMELOCK_DURAATION=10
+GRANTS_SUBDAO_TIMELOCK_DURATION=10
 
 ## Security subdao
 SECURITY_SUBDAO_CORE_LABEL=neutron grants subdao
@@ -350,7 +350,7 @@ VOTING_REGISTRY_INIT_MSG='{
 VOTING_REGISTRY_INIT_MSG_BASE64=$(echo "$VOTING_REGISTRY_INIT_MSG" | base64 | tr -d "\n")
 
 DAO_INIT='{
-  "description": "'"$DAO_DECSRIPTION"'",
+  "description": "'"$DAO_DESCRIPTION"'",
   "name": "'"$DAO_NAME"'",
   "initial_items": '"$DAO_ITEMS"',
   "proposal_modules_instantiate_info": [
@@ -367,7 +367,7 @@ DAO_INIT='{
         "core_module": {}
       },
       "code_id": '"$PROPOSAL_MULTIPLE_CONTRACT_BINARY_ID"',
-      "label": "$DAO_PROPOSAL_MULTIPLE_LABEL",
+      "label": "'"$DAO_PROPOSAL_MULTIPLE_LABEL"'",
       "msg": "'"$PROPOSAL_MULTIPLE_INIT_MSG_BASE64"'"
     },
     {
@@ -521,7 +521,7 @@ SECURITY_SUBDAO_CORE_INIT_MSG='{
 # GRANTS_SUBDAO
 
 GRANTS_SUBDAO_TIMELOCK_INIT_MSG='{
-  "timelock_duration": '"$GRANTS_SUBDAO_TIMELOCK_DURAATION"'
+  "timelock_duration": '"$GRANTS_SUBDAO_TIMELOCK_DURATION"'
 }'
 GRANTS_SUBDAO_TIMELOCK_INIT_MSG_BASE64=$(echo "$GRANTS_SUBDAO_TIMELOCK_INIT_MSG" | base64 | tr -d "\n")
 
@@ -631,3 +631,4 @@ $BINARY add-wasm-message execute "$DAO_CONTRACT_ADDRESS" "$ADD_SUBDAOS_MSG" --ru
 
 sed -i -e 's/\"admins\":.*/\"admins\": [\"'"$DAO_CONTRACT_ADDRESS"'\"]/g' "$CHAIN_DIR/config/genesis.json"
 sed -i -e 's/\"treasury_address\":.*/\"treasury_address\":\"'"$TREASURY_CONTRACT_ADDRESS"'\"/g' "$CHAIN_DIR/config/genesis.json"
+sed -i -e 's/\"security_address\":.*/\"security_address\":\"'"$SECURITY_SUBDAO_CORE_CONTRACT_ADDRESS"'\",/g' "$CHAIN_DIR/config/genesis.json"
