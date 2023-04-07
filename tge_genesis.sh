@@ -11,6 +11,8 @@ RESERVE_CONTRACT_ADDRESS="neutron1qyygux5t4s3a3l25k8psxjydhtudu5lnt0tk0szm8q4s27
 ASTROPORT_MULTISIG_ADDRESS="neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2"
 MANAGER="neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2"
 
+NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS="neutron1aaf9r6s7nxhysuegqrxv0wpm27ypyv4886medd3mrkrw6t4yfcnsu2zdzj"
+
 # ------------------------------------------------CONTRACT INIT PARAMS-------------------------------------------------
 LOCKDROP_INIT_TIMESTAMP=1680870600 #15:30
 LOCKDROP_LOCK_WINDOW=7200 # 2 hours
@@ -32,11 +34,11 @@ AUCTION_AMOUNT=500000000untrn
 
 CREDITS_WHEN_WITHDRAWABLE=1680874200 #16:30
 
-AIRDROP_MERKLE_ROOT="3e81e7e357f4a8cbe198a9a08e8c7c00a0385d26aceea5cbabcb89e27e595247" # just an admin
+AIRDROP_MERKLE_ROOT="71b68c87307ab96e66ad663931f60c8424b0b4503934c1a34e64dca0a22b5879" # all addresses from initial genesis
 AIRDROP_START="1680867000" #14:30
 AIRDROP_VESTING_START="1680867000" #14:30
 AIRDROP_DURATION_SECONDS=3600 #1 hour
-AIRDROP_AMOUNT=10000000000untrn
+AIRDROP_AMOUNT=700000000untrn
 
 PRICE_FEED_CLIENT_ID="cw-band-price-feed"
 PRICE_FEED_ORACLE_SCRIPT_ID="3"
@@ -48,7 +50,7 @@ PRICE_FEED_EXECUTE_GAS="500000"
 PRICE_FEED_MULTIPLIER="1000000"
 PRICE_FEED_SYMBOLS='["ATOM", "USDC"]'
 
-TWAP_UPDATE_PERIOD=60
+TWAP_UPDATE_PERIOD=60 # seconds
 
 #----------------------------------------------------------------------------------------------------------------------
 
@@ -316,12 +318,25 @@ LOCKDROP_VAULT_INIT_MSG='{
   "name": "Lockdrop Vault"
 }'
 
+ADD_CREDITS_VAULT_MSG='{
+  "add_voting_vault": {
+    "new_voting_vault_contract": "'"$CREDITS_VAULT_CONTRACT_ADDRESS"'"
+  }
+}'
+ADD_LOCKDROP_VAULT_MSG='{
+  "add_voting_vault": {
+    "new_voting_vault_contract": "'"$LOCKDROP_VAULT_CONTRACT_ADDRESS"'"
+  }
+}'
+
 # TODO
 
 #Top up aidrop contract with some NTRNs
 $BINARY add-genesis-account $AIDROP_CONTRACT_ADDRESS $AIRDROP_AMOUNT --home home
 #Top up auction contract with some NTRNs
 $BINARY add-genesis-account $AUCTION_CONTRACT_ADDRESS $AUCTION_AMOUNT --home home
+#Top up main dao contract with some NTRNs
+$BINARY add-genesis-account $MAIN_DAO_ADDRESS $LOCKDROP_NTRN_INCENTIVES --home home
 
 # Instantiate TGE contracts
 instantiate_contract $LOCKDROP_CONTRACT_BINARY_ID "$LOCKDROP_INIT_MSG" "TGE_NEUTRON_LOCKDROP" "$MAIN_DAO_ADDRESS"
@@ -337,6 +352,10 @@ instantiate_contract $LP_VESTING_CONTRACT_BINARY_ID "$USDC_LP_VESTING_INIT_MSG" 
 instantiate_contract $LP_VESTING_CONTRACT_BINARY_ID "$ATOM_LP_VESTING_INIT_MSG" "TGE_ATOM_LP_VESTING" "$MAIN_DAO_ADDRESS"
 instantiate_contract $CREDITS_VAULT_CONTRACT_BINARY_ID "$CREDITS_VAULT_INIT_MSG" "TGE_CREDITS_VAULT" "$MAIN_DAO_ADDRESS"
 instantiate_contract $LOCKDROP_VAULT_CONTRACT_BINARY_ID "$LOCKDROP_VAULT_INIT_MSG" "TGE_LOCKDROP_VAULT" "$MAIN_DAO_ADDRESS"
+
+# Add Lockdrop and Credits vault to Neutron DAO Voting Registry
+execute_contract "$NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS" "$ADD_CREDITS_VAULT_MSG" "$MAIN_DAO_ADDRESS"
+execute_contract "$NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS" "$ADD_LOCKDROP_VAULT_MSG" "$MAIN_DAO_ADDRESS"
 
 echo "LOCKDROP_CONTRACT_ADDRESS:" $LOCKDROP_CONTRACT_ADDRESS
 echo "AUCTION_CONTRACT_ADDRESS:" $AUCTION_CONTRACT_ADDRESS
