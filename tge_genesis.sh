@@ -2,7 +2,7 @@
 set -e
 
 # TODO!!!!!!!!
-cp genesis.json home/config/genesis.json
+cp genesis.json ./home/config/genesis.json
 
 # TODO!!!!!!!!!
 ADMIN_ADDRESS="neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2"
@@ -17,8 +17,10 @@ NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS="neutron1aaf9r6s7nxhysuegqrxv0wpm27ypyv
 #CHAIN START = 14:00
 #CALL = 15:00
 
+CHAIN_START=1681127592
+
 # ------------------------------------------------CONTRACT INIT PARAMS-------------------------------------------------
-LOCKDROP_INIT_TIMESTAMP=1680879600 #18:00
+let LOCKDROP_INIT_TIMESTAMP="$CHAIN_START + 2 * 60 * 60"
 LOCKDROP_LOCK_WINDOW=1800 # 0.5 hours
 LOCKDROP_WITHDRAWAL_WINDOW=1800 # 0.5 hours
 LOCKDROP_MIN_LOCK_DURATION=600  # 10 minutes
@@ -27,7 +29,7 @@ LOCKDROP_MAX_POSITIONS_PER_USER=1000
 LOCKDROP_NTRN_INCENTIVES=20000000000000untrn
 
 AUCTION_LP_TOKENS_LOCK_WINDOW=3600 #1 hour: LOCKDROP_LOCK_WINDOW + LOCKDROP_WITHDRAWAL_WINDOW
-AUCTION_INIT_TIMESTAMP=1680876000 #17:00
+let AUCTION_INIT_TIMESTAMP="$CHAIN_START + 60 * 60"
 AUCTION_DEPOSIT_WINDOW=1800 #0.5 hour
 AUCTION_WITHDRAWAL_WINDOW=1800 #0.5 hour
 AUCTION_MAX_EXCHANGE_RATE_AGE=3600 #1 hour
@@ -36,12 +38,12 @@ AUCTION_VESTING_MIGRATION_PACK_SIZE=100
 AUCTION_VESTING_LP_DURATION=1800 #0.5 hours
 AUCTION_AMOUNT=50000000000000untrn
 
-CREDITS_WHEN_WITHDRAWABLE=1680878700 #17:45
+let CREDITS_WHEN_WITHDRAWABLE="$CHAIN_START + 2 * 60 * 60"
 
 AIRDROP_MERKLE_ROOT="57f823441a91c4e1e0ee9c1dadaa8cc146688496175ef886b81e76415beab77a" # all addresses from initial genesis
-AIRDROP_START="1680876000" #17:00
-AIRDROP_VESTING_START="1680877800" #15:30
-AIRDROP_DURATION_SECONDS=3600 #1 hour
+AIRDROP_START="${CHAIN_START}"
+let AIRDROP_VESTING_START="$CHAIN_START + 60 * 60"
+AIRDROP_DURATION_SECONDS=10800 #1 hour
 AIRDROP_AMOUNT=70000000000000untrn
 
 PRICE_FEED_CLIENT_ID="cw-band-price-feed"
@@ -55,7 +57,6 @@ PRICE_FEED_MULTIPLIER="1000000"
 PRICE_FEED_SYMBOLS='["ATOM", "USDC"]'
 
 TWAP_UPDATE_PERIOD=60 #seconds
-
 #----------------------------------------------------------------------------------------------------------------------
 
 
@@ -71,26 +72,26 @@ INSTANCE_ID_COUNTER=25
 
 
 # https://github.com/neutron-org/neutron-tge-contracts
-LOCKDROP_BINARY=$TGE_CONTRACTS_BINARIES_DIR/neutron_lockdrop-aarch64.wasm
-AUCTION_BINARY=$TGE_CONTRACTS_BINARIES_DIR/neutron_auction-aarch64.wasm
-CREDITS_BINARY=$TGE_CONTRACTS_BINARIES_DIR/credits-aarch64.wasm
-AIRDROP_BINARY=$TGE_CONTRACTS_BINARIES_DIR/cw20_merkle_airdrop-aarch64.wasm
-PRICE_FEED_BINARY=$TGE_CONTRACTS_BINARIES_DIR/neutron_price_feed-aarch64.wasm
-TWAP_ORACLE_BINARY=$TGE_CONTRACTS_BINARIES_DIR/astroport_oracle-aarch64.wasm
-LP_VESTING_BINARY=$TGE_CONTRACTS_BINARIES_DIR/vesting_lp-aarch64.wasm
+LOCKDROP_BINARY=$TGE_CONTRACTS_BINARIES_DIR/neutron_lockdrop.wasm
+AUCTION_BINARY=$TGE_CONTRACTS_BINARIES_DIR/neutron_auction.wasm
+CREDITS_BINARY=$TGE_CONTRACTS_BINARIES_DIR/credits.wasm
+AIRDROP_BINARY=$TGE_CONTRACTS_BINARIES_DIR/cw20_merkle_airdrop.wasm
+PRICE_FEED_BINARY=$TGE_CONTRACTS_BINARIES_DIR/neutron_price_feed.wasm
+TWAP_ORACLE_BINARY=$TGE_CONTRACTS_BINARIES_DIR/astroport_oracle.wasm
+LP_VESTING_BINARY=$TGE_CONTRACTS_BINARIES_DIR/vesting_lp.wasm
 
 #https://github.com/neutron-org/neutron-dao
-CREDITS_VAULT_BINARY=$DAO_CONTRACTS_BINARIES_DIR/credits_vault-aarch64.wasm
-LOCKDROP_VAULT_BINARY=$DAO_CONTRACTS_BINARIES_DIR/lockdrop_vault-aarch64.wasm
+CREDITS_VAULT_BINARY=$DAO_CONTRACTS_BINARIES_DIR/credits_vault.wasm
+LOCKDROP_VAULT_BINARY=$DAO_CONTRACTS_BINARIES_DIR/lockdrop_vault.wasm
 
 # https://github.com/astroport-fi/astroport_ibc v1.1.0
 ASTROPORT_SATELLITE_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astro_satellite.wasm
 #https://github.com/astroport-fi/astroport-core v2.5.0
-ASTROPORT_GENERATOR_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_generator-aarch64.wasm
-ASTROPORT_FACTORY_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_factory-aarch64.wasm
-ASTROPORT_PAIR_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_pair-aarch64.wasm
-ASTROPORT_TOKEN_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_token-aarch64.wasm
-ASTROPORT_NATIVE_COIN_REGISTRY_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_native_coin_registry-aarch64.wasm
+ASTROPORT_GENERATOR_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_generator.wasm
+ASTROPORT_FACTORY_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_factory.wasm
+ASTROPORT_PAIR_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_pair.wasm
+ASTROPORT_TOKEN_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_token.wasm
+ASTROPORT_NATIVE_COIN_REGISTRY_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_native_coin_registry.wasm
 
 function store_binary() {
   CONTRACT_BINARY_PATH=$1
@@ -193,7 +194,7 @@ ASTROPORT_FACTORY_INIT_MSG='{
       "total_fee_bps": 0,
       "maker_fee_bps": 0,
       "is_disabled": false,
-      "is_generator_disabled": true
+      "is_generator_disabled": false
     }
   ],
   "token_code_id": '"${ASTROPORT_TOKEN_CONTRACT_BINARY_ID}"',
@@ -234,7 +235,7 @@ LOCKDROP_INIT_MSG='{
 
 AUCTION_INIT_MSG='{
   "owner": "'"$MAIN_DAO_ADDRESS"'",
-  "denom_manager": "'"$MANAGER"'",
+  "token_info_manager": "'"$MANAGER"'",
   "lockdrop_contract_address": "'"$LOCKDROP_CONTRACT_ADDRESS"'",
   "reserve_contract_address": "'"$RESERVE_CONTRACT_ADDRESS"'",
   "vesting_usdc_contract_address": "'"$USDC_LP_VESTING_CONTRACT_ADDRESS"'",
@@ -259,7 +260,7 @@ CREDITS_UPDATE_CONFIG_MSG='{
     "config": {
       "airdrop_address": "'"$AIDROP_CONTRACT_ADDRESS"'",
       "lockdrop_address": "'"$LOCKDROP_CONTRACT_ADDRESS"'",
-      "when_withdrawable": "'"$CREDITS_WHEN_WITHDRAWABLE"'"
+      "when_withdrawable": '$CREDITS_WHEN_WITHDRAWABLE'
     }
   }
 }'
@@ -268,8 +269,8 @@ AIRDROP_INIT_MSG='{
   "credits_address": "'"$CREDITS_CONTRACT_ADDRESS"'",
   "reserve_address": "'"$RESERVE_CONTRACT_ADDRESS"'",
   "merkle_root": "'"$AIRDROP_MERKLE_ROOT"'",
-  "airdrop_start": "'"$AIRDROP_START"'",
-  "vesting_start": "'"$AIRDROP_VESTING_START"'",
+  "airdrop_start": '$AIRDROP_START',
+  "vesting_start": '$AIRDROP_VESTING_START',
   "vesting_duration_seconds": '$AIRDROP_DURATION_SECONDS'
 }'
 
