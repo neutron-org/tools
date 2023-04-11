@@ -1,3 +1,5 @@
 /tmp_genesis.json
 /home/
 /.idea/
+.env
+/artifacts/
