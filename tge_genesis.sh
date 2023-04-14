@@ -13,7 +13,7 @@ MANAGER="neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2"
 
 NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS="neutron1aaf9r6s7nxhysuegqrxv0wpm27ypyv4886medd3mrkrw6t4yfcnsu2zdzj"
 
-CHAIN_START=1681293600 # 12 apr 13:00 GMT+3
+CHAIN_START=1681466400 # 14 apr 13:00 GMT+3
 
 # ------------------------------------------------CONTRACT INIT PARAMS-------------------------------------------------
 let LOCKDROP_INIT_TIMESTAMP="$CHAIN_START + 6 * 60 * 60" # AUCTION_INIT_TIMESTAMP + AUCTION_DEPOSIT_WINDOW + AUCTION_WITHDRAWAL_WINDOW
@@ -37,7 +37,7 @@ AUCTION_AMOUNT=50000000000000untrn
 let CREDITS_WHEN_WITHDRAWABLE="$CHAIN_START + 2 * 60 * 60"
 
 AIRDROP_MERKLE_ROOT="57f823441a91c4e1e0ee9c1dadaa8cc146688496175ef886b81e76415beab77a" # all addresses from initial genesis
-AIRDROP_START="${CHAIN_START} + 30 * 60"
+let AIRDROP_START="${CHAIN_START} + 30 * 60"
 let AIRDROP_VESTING_START="$CHAIN_START + 60 * 60"
 AIRDROP_DURATION_SECONDS=10800 #1 hour
 AIRDROP_AMOUNT=70000000000000
@@ -61,14 +61,14 @@ TWAP_UPDATE_PERIOD=60 #seconds
 
 
 BINARY=${BINARY:-neutrond}
-CHAINID=${CHAINID:-neutron-test-2}
+CHAINID=${CHAINID:-neutron-rehearsal-fix-1}
 STAKEDENOM=${STAKEDENOM:-untrn}
 TGE_CONTRACTS_BINARIES_DIR=${TGE_CONTRACTS_BINARIES_DIR:-./artifacts}
 DAO_CONTRACTS_BINARIES_DIR=${DAO_CONTRACTS_BINARIES_DIR:-./artifacts}
 ASTROPORT_CONTRACTS_BINARIES_DIR=${ASTROPORT_CONTRACTS_BINARIES_DIR:-./artifacts} # TODO
 GENESIS_PATH=${GENESIS_PATH:-./genesis.json}
 
-INSTANCE_ID_COUNTER=25
+INSTANCE_ID_COUNTER=24
 
 
 # https://github.com/neutron-org/neutron-tge-contracts
@@ -96,6 +96,10 @@ ASTROPORT_NATIVE_COIN_REGISTRY_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astropor
 function store_binary() {
   CONTRACT_BINARY_PATH=$1
   ADMIN=$2
+  if [ ! -f $CONTRACT_BINARY_PATH ]; then
+    >&2 echo "File $CONTRACT_BINARY_PATH does not exist."
+    exit 1
+  fi
   $BINARY add-wasm-message store "$CONTRACT_BINARY_PATH" --output json --run-as ${ADMIN} --home ./home
   BINARY_ID=$(jq -r "[.app_state.wasm.gen_msgs[] | select(.store_code != null)] | length" "./home/config/genesis.json")
   echo "$BINARY_ID"
