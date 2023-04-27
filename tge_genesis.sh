@@ -88,14 +88,17 @@ LP_VESTING_BINARY=$TGE_CONTRACTS_BINARIES_DIR/vesting_lp.wasm
 CREDITS_VAULT_BINARY=$DAO_CONTRACTS_BINARIES_DIR/credits_vault.wasm
 LOCKDROP_VAULT_BINARY=$DAO_CONTRACTS_BINARIES_DIR/lockdrop_vault.wasm
 
-# https://github.com/astroport-fi/astroport_ibc v1.1.0
+# https://github.com/astroport-fi/astroport_ibc/releases/tag/v1.1.0
 ASTROPORT_SATELLITE_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astro_satellite.wasm
-#https://github.com/astroport-fi/astroport-core v2.5.0
+# https://github.com/astroport-fi/astroport-core/releases/tag/TBD
 ASTROPORT_GENERATOR_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_generator.wasm
 ASTROPORT_FACTORY_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_factory.wasm
 ASTROPORT_PAIR_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_pair.wasm
-ASTROPORT_TOKEN_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_token.wasm
+ASTROPORT_PAIR_STABLE_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_pair_stable.wasm
+ASTROPORT_TOKEN_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_xastro_token.wasm
 ASTROPORT_NATIVE_COIN_REGISTRY_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_native_coin_registry.wasm
+ASTROPORT_VESTING_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_vesting.wasm
+ASTROPORT_MAKER_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_maker.wasm
 
 function store_binary() {
   CONTRACT_BINARY_PATH=$1
@@ -153,6 +156,9 @@ ASTROPORT_FACTORY_CONTRACT_BINARY_ID=$(store_binary "$ASTROPORT_FACTORY_BINARY" 
 ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_BINARY_ID=$(store_binary "$ASTROPORT_NATIVE_COIN_REGISTRY_BINARY" "$ASTROPORT_MULTISIG_ADDRESS")
 ASTROPORT_PAIR_CONTRACT_BINARY_ID=$(store_binary "$ASTROPORT_PAIR_BINARY" "$ASTROPORT_MULTISIG_ADDRESS")
 ASTROPORT_TOKEN_CONTRACT_BINARY_ID=$(store_binary "$ASTROPORT_TOKEN_BINARY" "$ASTROPORT_MULTISIG_ADDRESS")
+ASTROPORT_VESTING_CONTRACT_BINARY_ID=$(store_binary "$ASTROPORT_VESTING_BINARY" "$ASTROPORT_MULTISIG_ADDRESS")
+ASTROPORT_MAKER_CONTRACT_BINARY_ID=$(store_binary "$ASTROPORT_MAKER_BINARY" "$ASTROPORT_MULTISIG_ADDRESS")
+ASTROPORT_PAIR_STABLE_CONTRACT_BINARY_ID=$(store_binary "$ASTROPORT_PAIR_STABLE_BINARY" "$ASTROPORT_MULTISIG_ADDRESS")
 
 # Contracts addresses pregeneration
 # ORDER IS IMPORTANT HERE
@@ -176,13 +182,13 @@ ASTROPORT_SATELLITE_INIT_MSG='{
   "owner": "'"$ASTROPORT_MULTISIG_ADDRESS"'",
   "astro_denom": "TODO",
   "transfer_channel": "TODO",
-  "main_controller": "TODO",
-  "main_maker": "TODO",
-  "timeout": 1000
+  "main_controller": "terra1fkuhmq52pj08qqffp0elrvmzel8zz857x0pjjuuaar54mgcpe35s9km660",
+  "main_maker": "terra1ygcvxp9s054q8u2q4hvl52ke393zvgj0sllahlycm4mj8dm96zjsa45rzk",
+  "timeout": 300
 }'
 
 ASTROPORT_NATIVE_COIN_REGISTRY_INIT_MSG='{
-  "owner": "'"${ASTROPORT_SATELLITE_CONTRACT_ADDRESS}"'"
+  "owner": "'"${ASTROPORT_MULTISIG_ADDRESS}"'"
 }'
 SET_UNTRN_PRECISION_MSG='{
   "add": {
@@ -203,8 +209,18 @@ ASTROPORT_FACTORY_INIT_MSG='{
       "pair_type": {
         "xyk": {}
       },
-      "total_fee_bps": 0,
-      "maker_fee_bps": 0,
+      "total_fee_bps": 30,
+      "maker_fee_bps": 3333,
+      "is_disabled": false,
+      "is_generator_disabled": false
+    },
+    {
+      "code_id": '"${ASTROPORT_PAIR_STABLE_CONTRACT_BINARY_ID}"',
+      "pair_type": {
+        "stable": {}
+      },
+      "total_fee_bps": 5,
+      "maker_fee_bps": 5000,
       "is_disabled": false,
       "is_generator_disabled": false
     }
@@ -394,3 +410,6 @@ echo "CREDITS_VAULT_CONTRACT_ADDRESS:" $CREDITS_VAULT_CONTRACT_ADDRESS
 echo "LOCKDROP_VAULT_CONTRACT_ADDRESS:" $LOCKDROP_VAULT_CONTRACT_ADDRESS
 echo "ASTROPORT_SATELLITE_CONTRACT_ADDRESS:" $ASTROPORT_SATELLITE_CONTRACT_ADDRESS
 echo "ASTROPORT_FACTORY_CONTRACT_ADDRESS:" $ASTROPORT_FACTORY_CONTRACT_ADDRESS
+echo "ASTROPORT_VESTING_CONTRACT_BINARY_ID" $ASTROPORT_VESTING_CONTRACT_BINARY_ID
+echo "ASTROPORT_MAKER_CONTRACT_BINARY_ID" $ASTROPORT_MAKER_CONTRACT_BINARY_ID
+echo "ASTROPORT_GENERATOR_CONTRACT_BINARY_ID" $ASTROPORT_GENERATOR_CONTRACT_BINARY_ID
