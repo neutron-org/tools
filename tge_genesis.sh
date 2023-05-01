@@ -90,7 +90,7 @@ LOCKDROP_VAULT_BINARY=$DAO_CONTRACTS_BINARIES_DIR/lockdrop_vault.wasm
 
 # https://github.com/astroport-fi/astroport_ibc/releases/tag/v1.1.0
 ASTROPORT_SATELLITE_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astro_satellite.wasm
-# https://github.com/astroport-fi/astroport-core/releases/tag/TBD
+# https://github.com/astroport-fi/astroport-core/releases/tag/v2.8.0
 ASTROPORT_GENERATOR_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_generator.wasm
 ASTROPORT_FACTORY_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_factory.wasm
 ASTROPORT_PAIR_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_pair.wasm
