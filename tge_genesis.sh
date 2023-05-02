@@ -6,13 +6,13 @@ cp genesis.json ./home/config/genesis.json
 
 # TODO!!!!!!!!!
 ADMIN_ADDRESS="neutron19glux3jzdfyyz6ylmuksgxfj5phdaxfr2uhy86"
-MAIN_DAO_ADDRESS="neutron1yyca08xqdgvjz0psg56z67ejh9xms6l436u8y58m82npdqqhmmtqxfjftn"
+MAIN_DAO_ADDRESS="neutron1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrstdxvff"
 RESERVE_CONTRACT_ADDRESS="neutron1qyygux5t4s3a3l25k8psxjydhtudu5lnt0tk0szm8q4s27xa980s27p0kg"
 ASTROPORT_MULTISIG_ADDRESS="neutron19glux3jzdfyyz6ylmuksgxfj5phdaxfr2uhy86"
 MANAGER="neutron19glux3jzdfyyz6ylmuksgxfj5phdaxfr2uhy86"
 LTI_INVESTORS_OWNER="neutron12pp5qxctq89ac9ls8fm6laxykql9yxzclg0v0j"
 
-NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS="neutron1aaf9r6s7nxhysuegqrxv0wpm27ypyv4886medd3mrkrw6t4yfcnsu2zdzj"
+NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS="neutron1f6jlx7d9y408tlzue7r2qcf79plp549n30yzqjajjud8vm7m4vdspg933s"
 
 CHAIN_START=1683763200 # 11 May 00:00 UTC
 INTERVAL=$((86400*2))
@@ -71,7 +71,7 @@ DAO_CONTRACTS_BINARIES_DIR=${DAO_CONTRACTS_BINARIES_DIR:-./artifacts}
 ASTROPORT_CONTRACTS_BINARIES_DIR=${ASTROPORT_CONTRACTS_BINARIES_DIR:-./artifacts} # TODO
 GENESIS_PATH=${GENESIS_PATH:-./genesis.json}
 
-INSTANCE_ID_COUNTER=24
+INSTANCE_ID_COUNTER=23
 
 
 # https://github.com/neutron-org/neutron-tge-contracts
@@ -140,7 +140,7 @@ function execute_contract_w_funds() {
   $BINARY add-wasm-message execute $CONTRACT "$MESSAGE" --amount $FUNDS --run-as "$SENDER" --home ./home
 }
 
-echo "Initializing dao contract in genesis..."
+echo "Initializing TGE contract in genesis..."
 
 # Uploading contracts
 LOCKDROP_CONTRACT_BINARY_ID=$(store_binary "$LOCKDROP_BINARY" "$MAIN_DAO_ADDRESS")
@@ -422,8 +422,8 @@ execute_contract $USDC_LP_VESTING_CONTRACT_ADDRESS "$LP_VESTING_CONTRACT_ADD_VES
 execute_contract $ATOM_LP_VESTING_CONTRACT_ADDRESS "$LP_VESTING_CONTRACT_ADD_VESTING_MANAGER_MSG" "$MAIN_DAO_ADDRESS"
 
 # Add Lockdrop and Credits vault to Neutron DAO Voting Registry
-#execute_contract "$NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS" "$ADD_CREDITS_VAULT_MSG" "$MAIN_DAO_ADDRESS"
-#execute_contract "$NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS" "$ADD_LOCKDROP_VAULT_MSG" "$MAIN_DAO_ADDRESS"
+execute_contract "$NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS" "$ADD_CREDITS_VAULT_MSG" "$MAIN_DAO_ADDRESS"
+execute_contract "$NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS" "$ADD_LOCKDROP_VAULT_MSG" "$MAIN_DAO_ADDRESS"
 
 echo "LOCKDROP_CONTRACT_ADDRESS:" $LOCKDROP_CONTRACT_ADDRESS
 echo "AUCTION_CONTRACT_ADDRESS:" $AUCTION_CONTRACT_ADDRESS
