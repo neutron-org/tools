@@ -1,0 +1,12 @@
+[
+  { "address": "neutron1mrsrqsaumpr5f3sxmpljcmzjsfy8kemy7fcfcq", "amount": "1000000"},
+  { "address": "neutron19h42zjnls2tpmg6yylcg6nr56cjxcx35q6xt57", "amount": "2000000"},
+  { "address": "neutron1m7egrl5hek3ag04hdv37z8xx494lzrdwd3kawu", "amount": "3000000"},
+  { "address": "neutron1gf6fk9ylmcvrpjxse8w6pfu0a595c86md4cnpt", "amount": "4000000"},
+  { "address": "neutron15ml8necxafzqtq6t8t28c6rs9s399s6d0fqulr", "amount": "5000000"},
+  { "address": "neutron16ywg5dvjcd7yucv5m6a0txz0c8ywkaztxlexqh", "amount": "6000000"},
+  { "address": "neutron1m6vkh8tug5y0cg5mertf05juey0j86m2hkjr6j", "amount": "7000000"},
+  { "address": "neutron1jtj05je06sjxfcn68laazmeejq9sul03nfxv9s", "amount": "8000000"},
+  { "address": "neutron19qcaa9dwqykahpyv3fq349ymtpxatpyuk32a02", "amount": "9000000"},
+  { "address": "neutron10atr4tly42q5kry9u3t6vyrush2m2073x6llv3", "amount": "10000000"}
+]
