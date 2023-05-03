@@ -355,7 +355,7 @@ ATOM_LP_VESTING_INIT_MSG='{
 CREDITS_VAULT_INIT_MSG='{
   "credits_contract_address": "'"$CREDITS_CONTRACT_ADDRESS"'",
   "description": "Credits Contract Vault",
-  "owner": {"address": {"addr": "'"$NEUTRON_DAO_ADDRESS"'"}}
+  "owner": "'"$NEUTRON_DAO_ADDRESS"'"
 }'
 
 CREDITS_MINT_MSG='{
@@ -365,7 +365,7 @@ CREDITS_MINT_MSG='{
 LOCKDROP_VAULT_INIT_MSG='{
   "lockdrop_contract": "'"$LOCKDROP_CONTRACT_ADDRESS"'",
   "description": "Lockdrop Contract Vault",
-  "owner": {"address": {"addr": "'"$NEUTRON_DAO_ADDRESS"'"}},
+  "owner": "'"$NEUTRON_DAO_ADDRESS"'",
   "name": "Lockdrop Vault",
   "oracle_usdc_contract": "'"$USDC_TWAP_CONTRACT_ADDRESS"'",
   "oracle_atom_contract": "'"$ATOM_TWAP_CONTRACT_ADDRESS"'"
