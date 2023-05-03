@@ -6,7 +6,7 @@ cp genesis.json ./home/config/genesis.json
 
 # TODO!!!!!!!!!
 NEUTRON_DAO_ADDRESS="neutron1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrstdxvff"
-RESERVE_CONTRACT_ADDRESS="neutron1qyygux5t4s3a3l25k8psxjydhtudu5lnt0tk0szm8q4s27xa980s27p0kg"
+RESERVE_CONTRACT_ADDRESS="neutron13we0myxwzlpx8l5ark8elw5gj5d59dl6cjkzmt80c5q5cv5rt54qvzkv2a"
 ASTROPORT_MULTISIG_ADDRESS="neutron1xle8l3h0wkcp6tsxmkc6n4vqyfkhwnukevwwsk"
 TOKEN_INFO_MANAGER_MULTISIG_ADDRESS="neutron19glux3jzdfyyz6ylmuksgxfj5phdaxfr2uhy86"
 FOUNDATION_MULTISIG_ADDRESS="neutron12pp5qxctq89ac9ls8fm6laxykql9yxzclg0v0j"
