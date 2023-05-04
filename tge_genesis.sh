@@ -8,11 +8,87 @@ RESERVE_CONTRACT_ADDRESS="neutron13we0myxwzlpx8l5ark8elw5gj5d59dl6cjkzmt80c5q5cv
 ASTROPORT_MULTISIG_ADDRESS="neutron1xle8l3h0wkcp6tsxmkc6n4vqyfkhwnukevwwsk"
 TOKEN_INFO_MANAGER_MULTISIG_ADDRESS="neutron19glux3jzdfyyz6ylmuksgxfj5phdaxfr2uhy86"
 TOKEN_ISSUER_MULTISIG_ADDRESS="neutron12pp5qxctq89ac9ls8fm6laxykql9yxzclg0v0j"
-HADRON_LABS_MULTISIG_ADDRESS="neutron1neveke0vcflz5xmf6058h5ez5ewncznn3kafsd"
+FOUNDATION_MULTISIG_ADDRESS="neutron1neveke0vcflz5xmf6058h5ez5ewncznn3kafsd"
 NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS="neutron1f6jlx7d9y408tlzue7r2qcf79plp549n30yzqjajjud8vm7m4vdspg933s"
 
 TGE_START_DATE_TS=1684749600  # Mon May 22 2023 10:00:00 GMT+0000
 DAY=86400
+
+
+# ACCOUNTS
+# -------------------------------------------
+LTI_ALLOCATION_TOTAL_AMOUNT="68131557000000untrn"
+
+P2P_ALLOCATION_U_NTRN=150000000000000  # 15% of the supply
+P2P_MULTISIG_ACCOUNT=""
+
+LTI_START_TIMESTAMP=1683540000
+LTI_END_TIMESTAMP=1809770400
+
+LTI_ACCOUNT_1="neutron1h8vf3ueml7ah7m8z9e6vx09trq5lv2fw9e049f"
+LTI_1_TOTAL=15195600000000
+LTI_1_CLIFF=3798900000000
+
+LTI_ACCOUNT_2="neutron1cpy2gpwc8lphzyczderwma2rt5nqdmvtyyl26f"
+LTI_2_TOTAL=15000000000000
+LTI_2_CLIFF=3750000000000
+
+LTI_ACCOUNT_3="neutron106wvrvf69xvgv68uv9hwez79rqtwlkxpd3qq7z"
+LTI_3_TOTAL=7500000000000
+LTI_3_CLIFF=1875000000000
+
+LTI_ACCOUNT_4="neutron1tkavhfqt8358vl74z7r5kdkdy05s98yka0gl0t"
+LTI_4_TOTAL=7222222000000
+LTI_4_CLIFF=1805555000000
+
+LTI_ACCOUNT_5="neutron1f8yzjt9wnpm3499he5g2qya2kx9pdg3rgrc7le"
+LTI_5_TOTAL=3444000000000
+LTI_5_CLIFF=861000000000
+
+LTI_ACCOUNT_6="neutron1hdga6p84cpc6gulk9ruxy5w0vpfx9dv84f4kly"
+LTI_6_TOTAL=3666667000000
+LTI_6_CLIFF=916666000000
+
+LTI_ACCOUNT_7="neutron1sr3l95jynze2vamep28lw02ve2rv35x9jeltnx"
+LTI_7_TOTAL=3092400000000
+LTI_7_CLIFF=773100000000
+
+LTI_ACCOUNT_8="neutron1ruup9zdgtpl5gtylxhffsjxwpgsnjn2e0vct6c"
+LTI_8_TOTAL=3166667000000
+LTI_8_CLIFF=791666000000
+
+LTI_ACCOUNT_9="neutron1ua9rh0ag6s2syh6246zsxrj8hcysanlfkmgveh"
+LTI_9_TOTAL=2205667000000
+LTI_9_CLIFF=551416000000
+
+LTI_ACCOUNT_10="neutron1jjglgxh7lq59qfgea8t8t3r394dgkn99jxj697"
+LTI_10_TOTAL=1750000000000
+LTI_10_CLIFF=437500000000
+
+LTI_ACCOUNT_11="neutron1tkkry2wmcm0dzsh8j44ztjpcaguhwdnqu9u4np"
+LTI_11_TOTAL=1696667000000
+LTI_11_CLIFF=424166000000
+
+LTI_ACCOUNT_12="neutron148slufu7wlhn9axz38xs0q6frgkm2rkky4qzcq"
+LTI_12_TOTAL=1333333000000
+LTI_12_CLIFF=333333000000
+
+LTI_ACCOUNT_13="neutron1nl7p99kxxjlsls3ra5xj5yj2datakzr4vfl3dw"
+LTI_13_TOTAL=816667000000
+LTI_13_CLIFF=204166000000
+
+LTI_ACCOUNT_14="neutron1vehmy5f9w3dt8xad4ct7lsymy6wpxj8gu0kd2s"
+LTI_14_TOTAL=1111667000000
+LTI_14_CLIFF=277916000000
+
+LTI_ACCOUNT_15="neutron1sv3vaahqjqq0xqunjz476vjgpe0fv2v3xsgpem"
+LTI_15_TOTAL=530000000000
+LTI_15_CLIFF=132500000000
+
+LTI_ACCOUNT_16="neutron1sv3vaahqjqq0xqunjz476vjgpe0fv2v3xsgpem"
+LTI_16_TOTAL=400000000000
+LTI_16_CLIFF=100000000000
+
 
 # ------------------------------------------------CONTRACT INIT PARAMS-------------------------------------------------
 LOCKDROP_LOCK_WINDOW_SECONDS=259200  # 86400 * 3
@@ -72,7 +148,7 @@ DAO_CONTRACTS_BINARIES_DIR=${DAO_CONTRACTS_BINARIES_DIR:-./artifacts}
 ASTROPORT_CONTRACTS_BINARIES_DIR=${ASTROPORT_CONTRACTS_BINARIES_DIR:-./artifacts} # TODO
 GENESIS_PATH=${GENESIS_PATH:-./genesis.json}
 
-INSTANCE_ID_COUNTER=23
+INSTANCE_ID_COUNTER=19
 
 
 # https://github.com/neutron-org/neutron-tge-contracts
@@ -158,7 +234,7 @@ LP_VESTING_CONTRACT_BINARY_ID=$(store_binary "$LP_VESTING_BINARY" "$NEUTRON_DAO_
 CREDITS_VAULT_CONTRACT_BINARY_ID=$(store_binary "$CREDITS_VAULT_BINARY" "$NEUTRON_DAO_ADDRESS")
 LOCKDROP_VAULT_CONTRACT_BINARY_ID=$(store_binary "$LOCKDROP_VAULT_BINARY" "$NEUTRON_DAO_ADDRESS")
 VESTING_INVESTORS_CONTRACT_BINARY_ID=$(store_binary "$VESTING_INVESTORS_BINARY" "$TOKEN_ISSUER_MULTISIG_ADDRESS")
-VESTING_LTI_CONTRACT_BINARY_ID=$(store_binary "$VESTING_LTI_BINARY" "$HADRON_LABS_MULTISIG_ADDRESS")
+VESTING_LTI_CONTRACT_BINARY_ID=$(store_binary "$VESTING_LTI_BINARY" "$FOUNDATION_MULTISIG_ADDRESS")
 INVESTORS_VESTING_VAULT_BINARY_ID=$(store_binary "$INVESTORS_VESTING_VAULT_BINARY" "$NEUTRON_DAO_ADDRESS")
 
 ASTROPORT_SATELLITE_CONTRACT_BINARY_ID=$(store_binary "$ASTROPORT_SATELLITE_BINARY" "$ASTROPORT_MULTISIG_ADDRESS")
@@ -387,8 +463,8 @@ VESTING_INVESTORS_INIT_MSG='{
   "token_info_manager": "'"$TOKEN_ISSUER_MULTISIG_ADDRESS"'"
 }'
 VESTING_LTI_INIT_MSG='{
-  "owner": "'"$HADRON_LABS_MULTISIG_ADDRESS"'",
-  "token_info_manager": "'"$HADRON_LABS_MULTISIG_ADDRESS"'"
+  "owner": "'"$FOUNDATION_MULTISIG_ADDRESS"'",
+  "token_info_manager": "'"$FOUNDATION_MULTISIG_ADDRESS"'"
 }'
 INVESTORS_VESTING_VAULT_MSG='{
   "vesting_contract_address":"'"$VESTING_INVESTORS_CONTRACT_ADDRESS"'",
@@ -397,10 +473,267 @@ INVESTORS_VESTING_VAULT_MSG='{
   "name": "Investors Vault"
 }'
 
+SET_VESTING_TOKEN_MSG='{
+  "set_vesting_token": {
+    "vesting_token": {
+      "native_token": {
+        "denom": "untrn"
+      }
+    }
+  }
+}'
+
+ADD_VESTING_ACCOUNT_MESSAGE='
+{
+  "register_vesting_accounts": {
+    "vesting_accounts": [
+      {
+        "address": "'"$LTI_ACCOUNT_1"'",
+        "schedules": [
+          {
+            "start_point": {
+              "time": '$LTI_START_TIMESTAMP',
+              "amount": "'"$LTI_1_CLIFF"'"
+            },
+            "end_point": {
+              "time": '$LTI_END_TIMESTAMP',
+              "amount": "'"$LTI_1_TOTAL"'"
+            }
+          }
+        ]
+      },
+      {
+        "address": "'"$LTI_ACCOUNT_2"'",
+        "schedules": [
+          {
+            "start_point": {
+              "time": '$LTI_START_TIMESTAMP',
+              "amount": "'"$LTI_2_CLIFF"'"
+            },
+            "end_point": {
+              "time": '$LTI_END_TIMESTAMP',
+              "amount": "'"$LTI_2_TOTAL"'"
+            }
+          }
+        ]
+      },
+      {
+        "address": "'"$LTI_ACCOUNT_3"'",
+        "schedules": [
+          {
+            "start_point": {
+              "time":'$LTI_START_TIMESTAMP',
+              "amount": "'"$LTI_3_CLIFF"'"
+            },
+            "end_point": {
+              "time": '$LTI_END_TIMESTAMP',
+              "amount": "'"$LTI_3_TOTAL"'"
+            }
+          }
+        ]
+      },
+      {
+        "address": "'"$LTI_ACCOUNT_4"'",
+        "schedules": [
+          {
+            "start_point": {
+              "time": '$LTI_START_TIMESTAMP',
+              "amount": "'"$LTI_4_CLIFF"'"
+            },
+            "end_point": {
+              "time": '$LTI_END_TIMESTAMP',
+              "amount": "'"$LTI_4_TOTAL"'"
+            }
+          }
+        ]
+      },
+      {
+        "address": "'"$LTI_ACCOUNT_5"'",
+        "schedules": [
+          {
+            "start_point": {
+              "time": '$LTI_START_TIMESTAMP',
+              "amount": "'"$LTI_5_CLIFF"'"
+            },
+            "end_point": {
+              "time": '$LTI_END_TIMESTAMP',
+              "amount": "'"$LTI_5_TOTAL"'"
+            }
+          }
+        ]
+      },
+      {
+        "address": "'"$LTI_ACCOUNT_6"'",
+        "schedules": [
+          {
+            "start_point": {
+              "time": '$LTI_START_TIMESTAMP',
+              "amount": "'"$LTI_6_CLIFF"'"
+            },
+            "end_point": {
+              "time": '$LTI_END_TIMESTAMP',
+              "amount": "'"$LTI_6_TOTAL"'"
+            }
+          }
+        ]
+      },
+      {
+        "address": "'"$LTI_ACCOUNT_7"'",
+        "schedules": [
+          {
+            "start_point": {
+              "time": '$LTI_START_TIMESTAMP',
+              "amount": "'"$LTI_7_CLIFF"'"
+            },
+            "end_point": {
+              "time": '$LTI_END_TIMESTAMP',
+              "amount": "'"$LTI_7_TOTAL"'"
+            }
+          }
+        ]
+      },
+      {
+        "address": "'"$LTI_ACCOUNT_8"'",
+        "schedules": [
+          {
+            "start_point": {
+              "time": '$LTI_START_TIMESTAMP',
+              "amount": "'"$LTI_8_CLIFF"'"
+            },
+            "end_point": {
+              "time": '$LTI_END_TIMESTAMP',
+              "amount": "'"$LTI_8_TOTAL"'"
+            }
+          }
+        ]
+      },
+      {
+        "address": "'"$LTI_ACCOUNT_9"'",
+        "schedules": [
+          {
+            "start_point": {
+              "time": '$LTI_START_TIMESTAMP',
+              "amount": "'"$LTI_9_CLIFF"'"
+            },
+            "end_point": {
+              "time": '$LTI_END_TIMESTAMP',
+              "amount": "'"$LTI_9_TOTAL"'"
+            }
+          }
+        ]
+      },
+      {
+        "address": "'"$LTI_ACCOUNT_10"'",
+        "schedules": [
+          {
+            "start_point": {
+              "time": '$LTI_START_TIMESTAMP',
+              "amount": "'"$LTI_10_CLIFF"'"
+            },
+            "end_point": {
+              "time": '$LTI_END_TIMESTAMP',
+              "amount": "'"$LTI_10_TOTAL"'"
+            }
+          }
+        ]
+      },
+      {
+        "address": "'"$LTI_ACCOUNT_11"'",
+        "schedules": [
+          {
+            "start_point": {
+              "time": '$LTI_START_TIMESTAMP',
+              "amount": "'"$LTI_11_CLIFF"'"
+            },
+            "end_point": {
+              "time": '$LTI_END_TIMESTAMP',
+              "amount": "'"$LTI_11_TOTAL"'"
+            }
+          }
+        ]
+      },
+      {
+        "address": "'"$LTI_ACCOUNT_12"'",
+        "schedules": [
+          {
+            "start_point": {
+              "time": '$LTI_START_TIMESTAMP',
+              "amount": "'"$LTI_12_CLIFF"'"
+            },
+            "end_point": {
+              "time": '$LTI_END_TIMESTAMP',
+              "amount": "'"$LTI_12_TOTAL"'"
+            }
+          }
+        ]
+      },
+      {
+        "address": "'"$LTI_ACCOUNT_13"'",
+        "schedules": [
+          {
+            "start_point": {
+              "time": '$LTI_START_TIMESTAMP',
+              "amount": "'"$LTI_13_CLIFF"'"
+            },
+            "end_point": {
+              "time": '$LTI_END_TIMESTAMP',
+              "amount": "'"$LTI_13_TOTAL"'"
+            }
+          }
+        ]
+      },
+      {
+        "address": "'"$LTI_ACCOUNT_14"'",
+        "schedules": [
+          {
+            "start_point": {
+              "time": '$LTI_START_TIMESTAMP',
+              "amount": "'"$LTI_14_CLIFF"'"
+            },
+            "end_point": {
+              "time": '$LTI_END_TIMESTAMP',
+              "amount": "'"$LTI_14_TOTAL"'"
+            }
+          }
+        ]
+      },
+      {
+        "address": "'"$LTI_ACCOUNT_15"'",
+        "schedules": [
+          {
+            "start_point": {
+              "time": '$LTI_START_TIMESTAMP',
+              "amount": "'"$LTI_15_CLIFF"'"
+            },
+            "end_point": {
+              "time": '$LTI_END_TIMESTAMP',
+              "amount": "'"$LTI_15_TOTAL"'"
+            }
+          }
+        ]
+      },
+      {
+        "address": "'"$LTI_ACCOUNT_16"'",
+        "schedules": [
+          {
+            "start_point": {
+              "time": '$LTI_START_TIMESTAMP',
+              "amount": "'"$LTI_16_CLIFF"'"
+            },
+            "end_point": {
+              "time": '$LTI_END_TIMESTAMP',
+              "amount": "'"$LTI_16_TOTAL"'"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+'
+
 #Top up auction contract with some NTRNs
 $BINARY add-genesis-account $AUCTION_CONTRACT_ADDRESS $AUCTION_AMOUNT --home ./home
-#Top up main dao contract with some NTRNs
-$BINARY add-genesis-account $NEUTRON_DAO_ADDRESS $AMOUNT_TO_SEND_TO_LOCKDROP_AND_AIRDROP_FROM_DAO --home ./home
 
 # Instantiate TGE contracts
 instantiate_contract $LOCKDROP_CONTRACT_BINARY_ID "$LOCKDROP_INIT_MSG" "TGE_NEUTRON_LOCKDROP" "$NEUTRON_DAO_ADDRESS"
@@ -419,8 +752,11 @@ instantiate_contract $CREDITS_VAULT_CONTRACT_BINARY_ID "$CREDITS_VAULT_INIT_MSG"
 instantiate_contract $LOCKDROP_VAULT_CONTRACT_BINARY_ID "$LOCKDROP_VAULT_INIT_MSG" "neutron.voting.vaults.lockdrop" "$NEUTRON_DAO_ADDRESS"
 instantiate_contract $VESTING_INVESTORS_CONTRACT_BINARY_ID "$VESTING_INVESTORS_INIT_MSG" "VESTING_INVESTORS" "$TOKEN_ISSUER_MULTISIG_ADDRESS"
 instantiate_contract $VESTING_INVESTORS_CONTRACT_BINARY_ID "$VESTING_INVESTORS_INIT_MSG" "VESTING_INVESTORS_WITHOUT_VOTING_POWER" "$TOKEN_ISSUER_MULTISIG_ADDRESS"
-instantiate_contract $VESTING_LTI_CONTRACT_BINARY_ID "$VESTING_LTI_INIT_MSG" "VESTING_LTI" "$HADRON_LABS_MULTISIG_ADDRESS"
+instantiate_contract $VESTING_LTI_CONTRACT_BINARY_ID "$VESTING_LTI_INIT_MSG" "VESTING_LTI" "$FOUNDATION_MULTISIG_ADDRESS"
 instantiate_contract $INVESTORS_VESTING_VAULT_BINARY_ID "$INVESTORS_VESTING_VAULT_MSG" "neutron.voting.vaults.investors" "$NEUTRON_DAO_ADDRESS"
+
+execute_contract $VESTING_LTI_CONTRACT_ADDRESS "$SET_VESTING_TOKEN_MSG" "$FOUNDATION_MULTISIG_ADDRESS"
+execute_contract_w_funds $VESTING_LTI_CONTRACT_ADDRESS "$ADD_VESTING_ACCOUNT_MESSAGE" "$FOUNDATION_MULTISIG_ADDRESS" "$LTI_ALLOCATION_TOTAL_AMOUNT"
 
 # Add Lockdrop and Credits vault to Neutron DAO Voting Registry
 execute_contract "$NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS" "$ADD_CREDITS_VAULT_MSG" "$NEUTRON_DAO_ADDRESS"
