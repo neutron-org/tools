@@ -398,9 +398,9 @@ INVESTORS_VESTING_VAULT_MSG='{
 }'
 
 #Top up auction contract with some NTRNs
-$BINARY add-genesis-account $AUCTION_CONTRACT_ADDRESS $AUCTION_AMOUNT --home home
+$BINARY add-genesis-account $AUCTION_CONTRACT_ADDRESS $AUCTION_AMOUNT --home ./home
 #Top up main dao contract with some NTRNs
-$BINARY add-genesis-account $NEUTRON_DAO_ADDRESS $AMOUNT_TO_SEND_TO_LOCKDROP_AND_AIRDROP_FROM_DAO --home home
+$BINARY add-genesis-account $NEUTRON_DAO_ADDRESS $AMOUNT_TO_SEND_TO_LOCKDROP_AND_AIRDROP_FROM_DAO --home ./home
 
 # Instantiate TGE contracts
 instantiate_contract $LOCKDROP_CONTRACT_BINARY_ID "$LOCKDROP_INIT_MSG" "TGE_NEUTRON_LOCKDROP" "$NEUTRON_DAO_ADDRESS"
