@@ -157,6 +157,9 @@ ASTROPORT_SATELLITE_CONTRACT_ADDRESS="neutron1ffus553eet978k024lmssw0czsxwr97mgg
 ASTROPORT_FACTORY_CONTRACT_ADDRESS="neutron1hptk0k5kng7hjy35vmh009qd5m6l33609nypgf2yc6nqnewduqasxplt4e"
 ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_ADDRESS="neutron1jzzv6r5uckwd64n6qan3suzker0kct5w565f6529zjyumfcx96kqtcswn3"
 RESCUER_MULTISIG_ADDRESS="neutron1zfw930csx0k5qzf35vndaulwada4wa3pwtg5hy8rmnnx35wdyhssd2rtlz"
+VESTING_INVESTORS_ADDRESS="neutron17fcdl6crgsp49ja270fp0pdwm354ar5qqv3mda07py58lgqmm2sqasvgz9"
+VESTING_INVESTORS_NO_VP_ADDRESS="neutron14q5elxj4ghktt7d7d0uw0cs0gqyeay25h5fkree897gjm38gevxqmvqsq5"
+LTI_ADDRESS="neutron1a5xz4zm0gkpcf92ddm7fw8pghg2mf4wm6cyu6cgcruq35upf7auslnnfye"
 
 ASTROPORT_MULTISIG_ADDRESS="neutron1xle8l3h0wkcp6tsxmkc6n4vqyfkhwnukevwwsk"
 
@@ -468,6 +471,69 @@ then
        echo "ASTROPORT_NATIVE_COIN_REGISTRY_ADMIN is O.K."
   else
        echo "[X] ASTROPORT_NATIVE_COIN_REGISTRY_ADMIN is $ASTROPORT_NATIVE_COIN_REGISTRY_ADMIN, expected $EXPECTED_ASTROPORT_NATIVE_COIN_REGISTRY_ADMIN"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check astroport factory
+
+VESTING_INVESTORS_OWNER=$(neutrond q wasm contract-state smart $VESTING_INVESTORS_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.owner")
+
+if [[ "$VESTING_INVESTORS_OWNER" == "$EXPECTED_VESTING_INVESTORS_OWNER" ]]
+then
+       echo "VESTING_INVESTORS_OWNER is O.K."
+  else
+       echo "[X] VESTING_INVESTORS_OWNER is $VESTING_INVESTORS_OWNER, expected $EXPECTED_VESTING_INVESTORS_OWNER"
+fi
+
+VESTING_INVESTORS_ADMIN=$(neutrond q wasm contract $VESTING_INVESTORS_ADDRESS -o json | jq -r ".contract_info.admin")
+
+if [[ "$VESTING_INVESTORS_ADMIN" == "$EXPECTED_VESTING_INVESTORS_ADMIN" ]]
+then
+       echo "VESTING_INVESTORS_ADMIN is O.K."
+  else
+       echo "[X] VESTING_INVESTORS_ADMIN is $VESTING_INVESTORS_ADMIN, expected $EXPECTED_VESTING_INVESTORS_ADMIN"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check astroport factory
+
+VESTING_INVESTORS_NO_VP_OWNER=$(neutrond q wasm contract-state smart $VESTING_INVESTORS_NO_VP_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.owner")
+
+if [[ "$VESTING_INVESTORS_NO_VP_OWNER" == "$EXPECTED_VESTING_INVESTORS_NO_VP_OWNER" ]]
+then
+       echo "VESTING_INVESTORS_NO_VP_OWNER is O.K."
+  else
+       echo "[X] VESTING_INVESTORS_NO_VP_OWNER is $VESTING_INVESTORS_NO_VP_OWNER, expected $EXPECTED_VESTING_INVESTORS_NO_VP_OWNER"
+fi
+
+VESTING_INVESTORS_NO_VP_ADMIN=$(neutrond q wasm contract $VESTING_INVESTORS_NO_VP_ADDRESS -o json | jq -r ".contract_info.admin")
+
+if [[ "$VESTING_INVESTORS_NO_VP_ADMIN" == "$EXPECTED_VESTING_INVESTORS_NO_VP_ADMIN" ]]
+then
+       echo "VESTING_INVESTORS_NO_VP_ADMIN is O.K."
+  else
+       echo "[X] VESTING_INVESTORS_NO_VP_ADMIN is $VESTING_INVESTORS_NO_VP_ADMIN, expected $EXPECTED_VESTING_INVESTORS_NO_VP_ADMIN"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check astroport factory
+
+LTI_OWNER=$(neutrond q wasm contract-state smart $LTI_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.owner")
+
+if [[ "$LTI_OWNER" == "$EXPECTED_LTI_OWNER" ]]
+then
+       echo "LTI_OWNER is O.K."
+  else
+       echo "[X] LTI_OWNER is $LTI_OWNER, expected $EXPECTED_LTI_OWNER"
+fi
+
+LTI_ADMIN=$(neutrond q wasm contract $LTI_ADDRESS -o json | jq -r ".contract_info.admin")
+
+if [[ "$LTI_ADMIN" == "$EXPECTED_LTI_ADMIN" ]]
+then
+       echo "LTI_ADMIN is O.K."
+  else
+       echo "[X] LTI_ADMIN is $LTI_ADMIN, expected $EXPECTED_LTI_ADMIN"
 fi
 
 #######################################################################################################################
