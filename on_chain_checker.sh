@@ -7,6 +7,8 @@
 #######################################################################################################################
 #######################################################################################################################
 
+echo "### Checking account balances:\n"
+
 VESTING_LTI_CONTRACT_ADDRESS="neutron1a5xz4zm0gkpcf92ddm7fw8pghg2mf4wm6cyu6cgcruq35upf7auslnnfye"
 FOUNDATION_MULTISIG_ADDRESS="neutron1xumd0qd3pceu875vazn3w5m9n78cns7q5fhgj3"
 NEUTRON_DAO_ADDRESS="neutron1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrstdxvff"
@@ -150,6 +152,8 @@ fi
 
 SECURITY_SUBDAO_CORE_CONTRACT_ADDRESS="neutron1fuyxwxlsgjkfjmxfthq8427dm2am3ya3cwcdr8gls29l7jadtazsuyzwcc"
 
+echo "\n### Checking Security SubDAO:\n"
+
 # ---------------------------------------------------------------------------------------------------------------------
 # Check members
 
@@ -213,6 +217,8 @@ fi
 #######################################################################################################################
 
 RESCUEER_MULTISIG_CONTRACT_ADDRESS="neutron1zfw930csx0k5qzf35vndaulwada4wa3pwtg5hy8rmnnx35wdyhssd2rtlz"
+
+echo "\n### Checking Rescueeer:\n"
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Check members
@@ -301,6 +307,8 @@ EXPECTED_AUCTION_END="Wed May 31 10:00:00 UTC 2023"
 EXPECTED_LOCKDROP_START="Wed May 31 10:00:00 UTC 2023"
 EXPECTED_LOCKDROP_WITHDRAWAL_START="Sat Jun  3 10:00:00 UTC 2023"
 EXPECTED_LOCKDROP_END="Mon Jun  5 10:00:00 UTC 2023"
+
+echo "\n### Checking timestamps:\n"
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Check Rescueeer EOL
