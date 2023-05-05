@@ -49,7 +49,7 @@ fi
 #----------------------------------------------------------------------------------------
 
 RESERVE_CONTRACT_BALANCE=$(neutrond q bank balances $RESERVE_CONTRACT_ADDRESS --output --json | jq --raw-output ".balances[0].amount")
-RESERVE_CONTRACT_BALANCE_EXPECTED="240011111000000"
+RESERVE_CONTRACT_BALANCE_EXPECTED="240000000000000"
 
 
 if [[ "$RESERVE_CONTRACT_BALANCE" == "$RESERVE_CONTRACT_BALANCE_EXPECTED" ]]
@@ -109,4 +109,15 @@ if [[ "$CREDITS_CONTRACT_BALANCE" == "$CREDITS_CONTRACT_BALANCE_EXPECTED" ]]
        echo "CREDITS_CONTRACT_BALANCE is O.K."
   else
        echo "CREDITS_CONTRACT_BALANCE is $CREDITS_CONTRACT_BALANCE, expected $CREDITS_CONTRACT_BALANCE_EXPECTED"
+fi
+
+# --------------------------------------------------------------------------------------------
+TOTAL_SUPPLY_EXPECTED="1000000000000000"
+TOTAL_SUPPLY=$(neutrond q bank total --output json | jq ".supply[0].amount" --raw-output)
+
+if [[ "$TOTAL_SUPPLY_EXPECTED" == "$TOTAL_SUPPLY" ]]
+then
+       echo "TOTAL SUPPLY is O.K."
+  else
+       echo "TOTAL SUPPLY is $TOTAL_SUPPLY, expected $TOTAL_SUPPLY_EXPECTED"
 fi
