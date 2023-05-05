@@ -398,7 +398,7 @@ then
        echo "[X] LOCKDROP_END is $LOCKDROP_END, expected $EXPECTED_LOCKDROP_END"
 fi
 
-echo "\n### EXPECTED TIMELINE:\n"
+echo "\n### VERIFIED TGE TIMELINE:\n"
 
 echo "\tRESCUEER_EOL:               $EXPECTED_RESCUEER_EOL"
 echo "\tAUCTION_START:              $EXPECTED_AUCTION_START"
