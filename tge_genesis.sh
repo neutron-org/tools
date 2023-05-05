@@ -17,11 +17,6 @@ DAY=86400
 
 # ACCOUNTS
 # -------------------------------------------
-
-P2P_MULTISIG_ACCOUNT="neutron19shusjdn44zace8c2fphcvq7j957zjfath7t39"
-P2P_TOTAL=150000000000000
-P2P_CLIFF=37500000000000
-
 LTI_START_TIMESTAMP=1683540000
 LTI_END_TIMESTAMP=1809770400
 
@@ -89,7 +84,7 @@ LTI_ACCOUNT_16="neutron1rs6mnzel03t9rz5rf7hpqkrnz3yw4vlpvtn6gq"
 LTI_16_TOTAL=400000000000
 LTI_16_CLIFF=100000000000
 
-let LTI_ALLOCATION_TOTAL_AMOUNT="68131557000000+$P2P_TOTAL"
+let LTI_ALLOCATION_TOTAL_AMOUNT="68131557000000"
 LTI_ALLOCATION_TOTAL_AMOUNT_U_NTRN=${LTI_ALLOCATION_TOTAL_AMOUNT}untrn
 
 # ------------------------------------------------CONTRACT INIT PARAMS-------------------------------------------------
@@ -487,21 +482,6 @@ ADD_VESTING_ACCOUNT_MESSAGE='
 {
   "register_vesting_accounts": {
     "vesting_accounts": [
-      {
-        "address": "'"$P2P_MULTISIG_ACCOUNT"'",
-        "schedules": [
-          {
-            "start_point": {
-              "time": '$LTI_START_TIMESTAMP',
-              "amount": "'"$P2P_CLIFF"'"
-            },
-            "end_point": {
-              "time": '$LTI_END_TIMESTAMP',
-              "amount": "'"$P2P_TOTAL"'"
-            }
-          }
-        ]
-      },
       {
         "address": "'"$LTI_ACCOUNT_1"'",
         "schedules": [

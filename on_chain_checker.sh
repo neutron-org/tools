@@ -2,7 +2,7 @@ VESTING_LTI_CONTRACT_ADDRESS="neutron1a5xz4zm0gkpcf92ddm7fw8pghg2mf4wm6cyu6cgcru
 FOUNDATION_MULTISIG_ADDRESS="neutron1xumd0qd3pceu875vazn3w5m9n78cns7q5fhgj3"
 NEUTRON_DAO_ADDRESS="neutron1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrstdxvff"
 RESERVE_CONTRACT_ADDRESS="neutron13we0myxwzlpx8l5ark8elw5gj5d59dl6cjkzmt80c5q5cv5rt54qvzkv2a"
-TOKEN_INFO_MANAGER_MULTISIG_ADDRESS="neutron19glux3jzdfyyz6ylmuksgxfj5phdaxfr2uhy86"
+TOKEN_ISSUER_MULTISIG_ADDRESS="neutron18g42rexsmmnkt32nf4qxv04glp0u8w7rwvfxzr"
 LOCKDROP_CONTRACT_ADDRESS="neutron1ryhxe5fzczelcfmrhmcw9x2jsqy677fw59fsctr09srk24lt93eszwlvyj"
 AUCTION_CONTRACT_ADDRESS="neutron1qj296vdrjfhuvrm96el3yhx8rcpz4k0huqcp9vwtqzhxwrduhs8s49y3p4"
 CREDITS_CONTRACT_ADDRESS="neutron1h6828as2z5av0xqtlh4w9m75wxewapk8z9l2flvzc29zeyzhx6fqgp648z"
@@ -10,7 +10,7 @@ CREDITS_CONTRACT_ADDRESS="neutron1h6828as2z5av0xqtlh4w9m75wxewapk8z9l2flvzc29zey
 #----------------------------------------------------------------------------------------
 
 VESTING_LTI_CONTRACT_BALANCE=$(neutrond q bank balances $VESTING_LTI_CONTRACT_ADDRESS --output --json | jq --raw-output ".balances[0].amount")
-VESTING_LTI_CONTRACT_BALANCE_EXPECTED="218131557000000"
+VESTING_LTI_CONTRACT_BALANCE_EXPECTED="68131557000000"
 
 
 if [[ "$VESTING_LTI_CONTRACT_BALANCE" == "$VESTING_LTI_CONTRACT_BALANCE_EXPECTED" ]]
@@ -61,15 +61,15 @@ fi
 
 #----------------------------------------------------------------------------------------
 
-TOKEN_INFO_MANAGER_MULTISIG_BALANCE=$(neutrond q bank balances $TOKEN_INFO_MANAGER_MULTISIG_ADDRESS --output --json | jq --raw-output ".balances[0].amount")
-TOKEN_INFO_MANAGER_MULTISIG_BALANCE_EXPECTED="110000000000000"
+TOKEN_ISSUER_MULTISIG_BALANCE=$(neutrond q bank balances $TOKEN_ISSUER_MULTISIG_ADDRESS --output --json | jq --raw-output ".balances[0].amount")
+TOKEN_ISSUER_MULTISIG_BALANCE_EXPECTED="260000000000000"
 
 
-if [[ "$TOKEN_INFO_MANAGER_MULTISIG_BALANCE" == "$TOKEN_INFO_MANAGER_MULTISIG_BALANCE_EXPECTED" ]]
+if [[ "$TOKEN_ISSUER_MULTISIG_BALANCE" == "$TOKEN_ISSUER_MULTISIG_BALANCE_EXPECTED" ]]
   then
-       echo "TOKEN_INFO_MANAGER_MULTISIG_BALANCE is O.K."
+       echo "TOKEN_ISSUER_MULTISIG_BALANCE is O.K."
   else
-       echo "TOKEN_INFO_MANAGER_MULTISIG_BALANCE is $TOKEN_INFO_MANAGER_MULTISIG_BALANCE, expected $TOKEN_INFO_MANAGER_MULTISIG_BALANCE_EXPECTED"
+       echo "TOKEN_ISSUER_MULTISIG_BALANCE is $TOKEN_ISSUER_MULTISIG_BALANCE, expected $TOKEN_ISSUER_MULTISIG_BALANCE_EXPECTED"
 fi
 
 #----------------------------------------------------------------------------------------
