@@ -286,6 +286,54 @@ then
        echo "[X] DAO_ADMIN is $DAO_ADMIN, expected $RESCUEER_CONTRACT_ADDRESS"
 fi
 
+# ---------------------------------------------------------------------------------------------------------------------
+# Check Lockdrop rewards info
+
+echo "\n### Checking Lockdrop rewards info:\n"
+
+LOCKDROP_REWARDS_INFO=$(neutrond q wasm contract-state smart $LOCKDROP_CONTRACT_ADDRESS '{"config": {}}' --output json | jq ".data.lockup_rewards_info")
+
+EXPECTED_LOCKDROP_REWARDS_INFO='[
+  {
+    "duration": 7776000,
+    "coefficient": "0"
+  },
+  {
+    "duration": 11664000,
+    "coefficient": "0.25"
+  },
+  {
+    "duration": 15552000,
+    "coefficient": "0.5"
+  },
+  {
+    "duration": 19440000,
+    "coefficient": "1"
+  },
+  {
+    "duration": 23328000,
+    "coefficient": "2"
+  },
+  {
+    "duration": 27216000,
+    "coefficient": "4"
+  },
+  {
+    "duration": 31104000,
+    "coefficient": "8"
+  }
+]'
+
+if [[ "$EXPECTED_LOCKDROP_REWARDS_INFO" == "$LOCKDROP_REWARDS_INFO" ]]
+then
+       echo "LOCKDROP_REWARDS_INFO is O.K."
+  else
+       echo "[X] LOCKDROP_REWARDS_INFO is $LOCKDROP_REWARDS_INFO, expected $EXPECTED_LOCKDROP_REWARDS_INFO"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+
+
 #######################################################################################################################
 #######################################################################################################################
 #######################################################################################################################
