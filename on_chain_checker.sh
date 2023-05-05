@@ -17,6 +17,7 @@ TOKEN_ISSUER_MULTISIG_ADDRESS="neutron18g42rexsmmnkt32nf4qxv04glp0u8w7rwvfxzr"
 LOCKDROP_CONTRACT_ADDRESS="neutron1ryhxe5fzczelcfmrhmcw9x2jsqy677fw59fsctr09srk24lt93eszwlvyj"
 AUCTION_CONTRACT_ADDRESS="neutron1qj296vdrjfhuvrm96el3yhx8rcpz4k0huqcp9vwtqzhxwrduhs8s49y3p4"
 CREDITS_CONTRACT_ADDRESS="neutron1h6828as2z5av0xqtlh4w9m75wxewapk8z9l2flvzc29zeyzhx6fqgp648z"
+AIDROP_CONTRACT_ADDRESS="neutron198sxsrjvt2v2lln2ajn82ks76k97mj72mtgl7309jehd0vy8rezs7e6c56"
 
 VESTING_LTI_CONTRACT_BALANCE_EXPECTED="68131557000000"
 FOUNDATION_MULTISIG_BALANCE_EXPECTED="11868443000000"
@@ -301,8 +302,26 @@ EXPECTED_AUCTION_END="Wed May 31 10:00:00 UTC 2023"
 EXPECTED_LOCKDROP_START="Wed May 31 10:00:00 UTC 2023"
 EXPECTED_LOCKDROP_WITHDRAWAL_START="Sat Jun  3 10:00:00 UTC 2023"
 EXPECTED_LOCKDROP_END="Mon Jun  5 10:00:00 UTC 2023"
+EXPECTED_AIRDROP_START="Wed May 24 10:00:00 UTC 2023"
+EXPECTED_AIRDROP_VESTING_START="$EXPECTED_LOCKDROP_END"
+EXPECTED_AIRDROP_VESTING_END="Sun Sep  3 10:00:00 UTC 2023"
+EXPECTED_CREDITS_VESTING_START="$EXPECTED_LOCKDROP_END"
 
 echo "\n### Checking timestamps:\n"
+
+# Check Airdrop start
+AIRDROP_START_RAW=$(neutrond q wasm contract-state raw $AIDROP_CONTRACT_ADDRESS "airdrop_start" --ascii -o json | jq --raw-output ".data" | base64 -d)
+
+AIRDROP_START=$(date -u -r $AIRDROP_START_RAW)
+
+if [[ "$AIRDROP_START" == "$EXPECTED_AIRDROP_START" ]]
+then
+       echo "AIDROP_START is O.K."
+  else
+       echo "[X] AIRDROP_START is $AIRDROP_START, expected $EXPECTED_AIRDROP_START"
+fi
+# ---------------------------------------------------------------------------------------------------------------------
+
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Check Rescueeer EOL
@@ -400,14 +419,60 @@ then
        echo "[X] LOCKDROP_END is $LOCKDROP_END, expected $EXPECTED_LOCKDROP_END"
 fi
 
+# Check Airdrop vesting start
+AIRDROP_VESTING_START_RAW=$(neutrond q wasm contract-state raw $AIDROP_CONTRACT_ADDRESS "vesting_start" --ascii -o json | jq --raw-output ".data" | base64 -d)
+
+AIRDROP_VESTING_START=$(date -u -r $AIRDROP_VESTING_START_RAW)
+
+if [[ "$AIRDROP_VESTING_START" == "$EXPECTED_AIRDROP_VESTING_START" ]]
+then
+       echo "AIDROP_VESTING_START is O.K."
+  else
+       echo "[X] AIRDROP_VESTING_START is $AIRDROP_VESTING_START, expected $EXPECTED_AIRDROP_VESTING_START"
+fi
+# ---------------------------------------------------------------------------------------------------------------------
+
+# Check Credits vesting start
+CREDITS_VESTING_START_RAW=$(neutrond q wasm contract-state smart $CREDITS_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.when_withdrawable")
+
+CREDITS_VESTING_START=$(date -u -r $CREDITS_VESTING_START_RAW)
+
+if [[ "$CREDITS_VESTING_START" == "$EXPECTED_CREDITS_VESTING_START" ]]
+then
+       echo "CREDITS_VESTING_START is O.K."
+  else
+       echo "[X] CREDITS_VESTING_START is $CREDITS_VESTING_START, expected $EXPECTED_CREDITS_VESTING_START"
+fi
+# ---------------------------------------------------------------------------------------------------------------------
+
+
+# Check Airdrop Vesting end
+AIRDROP_VESTING_DURATION_RAW=$(neutrond q wasm contract-state raw $AIDROP_CONTRACT_ADDRESS "vesting_duration_key" --ascii -o json | jq --raw-output ".data" | base64 -d)
+
+let AIRDROP_VESTING_END_RAW="$AIRDROP_VESTING_START_RAW + $AIRDROP_VESTING_DURATION_RAW"
+AIRDROP_VESTING_END=$(date -u -r $AIRDROP_VESTING_END_RAW)
+
+if [[ "$AIRDROP_VESTING_END" == "$EXPECTED_AIRDROP_VESTING_END" ]]
+then
+       echo "AIDROP_VESTING_END is O.K."
+  else
+       echo "[X] AIRDROP_VESTING_END is $AIRDROP_VESTING_END, expected $EXPECTED_AIRDROP_VESTING_END"
+fi
+# ---------------------------------------------------------------------------------------------------------------------
+
+
 echo "\n### VERIFIED TGE TIMELINE:\n"
 
 echo "\tRESCUEER_EOL:               $EXPECTED_RESCUEER_EOL"
+echo "\tAIRDROP_START:              $AIRDROP_START"
 echo "\tAUCTION_START:              $EXPECTED_AUCTION_START"
 echo "\tAUCTION_WITHDRAWAL_START:   $EXPECTED_AUCTION_WITHDRAWAL_START"
 echo "\tAUCTION_END:                $EXPECTED_AUCTION_END"
 echo "\tLOCKDROP_START:             $EXPECTED_LOCKDROP_START"
 echo "\tLOCKDROP_WITHDRAWAL_START:  $EXPECTED_LOCKDROP_WITHDRAWAL_START"
 echo "\tLOCKDROP_END:               $EXPECTED_LOCKDROP_END"
+echo "\tAIRDROP_VESTING_START:      $AIRDROP_VESTING_START"
+echo "\tCREDITS_VESTING_START:      $CREDITS_VESTING_START"
+echo "\tAIRDROP_VESTING_END:        $AIRDROP_VESTING_END"
 
 echo "\n"
