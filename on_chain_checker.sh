@@ -1,6 +1,228 @@
 #######################################################################################################################
 #######################################################################################################################
 #######################################################################################################################
+############################################### CHECK OWNERSHIPS ######################################################
+#######################################################################################################################
+#######################################################################################################################
+#######################################################################################################################
+#######################################################################################################################
+
+echo "### Checking ownerships:\n"
+
+AIRDROPS_CONTRACT_ADDRESS="neutron198sxsrjvt2v2lln2ajn82ks76k97mj72mtgl7309jehd0vy8rezs7e6c56"
+PRICE_FEED_CONTRACT_ADDRESS="neutron1lxansfc8vkujy997e3xksd3ugsppv6a9jt32pjtgaxr0zkcnkznq67z3ax"
+USDC_TWAP_CONTRACT_ADDRESS="neutron1v8leqn5fv0hk056hkky8ym8gytuehe962cy4nt2mrg4lyt05p9nsz9p69a"
+ATOM_TWAP_CONTRACT_ADDRESS="neutron1gajw625kz8el4ayk8fwpy7r6ew0m7zrg9jdd6grg85fle39shuxqezuz2c"
+USDC_LP_VESTING_CONTRACT_ADDRESS="neutron1wgzzn83hhcc5asrtslqvaw2wuqqkfulgac7ze94dmqkrxu8nsensmy9dkv"
+ATOM_LP_VESTING_CONTRACT_ADDRESS="neutron1kkwp7pd4ts6gukm3e820kyftz4vv5jqtmal8pwqezrnq2ddycqasr87x9p"
+ASTROPORT_SATELLITE_CONTRACT_ADDRESS="neutron1ffus553eet978k024lmssw0czsxwr97mggyv85lpcsdkft8v9ufsz3sa07"
+ASTROPORT_FACTORY_CONTRACT_ADDRESS="neutron1hptk0k5kng7hjy35vmh009qd5m6l33609nypgf2yc6nqnewduqasxplt4e"
+ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_ADDRESS="neutron1jzzv6r5uckwd64n6qan3suzker0kct5w565f6529zjyumfcx96kqtcswn3"
+RESCUER_MULTISIG_ADDRESS="neutron1zfw930csx0k5qzf35vndaulwada4wa3pwtg5hy8rmnnx35wdyhssd2rtlz"
+
+ASTROPORT_MULTISIG_ADDRESS="neutron1xle8l3h0wkcp6tsxmkc6n4vqyfkhwnukevwwsk"
+
+EXPECTED_LOCKDROP_ADMIN=$NEUTRON_DAO_ADDRESS
+EXPECTED_AUCTION_ADMIN=$NEUTRON_DAO_ADDRESS
+EXPECTED_CREDITS_ADMIN=$NEUTRON_DAO_ADDRESS
+EXPECTED_AIRDROPS_ADMIN=$NEUTRON_DAO_ADDRESS
+EXPECTED_PRICE_FEED_ADMIN=$NEUTRON_DAO_ADDRESS
+EXPECTED_USDC_TWAP_ADMIN=$NEUTRON_DAO_ADDRESS
+EXPECTED_ATOM_TWAP_ADMIN=$NEUTRON_DAO_ADDRESS
+EXPECTED_USDC_LP_VESTING_ADMIN=$NEUTRON_DAO_ADDRESS
+EXPECTED_ATOM_LP_VESTING_ADMIN=$NEUTRON_DAO_ADDRESS
+EXPECTED_VESTING_INVESTORS_ADMIN=$TOKEN_ISSUER_MULTISIG_ADDRESS
+EXPECTED_VESTING_INVESTORS_NO_VP_ADMIN=$TOKEN_ISSUER_MULTISIG_ADDRESS
+EXPECTED_LTI_ADMIN=$FOUNDATION_MULTISIG_ADDRESS
+
+EXPECTED_LOCKDROP_OWNER=$NEUTRON_DAO_ADDRESS
+EXPECTED_AUCTION_OWNER=$NEUTRON_DAO_ADDRESS
+EXPECTED_CREDITS_OWNER=$NEUTRON_DAO_ADDRESS
+EXPECTED_AIRDROPS_OWNER=$NEUTRON_DAO_ADDRESS
+EXPECTED_PRICE_FEED_OWNER=$NEUTRON_DAO_ADDRESS
+EXPECTED_USDC_TWAP_OWNER=$NEUTRON_DAO_ADDRESS
+EXPECTED_ATOM_TWAP_OWNER=$NEUTRON_DAO_ADDRESS
+EXPECTED_TWAP_TOKEN_INFO_MANAGER=$RESCUER_MULTISIG_ADDRESS
+EXPECTED_USDC_LP_VESTING_OWNER=$NEUTRON_DAO_ADDRESS
+EXPECTED_ATOM_LP_VESTING_OWNER=$NEUTRON_DAO_ADDRESS
+EXPECTED_VESTING_INVESTORS_OWNER=$TOKEN_ISSUER_MULTISIG_ADDRESS
+EXPECTED_VESTING_INVESTORS_NO_VP_OWNER=$TOKEN_ISSUER_MULTISIG_ADDRESS
+EXPECTED_LTI_OWNER=$FOUNDATION_MULTISIG_ADDRESS
+EXPECTED_ASTROPORT_SATELLITE_CONTRACT_OWNER=$ASTROPORT_MULTISIG_ADDRESS
+EXPECTED_ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_OWNER=$ASTROPORT_MULTISIG_ADDRESS
+EXPECTED_ASTROPORT_FACTORY_CONTRACT_OWNER=$ASTROPORT_SATELLITE_CONTRACT_ADDRESS
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check Lockdrop Owner
+
+LOCKDROP_OWNER=$(neutrond q wasm contract-state smart $LOCKDROP_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.owner")
+
+if [[ "$LOCKDROP_OWNER" == "$EXPECTED_LOCKDROP_OWNER" ]]
+then
+       echo "LOCKDROP_OWNER is O.K."
+  else
+       echo "[X] LOCKDROP_OWNER is $LOCKDROP_OWNER, expected $EXPECTED_LOCKDROP_OWNER"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check Auction owner
+
+AUCTION_OWNER=$(neutrond q wasm contract-state smart $AUCTION_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.owner")
+
+if [[ "$AUCTION_OWNER" == "$EXPECTED_AUCTION_OWNER" ]]
+then
+       echo "AUCTION_OWNER is O.K."
+  else
+       echo "[X] AUCTION_OWNER is $AUCTION_OWNER, expected $EXPECTED_AUCTION_OWNER"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check Credits owner
+
+CREDITS_OWNER=$(neutrond q wasm contract-state smart $CREDITS_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.dao_address")
+
+if [[ "$CREDITS_OWNER" == "$EXPECTED_CREDITS_OWNER" ]]
+then
+       echo "CREDITS_OWNER is O.K."
+  else
+       echo "[X] CREDITS_OWNER is $CREDITS_OWNER, expected $EXPECTED_CREDITS_OWNER"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check Airdrops owner
+
+AIRDROPS_OWNER=$(neutrond q wasm contract-state smart $AIRDROPS_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.owner")
+
+if [[ "$AIRDROPS_OWNER" == "$EXPECTED_AIRDROPS_OWNER" ]]
+then
+       echo "AIRDROPS_OWNER is O.K."
+  else
+       echo "[X] AIRDROPS_OWNER is $AIRDROPS_OWNER, expected $EXPECTED_AIRDROPS_OWNER"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check price feed
+
+PRICE_FEED_OWNER=$(neutrond q wasm contract-state smart $PRICE_FEED_CONTRACT_ADDRESS '{"get_config":{}}' -o json | jq --raw-output ".data.owner")
+
+if [[ "$PRICE_FEED_OWNER" == "$EXPECTED_PRICE_FEED_OWNER" ]]
+then
+       echo "PRICE_FEED_OWNER is O.K."
+  else
+       echo "[X] PRICE_FEED_OWNER is $PRICE_FEED_OWNER, expected $EXPECTED_PRICE_FEED_OWNER"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check usdc twap owner
+
+USDC_TWAP_OWNER=$(neutrond q wasm contract-state smart $USDC_TWAP_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.owner")
+
+if [[ "$USDC_TWAP_OWNER" == "$EXPECTED_USDC_TWAP_OWNER" ]]
+then
+       echo "USDC_TWAP_OWNER is O.K."
+  else
+       echo "[X] USDC_TWAP_OWNER is $USDC_TWAP_OWNER, expected $EXPECTED_USDC_TWAP_OWNER"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check usdc twap token info manager
+
+USDC_TWAP_TOKEN_INFO_MANAGER=$(neutrond q wasm contract-state smart $USDC_TWAP_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.manager")
+
+if [[ "$USDC_TWAP_TOKEN_INFO_MANAGER" == "$EXPECTED_TWAP_TOKEN_INFO_MANAGER" ]]
+then
+       echo "USDC_TWAP_TOKEN_INFO_MANAGER is O.K."
+  else
+       echo "[X] USDC_TWAP_TOKEN_INFO_MANAGER is $USDC_TWAP_TOKEN_INFO_MANAGER, expected $EXPECTED_USDC_TWAP_TOKEN_MANAGER"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check atom twap token info manager
+
+ATOM_TWAP_TOKEN_INFO_MANAGER=$(neutrond q wasm contract-state smart $ATOM_TWAP_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.manager")
+
+if [[ "$ATOM_TWAP_TOKEN_INFO_MANAGER" == "$EXPECTED_TWAP_TOKEN_INFO_MANAGER" ]]
+then
+       echo "ATOM_TWAP_TOKEN_INFO_MANAGER is O.K."
+  else
+       echo "[X] ATOM_TWAP_TOKEN_INFO_MANAGER is $ATOM_TWAP_TOKEN_INFO_MANAGER, expected $EXPECTED_ATOM_TWAP_TOKEN_MANAGER"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check atom twap
+
+ATOM_TWAP_OWNER=$(neutrond q wasm contract-state smart $ATOM_TWAP_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.owner")
+
+if [[ "$ATOM_TWAP_OWNER" == "$EXPECTED_ATOM_TWAP_OWNER" ]]
+then
+       echo "ATOM_TWAP_OWNER is O.K."
+  else
+       echo "[X] ATOM_TWAP_OWNER is $ATOM_TWAP_OWNER, expected $EXPECTED_ATOM_TWAP_OWNER"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check usdc lp vesting
+
+USDC_LP_VESTING_OWNER=$(neutrond q wasm contract-state smart $USDC_LP_VESTING_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.owner")
+
+if [[ "$USDC_LP_VESTING_OWNER" == "$EXPECTED_USDC_LP_VESTING_OWNER" ]]
+then
+       echo "USDC_LP_VESTING_OWNER is O.K."
+  else
+       echo "[X] USDC_LP_VESTING_OWNER is $USDC_LP_VESTING_OWNER, expected $EXPECTED_USDC_LP_VESTING_OWNER"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check atom lp vesting
+
+ATOM_LP_VESTING_OWNER=$(neutrond q wasm contract-state smart $ATOM_LP_VESTING_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.owner")
+
+if [[ "$ATOM_LP_VESTING_OWNER" == "$EXPECTED_ATOM_LP_VESTING_OWNER" ]]
+then
+       echo "ATOM_LP_VESTING_OWNER is O.K."
+  else
+       echo "[X] ATOM_LP_VESTING_OWNER is $ATOM_LP_VESTING_OWNER, expected $EXPECTED_ATOM_LP_VESTING_OWNER"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check astroport satellite
+
+ASTROPORT_SATELLITE_CONTRACT_OWNER=$(neutrond q wasm contract-state raw $ASTROPORT_SATELLITE_CONTRACT_ADDRESS "config" --ascii -o json | jq --raw-output ".data" | base64 -d | jq --raw-output ".owner")
+
+if [[ "$ASTROPORT_SATELLITE_CONTRACT_OWNER" == "$EXPECTED_ASTROPORT_SATELLITE_CONTRACT_OWNER" ]]
+then
+       echo "ASTROPORT_SATELLITE_OWNER is O.K."
+  else
+       echo "[X] ASTROPORT_SATELLITE_OWNER is $ASTROPORT_SATELLITE_CONTRACT_OWNER, expected $EXPECTED_ASTROPORT_SATELLITE_CONTRACT_OWNER"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check astroport factory
+
+ASTROPORT_FACTORY_CONTRACT_OWNER=$(neutrond q wasm contract-state smart $ASTROPORT_FACTORY_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.owner")
+
+if [[ "$ASTROPORT_FACTORY_CONTRACT_OWNER" == "$EXPECTED_ASTROPORT_FACTORY_CONTRACT_OWNER" ]]
+then
+       echo "ASTROPORT_FACTORY_CONTRACT_OWNER is O.K."
+  else
+       echo "[X] ASTROPORT_FACTORY_CONTRACT_OWNER is $ASTROPORT_FACTORY_CONTRACT_OWNER, expected $EXPECTED_ASTROPORT_FACTORY_CONTRACT_OWNER"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check astroport native coin registry
+
+ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_OWNER=$(neutrond q wasm contract-state smart $ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.owner")
+
+if [[ "$ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_OWNER" == "$EXPECTED_ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_OWNER" ]]
+then
+       echo "ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_OWNER is O.K."
+  else
+       echo "[X] ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_OWNER is $ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_OWNER, expected $EXPECTED_ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_OWNER"
+fi
+
+#######################################################################################################################
+#######################################################################################################################
+#######################################################################################################################
 ###########################################  CHECK BALANCES ###########################################################
 #######################################################################################################################
 #######################################################################################################################
