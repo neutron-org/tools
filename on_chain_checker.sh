@@ -145,7 +145,7 @@ fi
 #######################################################################################################################
 #######################################################################################################################
 
-echo "### Checking ownerships:\n"
+echo "\n### Checking ownerships:\n"
 
 AIRDROPS_CONTRACT_ADDRESS="neutron198sxsrjvt2v2lln2ajn82ks76k97mj72mtgl7309jehd0vy8rezs7e6c56"
 PRICE_FEED_CONTRACT_ADDRESS="neutron1lxansfc8vkujy997e3xksd3ugsppv6a9jt32pjtgaxr0zkcnkznq67z3ax"
