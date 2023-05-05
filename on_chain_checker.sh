@@ -294,12 +294,16 @@ fi
 #######################################################################################################################
 #######################################################################################################################
 
+EXPECTED_RESCUEER_EOL="Tue May 23 10:00:00 UTC 2023"
+EXPECTED_AUCTION_START="Wed May 24 10:00:00 UTC 2023"
+EXPECTED_AUCTION_WITHDRAWAL_START="Mon May 29 10:00:00 UTC 2023"
+EXPECTED_AUCTION_END="Wed May 31 10:00:00 UTC 2023"
+
 # ---------------------------------------------------------------------------------------------------------------------
 # Check Rescueeer EOL
 
 RESCUEER_EOL_RAW=$(neutrond q wasm contract-state raw $RESCUEER_CONTRACT_ADDRESS "config" --ascii -o json | jq --raw-output ".data" | base64 -d | jq --raw-output ".eol")
 RESCUEER_EOL=$(date -u -r $RESCUEER_EOL_RAW)
-EXPECTED_RESCUEER_EOL="Tue May 23 10:00:00 UTC 2023"
 
 if [[ "$RESCUEER_EOL" == "$EXPECTED_RESCUEER_EOL" ]]
 then
@@ -313,11 +317,38 @@ fi
 
 AUCTION_START_RAW=$(neutrond q wasm contract-state smart $AUCTION_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.init_timestamp")
 AUCTION_START=$(date -u -r $AUCTION_START_RAW)
-EXPECTED_AUCTION_START="Wed May 24 10:00:00 UTC 2023"
 
 if [[ "$AUCTION_START" == "$EXPECTED_AUCTION_START" ]]
 then
        echo "AUCTION_START is O.K."
   else
        echo "[X] AUCTION_START is $AUCTION_START, expected $EXPECTED_AUCTION_START"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check Auction withdrawals start
+
+AUCTION_DEPOSIT_WINDOW=$(neutrond q wasm contract-state smart $AUCTION_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.deposit_window")
+let AUCTION_WITHDRAWAL_START_RAW="$AUCTION_START_RAW+$AUCTION_DEPOSIT_WINDOW"
+AUCTION_WITHDRAWAL_START=$(date -u -r $AUCTION_WITHDRAWAL_START_RAW)
+
+if [[ "$AUCTION_WITHDRAWAL_START" == "$EXPECTED_AUCTION_WITHDRAWAL_START" ]]
+then
+       echo "AUCTION_WITHDRAWAL_START is O.K."
+  else
+       echo "[X] AUCTION_WITHDRAWAL_START is $AUCTION_WITHDRAWAL_START, expected $EXPECTED_AUCTION_WITHDRAWAL_START"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check Auction end
+
+AUCTION_WITHDRAWAL_WINDOW=$(neutrond q wasm contract-state smart $AUCTION_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.withdrawal_window")
+let AUCTION_END_RAW="$AUCTION_START_RAW+$AUCTION_DEPOSIT_WINDOW+$AUCTION_WITHDRAWAL_WINDOW"
+AUCTION_END=$(date -u -r $AUCTION_END_RAW)
+
+if [[ "$AUCTION_END" == "$EXPECTED_AUCTION_END" ]]
+then
+       echo "AUCTION_END is O.K."
+  else
+       echo "[X] AUCTION_END is $AUCTION_END, expected $EXPECTED_AUCTION_END"
 fi
