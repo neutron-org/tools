@@ -192,8 +192,6 @@ fi
 # ---------------------------------------------------------------------------------------------------------------------
 # Check threshold
 
-{"proposal_modules":{}}
-
 SECURITY_SUBDAO_PROPOSAL_MODULE_ADDRESS=$(neutrond q wasm contract-state smart $SECURITY_SUBDAO_CORE_CONTRACT_ADDRESS '{"proposal_modules":{}}' --output json | jq --raw-output ".data[0].address")
 SECURITY_SUBDAO_PROPOSAL_MODULE_CONFIG_THRESHOLD=$(neutrond q wasm contract-state smart $SECURITY_SUBDAO_PROPOSAL_MODULE_ADDRESS '{"config":{}}' --output json | jq --raw-output ".data.threshold.absolute_count.threshold")
 EXPECTED_SECURITY_SUBDAO_PROPOSAL_MODULE_CONFIG_THRESHOLD="3"
@@ -203,4 +201,93 @@ then
        echo "SECURITY_SUBDAO_PROPOSAL_MODULE_CONFIG_THRESHOLD is O.K."
   else
        echo "SECURITY_SUBDAO_PROPOSAL_MODULE_CONFIG_THRESHOLD is $SECURITY_SUBDAO_PROPOSAL_MODULE_CONFIG_THRESHOLD, expected $SECURITY_SUBDAO_PROPOSAL_MODULE_CONFIG_THRESHOLD"
+fi
+
+#######################################################################################################################
+#######################################################################################################################
+#######################################################################################################################
+############################################### CHECK RESCUEEER #######################################################
+#######################################################################################################################
+#######################################################################################################################
+#######################################################################################################################
+#######################################################################################################################
+
+RESCUEER_MULTISIG_CONTRACT_ADDRESS="neutron1zfw930csx0k5qzf35vndaulwada4wa3pwtg5hy8rmnnx35wdyhssd2rtlz"
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check members
+
+RESCUEER_MULTISIG_MEMBERS=$(neutrond q wasm contract-state smart $RESCUEER_MULTISIG_CONTRACT_ADDRESS '{"list_voters": {}}' --output json | jq --raw-output ".data.voters")
+
+EXPECTED_RESCUEER_MULTISIG_MEMBERS='[
+  {
+    "addr": "neutron1083svrca4t350mphfv9x45wq9asrs60cvs77fx",
+    "weight": 1
+  },
+  {
+    "addr": "neutron1705swa2kgn9pvancafzl254f63a3jda9hhy3ze",
+    "weight": 1
+  },
+  {
+    "addr": "neutron1h8vf3ueml7ah7m8z9e6vx09trq5lv2fw9e049f",
+    "weight": 1
+  },
+  {
+    "addr": "neutron1tkavhfqt8358vl74z7r5kdkdy05s98yka0gl0t",
+    "weight": 1
+  }
+]'
+
+if [[ "$EXPECTED_RESCUEER_MULTISIG_MEMBERS" == "$RESCUEER_MULTISIG_MEMBERS" ]]
+then
+       echo "RESCUEER_MULTISIG_MEMBERS is O.K."
+  else
+       echo "RESCUEER_MULTISIG_MEMBERS is $RESCUEER_MULTISIG_MEMBERS, expected $EXPECTED_RESCUEER_MULTISIG_MEMBERS"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check threshold
+
+RESCUEER_MULTISIG_THRESHOLD=$(neutrond q wasm contract-state smart $RESCUEER_MULTISIG_CONTRACT_ADDRESS '{"threshold":{}}' --output json | jq --raw-output ".data.absolute_count.weight")
+
+EXPECTED_RESCUEER_MULTISIG_THRESHOLD="3"
+
+if [[ "$EXPECTED_RESCUEER_MULTISIG_THRESHOLD" == "$RESCUEER_MULTISIG_THRESHOLD" ]]
+then
+       echo "EXPECTED_RESCUEER_MULTISIG_THRESHOLD is O.K."
+  else
+       echo "EXPECTED_RESCUEER_MULTISIG_THRESHOLD is $RESCUEER_MULTISIG_THRESHOLD, expected $EXPECTED_RESCUEER_MULTISIG_THRESHOLD"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check Rescueeer owner
+
+RESCUEER_CONTRACT_ADDRESS="neutron14n26cr7dj79smrgg44hfylhph9y45h4yy5emshwymd395g38kdpq9nj46s"
+
+RESCUEER_OWNER=$(neutrond q wasm contract-state raw $RESCUEER_CONTRACT_ADDRESS "config" --ascii -o json | jq --raw-output ".data" | base64 -d | jq --raw-output ".owner")
+
+if [[ "$RESCUEER_MULTISIG_CONTRACT_ADDRESS" == "$RESCUEER_OWNER" ]]
+then
+       echo "RESCUEER_OWNER is O.K."
+  else
+       echo "RESCUEER_OWNER is $RESCUEER_MULTISIG_THRESHOLD, expected $EXPECTED_RESCUEER_MULTISIG_THRESHOLD"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check Rescueeer EOL
+
+RESCUEER_EOL=$(neutrond q wasm contract-state raw $RESCUEER_CONTRACT_ADDRESS "config" --ascii -o json | jq --raw-output ".data" | base64 -d | jq --raw-output ".eol")
+
+echo $RESCUEER_EOL
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check if Rescueeer is DAO admin
+
+DAO_ADMIN=$(neutrond q wasm contract $NEUTRON_DAO_ADDRESS -o json | jq -r ".contract_info.admin")
+
+if [[ "$RESCUEER_CONTRACT_ADDRESS" == "$DAO_ADMIN" ]]
+then
+       echo "DAO_ADMIN is O.K."
+  else
+       echo "DAO_ADMIN is $DAO_ADMIN, expected $RESCUEER_CONTRACT_ADDRESS"
 fi
