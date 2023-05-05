@@ -85,8 +85,7 @@ LTI_ACCOUNT_15="neutron1sv3vaahqjqq0xqunjz476vjgpe0fv2v3xsgpem"
 LTI_15_TOTAL=530000000000
 LTI_15_CLIFF=132500000000
 
-# TODO: CHANGE
-LTI_ACCOUNT_16="neutron1sv3vaahqjqq0xqunjz476vjgpe0fv2v3xsgpem"
+LTI_ACCOUNT_16="neutron1rs6mnzel03t9rz5rf7hpqkrnz3yw4vlpvtn6gq"
 LTI_16_TOTAL=400000000000
 LTI_16_CLIFF=100000000000
 
