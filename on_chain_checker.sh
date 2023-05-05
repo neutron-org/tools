@@ -172,6 +172,9 @@ EXPECTED_ATOM_LP_VESTING_ADMIN=$NEUTRON_DAO_ADDRESS
 EXPECTED_VESTING_INVESTORS_ADMIN=$TOKEN_ISSUER_MULTISIG_ADDRESS
 EXPECTED_VESTING_INVESTORS_NO_VP_ADMIN=$TOKEN_ISSUER_MULTISIG_ADDRESS
 EXPECTED_LTI_ADMIN=$FOUNDATION_MULTISIG_ADDRESS
+EXPECTED_ASTROPORT_SATELLITE_ADMIN=$ASTROPORT_MULTISIG_ADDRESS
+EXPECTED_ASTROPORT_FACTORY_ADMIN=$ASTROPORT_SATELLITE_CONTRACT_ADDRESS
+EXPECTED_ASTROPORT_NATIVE_COIN_REGISTRY_ADMIN=$ASTROPORT_SATELLITE_CONTRACT_ADDRESS
 
 EXPECTED_LOCKDROP_OWNER=$NEUTRON_DAO_ADDRESS
 EXPECTED_AUCTION_OWNER=$NEUTRON_DAO_ADDRESS
@@ -202,6 +205,15 @@ then
        echo "[X] LOCKDROP_OWNER is $LOCKDROP_OWNER, expected $EXPECTED_LOCKDROP_OWNER"
 fi
 
+LOCKDROP_ADMIN=$(neutrond q wasm contract $LOCKDROP_CONTRACT_ADDRESS -o json | jq -r ".contract_info.admin")
+
+if [[ "$LOCKDROP_ADMIN" == "$EXPECTED_LOCKDROP_ADMIN" ]]
+then
+       echo "LOCKDROP_ADMIN is O.K."
+  else
+       echo "[X] LOCKDROP_ADMIN is $LOCKDROP_ADMIN, expected $EXPECTED_LOCKDROP_ADMIN"
+fi
+
 # ---------------------------------------------------------------------------------------------------------------------
 # Check Auction owner
 
@@ -214,6 +226,16 @@ then
        echo "[X] AUCTION_OWNER is $AUCTION_OWNER, expected $EXPECTED_AUCTION_OWNER"
 fi
 
+AUCTION_ADMIN=$(neutrond q wasm contract $AUCTION_CONTRACT_ADDRESS -o json | jq -r ".contract_info.admin")
+
+if [[ "$AUCTION_ADMIN" == "$EXPECTED_AUCTION_ADMIN" ]]
+then
+       echo "AUCTION_ADMIN is O.K."
+  else
+       echo "[X] AUCTION_ADMIN is $AUCTION_ADMIN, expected $EXPECTED_AUCTION_ADMIN"
+fi
+
+
 # ---------------------------------------------------------------------------------------------------------------------
 # Check Credits owner
 
@@ -224,6 +246,15 @@ then
        echo "CREDITS_OWNER is O.K."
   else
        echo "[X] CREDITS_OWNER is $CREDITS_OWNER, expected $EXPECTED_CREDITS_OWNER"
+fi
+
+CREDITS_ADMIN=$(neutrond q wasm contract $CREDITS_CONTRACT_ADDRESS -o json | jq -r ".contract_info.admin")
+
+if [[ "$CREDITS_ADMIN" == "$EXPECTED_CREDITS_ADMIN" ]]
+then
+       echo "CREDITS_ADMIN is O.K."
+  else
+       echo "[X] CREDITS_ADMIN is $CREDITS_ADMIN, expected $EXPECTED_CREDITS_ADMIN"
 fi
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -238,6 +269,15 @@ then
        echo "[X] AIRDROPS_OWNER is $AIRDROPS_OWNER, expected $EXPECTED_AIRDROPS_OWNER"
 fi
 
+AIRDROPS_ADMIN=$(neutrond q wasm contract $AIRDROPS_CONTRACT_ADDRESS -o json | jq -r ".contract_info.admin")
+
+if [[ "$AIRDROPS_ADMIN" == "$EXPECTED_AIRDROPS_ADMIN" ]]
+then
+       echo "AIRDROPS_ADMIN is O.K."
+  else
+       echo "[X] AIRDROPS_ADMIN is $AIRDROPS_ADMIN, expected $EXPECTED_AIRDROPS_ADMIN"
+fi
+
 # ---------------------------------------------------------------------------------------------------------------------
 # Check price feed
 
@@ -250,6 +290,15 @@ then
        echo "[X] PRICE_FEED_OWNER is $PRICE_FEED_OWNER, expected $EXPECTED_PRICE_FEED_OWNER"
 fi
 
+PRICE_FEED_ADMIN=$(neutrond q wasm contract $PRICE_FEED_CONTRACT_ADDRESS -o json | jq -r ".contract_info.admin")
+
+if [[ "$PRICE_FEED_ADMIN" == "$EXPECTED_PRICE_FEED_ADMIN" ]]
+then
+       echo "PRICE_FEED_ADMIN is O.K."
+  else
+       echo "[X] PRICE_FEED_ADMIN is $PRICE_FEED_ADMIN, expected $EXPECTED_PRICE_FEED_ADMIN"
+fi
+
 # ---------------------------------------------------------------------------------------------------------------------
 # Check usdc twap owner
 
@@ -260,6 +309,15 @@ then
        echo "USDC_TWAP_OWNER is O.K."
   else
        echo "[X] USDC_TWAP_OWNER is $USDC_TWAP_OWNER, expected $EXPECTED_USDC_TWAP_OWNER"
+fi
+
+USDC_TWAP_ADMIN=$(neutrond q wasm contract $USDC_TWAP_CONTRACT_ADDRESS -o json | jq -r ".contract_info.admin")
+
+if [[ "$USDC_TWAP_ADMIN" == "$EXPECTED_USDC_TWAP_ADMIN" ]]
+then
+       echo "USDC_TWAP_ADMIN is O.K."
+  else
+       echo "[X] USDC_TWAP_ADMIN is $USDC_TWAP_ADMIN, expected $EXPECTED_USDC_TWAP_ADMIN"
 fi
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -298,6 +356,15 @@ then
        echo "[X] ATOM_TWAP_OWNER is $ATOM_TWAP_OWNER, expected $EXPECTED_ATOM_TWAP_OWNER"
 fi
 
+ATOM_TWAP_ADMIN=$(neutrond q wasm contract $ATOM_TWAP_CONTRACT_ADDRESS -o json | jq -r ".contract_info.admin")
+
+if [[ "$ATOM_TWAP_ADMIN" == "$EXPECTED_ATOM_TWAP_ADMIN" ]]
+then
+       echo "ATOM_TWAP_ADMIN is O.K."
+  else
+       echo "[X] ATOM_TWAP_ADMIN is $ATOM_TWAP_ADMIN, expected $EXPECTED_ATOM_TWAP_ADMIN"
+fi
+
 # ---------------------------------------------------------------------------------------------------------------------
 # Check usdc lp vesting
 
@@ -308,6 +375,15 @@ then
        echo "USDC_LP_VESTING_OWNER is O.K."
   else
        echo "[X] USDC_LP_VESTING_OWNER is $USDC_LP_VESTING_OWNER, expected $EXPECTED_USDC_LP_VESTING_OWNER"
+fi
+
+USDC_LP_VESTING_ADMIN=$(neutrond q wasm contract $USDC_LP_VESTING_CONTRACT_ADDRESS -o json | jq -r ".contract_info.admin")
+
+if [[ "$USDC_LP_VESTING_ADMIN" == "$EXPECTED_USDC_LP_VESTING_ADMIN" ]]
+then
+       echo "USDC_LP_VESTING_ADMIN is O.K."
+  else
+       echo "[X] USDC_LP_VESTING_ADMIN is $USDC_LP_VESTING_ADMIN, expected $EXPECTED_USDC_LP_VESTING_ADMIN"
 fi
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -322,6 +398,15 @@ then
        echo "[X] ATOM_LP_VESTING_OWNER is $ATOM_LP_VESTING_OWNER, expected $EXPECTED_ATOM_LP_VESTING_OWNER"
 fi
 
+ATOM_LP_VESTING_ADMIN=$(neutrond q wasm contract $ATOM_LP_VESTING_CONTRACT_ADDRESS -o json | jq -r ".contract_info.admin")
+
+if [[ "$ATOM_LP_VESTING_ADMIN" == "$EXPECTED_ATOM_LP_VESTING_ADMIN" ]]
+then
+       echo "ATOM_LP_VESTING_ADMIN is O.K."
+  else
+       echo "[X] ATOM_LP_VESTING_ADMIN is $ATOM_LP_VESTING_ADMIN, expected $EXPECTED_ATOM_LP_VESTING_ADMIN"
+fi
+
 # ---------------------------------------------------------------------------------------------------------------------
 # Check astroport satellite
 
@@ -332,6 +417,15 @@ then
        echo "ASTROPORT_SATELLITE_OWNER is O.K."
   else
        echo "[X] ASTROPORT_SATELLITE_OWNER is $ASTROPORT_SATELLITE_CONTRACT_OWNER, expected $EXPECTED_ASTROPORT_SATELLITE_CONTRACT_OWNER"
+fi
+
+ASTROPORT_SATELLITE_ADMIN=$(neutrond q wasm contract $ASTROPORT_SATELLITE_CONTRACT_ADDRESS -o json | jq -r ".contract_info.admin")
+
+if [[ "$ASTROPORT_SATELLITE_ADMIN" == "$EXPECTED_ASTROPORT_SATELLITE_ADMIN" ]]
+then
+       echo "ASTROPORT_SATELLITE_ADMIN is O.K."
+  else
+       echo "[X] ASTROPORT_SATELLITE_ADMIN is $ASTROPORT_SATELLITE_ADMIN, expected $EXPECTED_ASTROPORT_SATELLITE_ADMIN"
 fi
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -346,6 +440,15 @@ then
        echo "[X] ASTROPORT_FACTORY_CONTRACT_OWNER is $ASTROPORT_FACTORY_CONTRACT_OWNER, expected $EXPECTED_ASTROPORT_FACTORY_CONTRACT_OWNER"
 fi
 
+ASTROPORT_FACTORY_ADMIN=$(neutrond q wasm contract $ASTROPORT_FACTORY_CONTRACT_ADDRESS -o json | jq -r ".contract_info.admin")
+
+if [[ "$ASTROPORT_FACTORY_ADMIN" == "$EXPECTED_ASTROPORT_FACTORY_ADMIN" ]]
+then
+       echo "ASTROPORT_FACTORY_ADMIN is O.K."
+  else
+       echo "[X] ASTROPORT_FACTORY_ADMIN is $ASTROPORT_FACTORY_ADMIN, expected $EXPECTED_ASTROPORT_FACTORY_ADMIN"
+fi
+
 # ---------------------------------------------------------------------------------------------------------------------
 # Check astroport native coin registry
 
@@ -356,6 +459,15 @@ then
        echo "ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_OWNER is O.K."
   else
        echo "[X] ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_OWNER is $ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_OWNER, expected $EXPECTED_ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_OWNER"
+fi
+
+ASTROPORT_NATIVE_COIN_REGISTRY_ADMIN=$(neutrond q wasm contract $ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_ADDRESS -o json | jq -r ".contract_info.admin")
+
+if [[ "$ASTROPORT_NATIVE_COIN_REGISTRY_ADMIN" == "$EXPECTED_ASTROPORT_NATIVE_COIN_REGISTRY_ADMIN" ]]
+then
+       echo "ASTROPORT_NATIVE_COIN_REGISTRY_ADMIN is O.K."
+  else
+       echo "[X] ASTROPORT_NATIVE_COIN_REGISTRY_ADMIN is $ASTROPORT_NATIVE_COIN_REGISTRY_ADMIN, expected $EXPECTED_ASTROPORT_NATIVE_COIN_REGISTRY_ADMIN"
 fi
 
 #######################################################################################################################
