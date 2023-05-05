@@ -27,14 +27,14 @@ if [[ "$VESTING_LTI_CONTRACT_BALANCE" == "$VESTING_LTI_CONTRACT_BALANCE_EXPECTED
   then
        echo "VESTING_LTI_CONTRACT_BALANCE is O.K."
   else
-       echo "VESTING_LTI_CONTRACT_BALANCE is $VESTING_LTI_CONTRACT_BALANCE, expected $VESTING_LTI_CONTRACT_BALANCE_EXPECTED"
+       echo "[X] VESTING_LTI_CONTRACT_BALANCE is $VESTING_LTI_CONTRACT_BALANCE, expected $VESTING_LTI_CONTRACT_BALANCE_EXPECTED"
 fi
 
 if [[ "$SUM_OF_VESTING_LTI_ACCOUNTS_ALLOCATIONS" == "$VESTING_LTI_CONTRACT_BALANCE_EXPECTED" ]]
   then
        echo "SUM_OF_VESTING_LTI_ACCOUNTS_ALLOCATIONS is O.K."
   else
-       echo "SUM_OF_VESTING_LTI_ACCOUNTS_ALLOCATIONS is $SUM_OF_VESTING_LTI_ACCOUNTS_ALLOCATIONS, expected $VESTING_LTI_CONTRACT_BALANCE_EXPECTED"
+       echo "[X] SUM_OF_VESTING_LTI_ACCOUNTS_ALLOCATIONS is $SUM_OF_VESTING_LTI_ACCOUNTS_ALLOCATIONS, expected $VESTING_LTI_CONTRACT_BALANCE_EXPECTED"
 fi
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -47,7 +47,7 @@ if [[ "$FOUNDATION_MULTISIG_BALANCE" == "$FOUNDATION_MULTISIG_BALANCE_EXPECTED" 
   then
        echo "FOUNDATION_MULTISIG_BALANCE is O.K."
   else
-       echo "FOUNDATION_MULTISIG_BALANCE is $FOUNDATION_MULTISIG_BALANCE, expected $FOUNDATION_MULTISIG_BALANCE_EXPECTED"
+       echo "[X] FOUNDATION_MULTISIG_BALANCE is $FOUNDATION_MULTISIG_BALANCE, expected $FOUNDATION_MULTISIG_BALANCE_EXPECTED"
 fi
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -60,7 +60,7 @@ if [[ "$NEUTRON_DAO_BALANCE" == "$NEUTRON_DAO_BALANCE_EXPECTED" ]]
   then
        echo "NEUTRON_DAO_BALANCE is O.K."
   else
-       echo "NEUTRON_DAO_BALANCE is $NEUTRON_DAO_BALANCE, expected $NEUTRON_DAO_BALANCE_EXPECTED"
+       echo "[X] NEUTRON_DAO_BALANCE is $NEUTRON_DAO_BALANCE, expected $NEUTRON_DAO_BALANCE_EXPECTED"
 fi
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ if [[ "$RESERVE_CONTRACT_BALANCE" == "$RESERVE_CONTRACT_BALANCE_EXPECTED" ]]
   then
        echo "RESERVE_CONTRACT_BALANCE is O.K."
   else
-       echo "RESERVE_CONTRACT_BALANCE is $RESERVE_CONTRACT_BALANCE, expected $RESERVE_CONTRACT_BALANCE_EXPECTED"
+       echo "[X] RESERVE_CONTRACT_BALANCE is $RESERVE_CONTRACT_BALANCE, expected $RESERVE_CONTRACT_BALANCE_EXPECTED"
 fi
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -86,7 +86,7 @@ if [[ "$TOKEN_ISSUER_MULTISIG_BALANCE" == "$TOKEN_ISSUER_MULTISIG_BALANCE_EXPECT
   then
        echo "TOKEN_ISSUER_MULTISIG_BALANCE is O.K."
   else
-       echo "TOKEN_ISSUER_MULTISIG_BALANCE is $TOKEN_ISSUER_MULTISIG_BALANCE, expected $TOKEN_ISSUER_MULTISIG_BALANCE_EXPECTED"
+       echo "[X] TOKEN_ISSUER_MULTISIG_BALANCE is $TOKEN_ISSUER_MULTISIG_BALANCE, expected $TOKEN_ISSUER_MULTISIG_BALANCE_EXPECTED"
 fi
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -99,7 +99,7 @@ if [[ "$LOCKDROP_CONTRACT_BALANCE" == "$LOCKDROP_CONTRACT_BALANCE_EXPECTED" ]]
   then
        echo "LOCKDROP_CONTRACT_BALANCE is O.K."
   else
-       echo "LOCKDROP_CONTRACT_BALANCE is $LOCKDROP_CONTRACT_BALANCE, expected $LOCKDROP_CONTRACT_BALANCE_EXPECTED"
+       echo "[X] LOCKDROP_CONTRACT_BALANCE is $LOCKDROP_CONTRACT_BALANCE, expected $LOCKDROP_CONTRACT_BALANCE_EXPECTED"
 fi
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -112,7 +112,7 @@ if [[ "$AUCTION_CONTRACT_BALANCE" == "$AUCTION_CONTRACT_BALANCE_EXPECTED" ]]
   then
        echo "AUCTION_CONTRACT_BALANCE is O.K."
   else
-       echo "AUCTION_CONTRACT_BALANCE is $AUCTION_CONTRACT_BALANCE, expected $AUCTION_CONTRACT_BALANCE_EXPECTED"
+       echo "[X] AUCTION_CONTRACT_BALANCE is $AUCTION_CONTRACT_BALANCE, expected $AUCTION_CONTRACT_BALANCE_EXPECTED"
 fi
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -125,7 +125,7 @@ if [[ "$CREDITS_CONTRACT_BALANCE" == "$CREDITS_CONTRACT_BALANCE_EXPECTED" ]]
   then
        echo "CREDITS_CONTRACT_BALANCE is O.K."
   else
-       echo "CREDITS_CONTRACT_BALANCE is $CREDITS_CONTRACT_BALANCE, expected $CREDITS_CONTRACT_BALANCE_EXPECTED"
+       echo "[X] CREDITS_CONTRACT_BALANCE is $CREDITS_CONTRACT_BALANCE, expected $CREDITS_CONTRACT_BALANCE_EXPECTED"
 fi
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -136,7 +136,7 @@ if [[ "$TOTAL_SUPPLY_EXPECTED" == "$TOTAL_SUPPLY" ]]
 then
        echo "TOTAL SUPPLY is O.K."
   else
-       echo "TOTAL SUPPLY is $TOTAL_SUPPLY, expected $TOTAL_SUPPLY_EXPECTED"
+       echo "[X] TOTAL SUPPLY is $TOTAL_SUPPLY, expected $TOTAL_SUPPLY_EXPECTED"
 fi
 
 #######################################################################################################################
@@ -186,7 +186,7 @@ if [[ "$EXPECTED_SECURITY_SUBDAO_MEMBERS" == "$SECURITY_SUBDAO_MEMBERS" ]]
 then
        echo "SECURITY_SUBDAO_MEMBERS is O.K."
   else
-       echo "SECURITY_SUBDAO_MEMBERS is $SECURITY_SUBDAO_MEMBERS, expected $SECURITY_SUBDAO_MEMBERS"
+       echo "[X] SECURITY_SUBDAO_MEMBERS is $SECURITY_SUBDAO_MEMBERS, expected $SECURITY_SUBDAO_MEMBERS"
 fi
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -200,7 +200,7 @@ if [[ "$EXPECTED_SECURITY_SUBDAO_PROPOSAL_MODULE_CONFIG_THRESHOLD" == "$SECURITY
 then
        echo "SECURITY_SUBDAO_PROPOSAL_MODULE_CONFIG_THRESHOLD is O.K."
   else
-       echo "SECURITY_SUBDAO_PROPOSAL_MODULE_CONFIG_THRESHOLD is $SECURITY_SUBDAO_PROPOSAL_MODULE_CONFIG_THRESHOLD, expected $SECURITY_SUBDAO_PROPOSAL_MODULE_CONFIG_THRESHOLD"
+       echo "[X] SECURITY_SUBDAO_PROPOSAL_MODULE_CONFIG_THRESHOLD is $SECURITY_SUBDAO_PROPOSAL_MODULE_CONFIG_THRESHOLD, expected $SECURITY_SUBDAO_PROPOSAL_MODULE_CONFIG_THRESHOLD"
 fi
 
 #######################################################################################################################
@@ -242,7 +242,7 @@ if [[ "$EXPECTED_RESCUEER_MULTISIG_MEMBERS" == "$RESCUEER_MULTISIG_MEMBERS" ]]
 then
        echo "RESCUEER_MULTISIG_MEMBERS is O.K."
   else
-       echo "RESCUEER_MULTISIG_MEMBERS is $RESCUEER_MULTISIG_MEMBERS, expected $EXPECTED_RESCUEER_MULTISIG_MEMBERS"
+       echo "[X] RESCUEER_MULTISIG_MEMBERS is $RESCUEER_MULTISIG_MEMBERS, expected $EXPECTED_RESCUEER_MULTISIG_MEMBERS"
 fi
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -256,7 +256,7 @@ if [[ "$EXPECTED_RESCUEER_MULTISIG_THRESHOLD" == "$RESCUEER_MULTISIG_THRESHOLD" 
 then
        echo "EXPECTED_RESCUEER_MULTISIG_THRESHOLD is O.K."
   else
-       echo "EXPECTED_RESCUEER_MULTISIG_THRESHOLD is $RESCUEER_MULTISIG_THRESHOLD, expected $EXPECTED_RESCUEER_MULTISIG_THRESHOLD"
+       echo "[X] EXPECTED_RESCUEER_MULTISIG_THRESHOLD is $RESCUEER_MULTISIG_THRESHOLD, expected $EXPECTED_RESCUEER_MULTISIG_THRESHOLD"
 fi
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -270,15 +270,22 @@ if [[ "$RESCUEER_MULTISIG_CONTRACT_ADDRESS" == "$RESCUEER_OWNER" ]]
 then
        echo "RESCUEER_OWNER is O.K."
   else
-       echo "RESCUEER_OWNER is $RESCUEER_MULTISIG_THRESHOLD, expected $EXPECTED_RESCUEER_MULTISIG_THRESHOLD"
+       echo "[X] RESCUEER_OWNER is $RESCUEER_OWNER, expected $RESCUEER_CONTRACT_ADDRESS"
 fi
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Check Rescueeer EOL
 
-RESCUEER_EOL=$(neutrond q wasm contract-state raw $RESCUEER_CONTRACT_ADDRESS "config" --ascii -o json | jq --raw-output ".data" | base64 -d | jq --raw-output ".eol")
+RESCUEER_EOL_RAW=$(neutrond q wasm contract-state raw $RESCUEER_CONTRACT_ADDRESS "config" --ascii -o json | jq --raw-output ".data" | base64 -d | jq --raw-output ".eol")
+RESCUEER_EOL=$(date -u -r $RESCUEER_EOL_RAW)
+EXPECTED_RESCUEER_EOL="Tue May 23 10:00:00 UTC 2023"
 
-echo $RESCUEER_EOL
+if [[ "$RESCUEER_EOL" == "$EXPECTED_RESCUEER_EOL" ]]
+then
+       echo "EXPECTED_RESCUEER_EOL is O.K."
+  else
+       echo "[X] EXPECTED_RESCUEER_EOL is $RESCUEER_EOL, expected $EXPECTED_RESCUEER_EOL"
+fi
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Check if Rescueeer is DAO admin
@@ -289,5 +296,6 @@ if [[ "$RESCUEER_CONTRACT_ADDRESS" == "$DAO_ADMIN" ]]
 then
        echo "DAO_ADMIN is O.K."
   else
-       echo "DAO_ADMIN is $DAO_ADMIN, expected $RESCUEER_CONTRACT_ADDRESS"
+       echo "[X] DAO_ADMIN is $DAO_ADMIN, expected $RESCUEER_CONTRACT_ADDRESS"
 fi
+
