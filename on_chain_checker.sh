@@ -256,7 +256,7 @@ if [[ "$EXPECTED_RESCUEER_MULTISIG_THRESHOLD" == "$RESCUEER_MULTISIG_THRESHOLD" 
 then
        echo "EXPECTED_RESCUEER_MULTISIG_THRESHOLD is O.K."
   else
-       echo "[X] EXPECTED_RESCUEER_MULTISIG_THRESHOLD is $RESCUEER_MULTISIG_THRESHOLD, expected $EXPECTED_RESCUEER_MULTISIG_THRESHOLD"
+       echo "[X] RESCUEER_MULTISIG_THRESHOLD is $RESCUEER_MULTISIG_THRESHOLD, expected $EXPECTED_RESCUEER_MULTISIG_THRESHOLD"
 fi
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -274,20 +274,6 @@ then
 fi
 
 # ---------------------------------------------------------------------------------------------------------------------
-# Check Rescueeer EOL
-
-RESCUEER_EOL_RAW=$(neutrond q wasm contract-state raw $RESCUEER_CONTRACT_ADDRESS "config" --ascii -o json | jq --raw-output ".data" | base64 -d | jq --raw-output ".eol")
-RESCUEER_EOL=$(date -u -r $RESCUEER_EOL_RAW)
-EXPECTED_RESCUEER_EOL="Tue May 23 10:00:00 UTC 2023"
-
-if [[ "$RESCUEER_EOL" == "$EXPECTED_RESCUEER_EOL" ]]
-then
-       echo "EXPECTED_RESCUEER_EOL is O.K."
-  else
-       echo "[X] EXPECTED_RESCUEER_EOL is $RESCUEER_EOL, expected $EXPECTED_RESCUEER_EOL"
-fi
-
-# ---------------------------------------------------------------------------------------------------------------------
 # Check if Rescueeer is DAO admin
 
 DAO_ADMIN=$(neutrond q wasm contract $NEUTRON_DAO_ADDRESS -o json | jq -r ".contract_info.admin")
@@ -299,3 +285,39 @@ then
        echo "[X] DAO_ADMIN is $DAO_ADMIN, expected $RESCUEER_CONTRACT_ADDRESS"
 fi
 
+#######################################################################################################################
+#######################################################################################################################
+#######################################################################################################################
+############################################### CHECK TIMESTAMPS ######################################################
+#######################################################################################################################
+#######################################################################################################################
+#######################################################################################################################
+#######################################################################################################################
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check Rescueeer EOL
+
+RESCUEER_EOL_RAW=$(neutrond q wasm contract-state raw $RESCUEER_CONTRACT_ADDRESS "config" --ascii -o json | jq --raw-output ".data" | base64 -d | jq --raw-output ".eol")
+RESCUEER_EOL=$(date -u -r $RESCUEER_EOL_RAW)
+EXPECTED_RESCUEER_EOL="Tue May 23 10:00:00 UTC 2023"
+
+if [[ "$RESCUEER_EOL" == "$EXPECTED_RESCUEER_EOL" ]]
+then
+       echo "RESCUEER_EOL is O.K."
+  else
+       echo "[X] RESCUEER_EOL is $RESCUEER_EOL, expected $EXPECTED_RESCUEER_EOL"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check Auction start
+
+AUCTION_START_RAW=$(neutrond q wasm contract-state smart $AUCTION_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.init_timestamp")
+AUCTION_START=$(date -u -r $AUCTION_START_RAW)
+EXPECTED_AUCTION_START="Wed May 24 10:00:00 UTC 2023"
+
+if [[ "$AUCTION_START" == "$EXPECTED_AUCTION_START" ]]
+then
+       echo "AUCTION_START is O.K."
+  else
+       echo "[X] AUCTION_START is $AUCTION_START, expected $EXPECTED_AUCTION_START"
+fi
