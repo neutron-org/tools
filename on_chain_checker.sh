@@ -298,6 +298,9 @@ EXPECTED_RESCUEER_EOL="Tue May 23 10:00:00 UTC 2023"
 EXPECTED_AUCTION_START="Wed May 24 10:00:00 UTC 2023"
 EXPECTED_AUCTION_WITHDRAWAL_START="Mon May 29 10:00:00 UTC 2023"
 EXPECTED_AUCTION_END="Wed May 31 10:00:00 UTC 2023"
+EXPECTED_LOCKDROP_START="Wed May 31 10:00:00 UTC 2023"
+EXPECTED_LOCKDROP_WITHDRAWAL_START="Sat Jun  3 10:00:00 UTC 2023"
+EXPECTED_LOCKDROP_END="Mon Jun  5 10:00:00 UTC 2023"
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Check Rescueeer EOL
@@ -352,3 +355,57 @@ then
   else
        echo "[X] AUCTION_END is $AUCTION_END, expected $EXPECTED_AUCTION_END"
 fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check Lockdrop start
+
+LOCKDROP_START_RAW=$(neutrond q wasm contract-state smart $LOCKDROP_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.init_timestamp")
+LOCKDROP_START=$(date -u -r $LOCKDROP_START_RAW)
+
+if [[ "$LOCKDROP_START" == "$EXPECTED_LOCKDROP_START" ]]
+then
+       echo "LOCKDROP_START is O.K."
+  else
+       echo "[X] LOCKDROP_START is $LOCKDROP_START, expected $EXPECTED_LOCKDROP_START"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check Lockdrop withdrawals start
+
+LOCKDROP_DEPOSIT_WINDOW=$(neutrond q wasm contract-state smart $LOCKDROP_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.lock_window")
+
+let LOCKDROP_WITHDRAWAL_START_RAW="$LOCKDROP_START_RAW+$LOCKDROP_DEPOSIT_WINDOW"
+LOCKDROP_WITHDRAWAL_START=$(date -u -r $LOCKDROP_WITHDRAWAL_START_RAW)
+
+if [[ "$LOCKDROP_WITHDRAWAL_START" == "$EXPECTED_LOCKDROP_WITHDRAWAL_START" ]]
+then
+       echo "LOCKDROP_WITHDRAWAL_START is O.K."
+  else
+       echo "[X] LOCKDROP_WITHDRAWAL_START is $LOCKDROP_WITHDRAWAL_START, expected $EXPECTED_LOCKDROP_WITHDRAWAL_START"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check Lockdrop end
+
+LOCKDROP_WITHDRAWAL_WINDOW=$(neutrond q wasm contract-state smart $LOCKDROP_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.withdrawal_window")
+let LOCKDROP_END_RAW="$LOCKDROP_START_RAW+$LOCKDROP_DEPOSIT_WINDOW+$LOCKDROP_WITHDRAWAL_WINDOW"
+LOCKDROP_END=$(date -u -r $LOCKDROP_END_RAW)
+
+if [[ "$LOCKDROP_END" == "$EXPECTED_LOCKDROP_END" ]]
+then
+       echo "LOCKDROP_END is O.K."
+  else
+       echo "[X] LOCKDROP_END is $LOCKDROP_END, expected $EXPECTED_LOCKDROP_END"
+fi
+
+echo "\n### EXPECTED TIMELINE:\n"
+
+echo "\tRESCUEER_EOL:               $EXPECTED_RESCUEER_EOL"
+echo "\tAUCTION_START:              $EXPECTED_AUCTION_START"
+echo "\tAUCTION_WITHDRAWAL_START:   $EXPECTED_AUCTION_WITHDRAWAL_START"
+echo "\tAUCTION_END:                $EXPECTED_AUCTION_END"
+echo "\tLOCKDROP_START:             $EXPECTED_LOCKDROP_START"
+echo "\tLOCKDROP_WITHDRAWAL_START:  $EXPECTED_LOCKDROP_WITHDRAWAL_START"
+echo "\tLOCKDROP_END:               $EXPECTED_LOCKDROP_END"
+
+echo "\n"
