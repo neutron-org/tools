@@ -1,3 +1,12 @@
+#######################################################################################################################
+#######################################################################################################################
+#######################################################################################################################
+###########################################  CHECK BALANCES ###########################################################
+#######################################################################################################################
+#######################################################################################################################
+#######################################################################################################################
+#######################################################################################################################
+
 VESTING_LTI_CONTRACT_ADDRESS="neutron1a5xz4zm0gkpcf92ddm7fw8pghg2mf4wm6cyu6cgcruq35upf7auslnnfye"
 FOUNDATION_MULTISIG_ADDRESS="neutron1xumd0qd3pceu875vazn3w5m9n78cns7q5fhgj3"
 NEUTRON_DAO_ADDRESS="neutron1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrstdxvff"
@@ -128,4 +137,51 @@ then
        echo "TOTAL SUPPLY is O.K."
   else
        echo "TOTAL SUPPLY is $TOTAL_SUPPLY, expected $TOTAL_SUPPLY_EXPECTED"
+fi
+
+#######################################################################################################################
+#######################################################################################################################
+#######################################################################################################################
+########################################### CHECK MULTISIGS ###########################################################
+#######################################################################################################################
+#######################################################################################################################
+#######################################################################################################################
+#######################################################################################################################
+
+SECURITY_SUBDAO_CORE_CONTRACT_ADDRESS="neutron1fuyxwxlsgjkfjmxfthq8427dm2am3ya3cwcdr8gls29l7jadtazsuyzwcc"
+
+SECURITY_SUBDAO_VOTING_MODULE_ADDRESS=$(neutrond q wasm contract-state smart $SECURITY_SUBDAO_CORE_CONTRACT_ADDRESS '{"voting_module": {}}' --output json | jq --raw-output ".data")
+SECURITY_SUBDAO_CW4_GROUP_ADDRESS=$(neutrond q wasm contract-state smart $SECURITY_SUBDAO_VOTING_MODULE_ADDRESS '{"group_contract": {}}' --output json | jq --raw-output ".data")
+
+SECURITY_SUBDAO_MEMBERS=$(neutrond q wasm contract-state smart $SECURITY_SUBDAO_CW4_GROUP_ADDRESS '{"list_members": {}}' --output json | jq --raw-output ".data.members")
+SECURITY_SUBDAO_MEMBERS=$(echo $SECURITY_SUBDAO_MEMBERS | jq 'sort_by(.addr)' | jq)
+
+EXPECTED_SECURITY_SUBDAO_MEMBERS='[
+  {
+    "addr": "neutron1083svrca4t350mphfv9x45wq9asrs60cvs77fx",
+    "weight": 1
+  },
+  {
+    "addr": "neutron10ng7hj4ucz2pzgmw6l22cpkhaxvhyh4pvu0dzk",
+    "weight": 1
+  },
+  {
+    "addr": "neutron14xgp8mgs4tg6dj47ud5408cs5s53sf9ydxs3kp",
+    "weight": 1
+  },
+  {
+    "addr": "neutron1h8vf3ueml7ah7m8z9e6vx09trq5lv2fw9e049f",
+    "weight": 1
+  },
+  {
+    "addr": "neutron1tkavhfqt8358vl74z7r5kdkdy05s98yka0gl0t",
+    "weight": 1
+  }
+]'
+
+if [[ "$EXPECTED_SECURITY_SUBDAO_MEMBERS" == "$SECURITY_SUBDAO_MEMBERS" ]]
+then
+       echo "SECURITY_SUBDAO_MEMBERS is O.K."
+  else
+       echo "SECURITY_SUBDAO_MEMBERS is $SECURITY_SUBDAO_MEMBERS, expected $SECURITY_SUBDAO_MEMBERS"
 fi
