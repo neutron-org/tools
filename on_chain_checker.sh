@@ -393,9 +393,9 @@ fi
 # ---------------------------------------------------------------------------------------------------------------------
 # Check Lockdrop withdrawals start
 
-LOCKDROP_DEPOSIT_WINDOW=$(neutrond q wasm contract-state smart $LOCKDROP_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.lock_window")
+LOCKDROP_LOCK_WINDOW=$(neutrond q wasm contract-state smart $LOCKDROP_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.lock_window")
 
-let LOCKDROP_WITHDRAWAL_START_RAW="$LOCKDROP_START_RAW+$LOCKDROP_DEPOSIT_WINDOW"
+let LOCKDROP_WITHDRAWAL_START_RAW="$LOCKDROP_START_RAW+$LOCKDROP_LOCK_WINDOW"
 LOCKDROP_WITHDRAWAL_START=$(date -u -r $LOCKDROP_WITHDRAWAL_START_RAW)
 
 if [[ "$LOCKDROP_WITHDRAWAL_START" == "$EXPECTED_LOCKDROP_WITHDRAWAL_START" ]]
@@ -409,7 +409,7 @@ fi
 # Check Lockdrop end
 
 LOCKDROP_WITHDRAWAL_WINDOW=$(neutrond q wasm contract-state smart $LOCKDROP_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.withdrawal_window")
-let LOCKDROP_END_RAW="$LOCKDROP_START_RAW+$LOCKDROP_DEPOSIT_WINDOW+$LOCKDROP_WITHDRAWAL_WINDOW"
+let LOCKDROP_END_RAW="$LOCKDROP_START_RAW+$LOCKDROP_LOCK_WINDOW+$LOCKDROP_WITHDRAWAL_WINDOW"
 LOCKDROP_END=$(date -u -r $LOCKDROP_END_RAW)
 
 if [[ "$LOCKDROP_END" == "$EXPECTED_LOCKDROP_END" ]]
@@ -419,6 +419,21 @@ then
        echo "[X] LOCKDROP_END is $LOCKDROP_END, expected $EXPECTED_LOCKDROP_END"
 fi
 
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check Auction LP tokens lock window
+
+AUCTION_LP_TOKENS_LOCK_WINDOW=$(neutrond q wasm contract-state smart $AUCTION_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.lp_tokens_lock_window")
+let EXPECTED_AUCTION_LP_TOKENS_LOCK_WINDOW="$LOCKDROP_LOCK_WINDOW+$LOCKDROP_WITHDRAWAL_WINDOW"
+
+if [[ "$AUCTION_LP_TOKENS_LOCK_WINDOW" == "$EXPECTED_AUCTION_LP_TOKENS_LOCK_WINDOW" ]]
+then
+       echo "AUCTION_LP_TOKENS_LOCK_WINDOW is O.K."
+  else
+       echo "[X] AUCTION_LP_TOKENS_LOCK_WINDOW is $AUCTION_LP_TOKENS_LOCK_WINDOW, expected $EXPECTED_AUCTION_LP_TOKENS_LOCK_WINDOW"
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
 # Check Airdrop vesting start
 AIRDROP_VESTING_START_RAW=$(neutrond q wasm contract-state raw $AIDROP_CONTRACT_ADDRESS "vesting_start" --ascii -o json | jq --raw-output ".data" | base64 -d)
 
@@ -430,8 +445,8 @@ then
   else
        echo "[X] AIRDROP_VESTING_START is $AIRDROP_VESTING_START, expected $EXPECTED_AIRDROP_VESTING_START"
 fi
-# ---------------------------------------------------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------------------------------------------------
 # Check Credits vesting start
 CREDITS_VESTING_START_RAW=$(neutrond q wasm contract-state smart $CREDITS_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.when_withdrawable")
 
@@ -443,9 +458,8 @@ then
   else
        echo "[X] CREDITS_VESTING_START is $CREDITS_VESTING_START, expected $EXPECTED_CREDITS_VESTING_START"
 fi
+
 # ---------------------------------------------------------------------------------------------------------------------
-
-
 # Check Airdrop Vesting end
 AIRDROP_VESTING_DURATION_RAW=$(neutrond q wasm contract-state raw $AIDROP_CONTRACT_ADDRESS "vesting_duration_key" --ascii -o json | jq --raw-output ".data" | base64 -d)
 
@@ -458,8 +472,6 @@ then
   else
        echo "[X] AIRDROP_VESTING_END is $AIRDROP_VESTING_END, expected $EXPECTED_AIRDROP_VESTING_END"
 fi
-# ---------------------------------------------------------------------------------------------------------------------
-
 
 echo "\n### VERIFIED TGE TIMELINE:\n"
 
