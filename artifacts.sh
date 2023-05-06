@@ -135,7 +135,7 @@ echo "Adding daodao_checksums.txt..."
 cp artifacts/checksums.txt ../../daodao_checksums.txt
 
 echo "Adding cw4_voting.wasm..."
-cp artifacts/cwd_voting_cw4.wasm ../../../neutron/contracts_thirdparty/
+cp artifacts/cwd_voting_cw4.wasm ../../../neutron/contracts_thirdparty/cw4_voting.wasm
 
 echo "############################################################################################################"
 echo "################## Done ####################################################################################"
