@@ -3,6 +3,8 @@ set -e
 
 cp genesis.json ./home/config/genesis.json
 
+CONTRACTS_TO_CODE_IDS=${CONTRACTS_TO_CODE_IDS:-"contracts_to_code_ids.txt"}
+
 NEUTRON_DAO_ADDRESS="neutron1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrstdxvff"
 RESERVE_CONTRACT_ADDRESS="neutron13we0myxwzlpx8l5ark8elw5gj5d59dl6cjkzmt80c5q5cv5rt54qvzkv2a"
 ASTROPORT_MULTISIG_ADDRESS="neutron1xle8l3h0wkcp6tsxmkc6n4vqyfkhwnukevwwsk"
@@ -183,6 +185,8 @@ function store_binary() {
   fi
   $BINARY add-wasm-message store "$CONTRACT_BINARY_PATH" --output json --run-as ${ADMIN} --home ./home
   BINARY_ID=$(jq -r "[.app_state.wasm.gen_msgs[] | select(.store_code != null)] | length" "./home/config/genesis.json")
+  CONTRACT_NAME=${CONTRACT_BINARY_PATH##*/}
+  echo "$CONTRACT_NAME, $BINARY_ID" >> $CONTRACTS_TO_CODE_IDS
   echo "$BINARY_ID"
 }
 
