@@ -53,9 +53,8 @@ echo "##########################################################################
 echo "################## Building Astroport core contracts for the TOOLS repo ####################################"
 echo "############################################################################################################"
 
-git clone git@github.com:astroport-fi/astroport-core.git
+git clone --depth 1 --branch $ASTROPORT_CORE_VERSION git@github.com:astroport-fi/astroport-core.git
 cd astroport-core
-git checkout -q $ASTROPORT_CORE_VERSION
 
 echo "Building binaries..."
 docker run --rm -v "$(pwd)":/code \
@@ -91,9 +90,8 @@ echo "##########################################################################
 echo "################## Building Astroport IBC contracts for the TOOLS repo #####################################"
 echo "############################################################################################################"
 
-git clone git@github.com:astroport-fi/astroport_ibc.git
+git clone --depth 1 --branch $ASTROPORT_IBC_VERSION git@github.com:astroport-fi/astroport_ibc.git
 cd astroport_ibc
-git checkout -q $ASTROPORT_IBC_VERSION
 
 echo "Building binaries..."
 docker run --rm -v "$(pwd)":/code \
@@ -113,9 +111,8 @@ echo "##########################################################################
 echo "################## Building CosmWasm Plus contracts for the Neutron repo ###################################"
 echo "############################################################################################################"
 
-git clone git@github.com:CosmWasm/cw-plus.git
+git clone --depth 1 --branch $CW_PLUS_VERSION git@github.com:CosmWasm/cw-plus.git
 cd cw-plus
-git checkout -q $CW_PLUS_VERSION
 
 echo "Building binaries..."
 docker run --rm -v "$(pwd)":/code \
