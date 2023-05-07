@@ -148,8 +148,8 @@ docker run --rm -v "$(pwd)":/code \
 		--platform linux/amd64 \
 		cosmwasm/workspace-optimizer:0.12.11 > /dev/null 2>&1
 
-echo "Adding daodao_checksums.txt..."
-cp artifacts/checksums.txt ../../daodao_checksums.txt
+echo "Adding daodao_checksums.txt (only cwd_voting_cw4.wasm)..."
+cat artifacts/checksums.txt | grep cwd_voting_cw4.wasm >> ../../daodao_checksums.txt
 
 echo "Adding cw4_voting.wasm..."
 cp artifacts/cwd_voting_cw4.wasm ../../../neutron/contracts_thirdparty/cw4_voting.wasm

@@ -4,11 +4,13 @@ from pprint import pprint
 NODE = "tcp://localhost:26657"
 
 CHECKSUM_FILES = [
+    # IMPORTANT: "neutron_dao_checksums.txt" should always be after "astroport_core_checksums.txt".
     "astroport_core_checksums.txt",
+    "neutron_dao_checksums.txt",
     "astroport_ibc_checksums.txt",
     "cw_plus_checksums.txt",
     "neutron_tge_checksums.txt",
-    "neutron_dao_checksums.txt"
+    "daodao_checksums.txt"
 ]
 
 CONTRACTS_TO_CODE_IDS_FILE = "contracts_to_code_ids.txt"
@@ -38,11 +40,7 @@ def main():
                 parsed_line = line.split("  ")
                 checksums[parsed_line[1].strip("\n")] = parsed_line[0].strip().lower()
 
-    pprint(checksums)
-    pprint(contracts_to_code_ids)
-
-    checksums.pop("astroport_oracle.wasm")
-    contracts_to_code_ids.pop("astroport_oracle.wasm")
+    contracts_to_code_ids["cwd_voting_cw4.wasm"] = contracts_to_code_ids.pop("cw4_voting.wasm")
 
     for contract in contracts_to_code_ids.keys():
         contract_code_hash = get_contract_code_checksum(contracts_to_code_ids[contract])
