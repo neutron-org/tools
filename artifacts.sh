@@ -21,7 +21,7 @@ echo "Writing neutron_dao_checksums.txt..."
 rm -f ../../tools/neutron_dao_checksums.txt
 for f in *.wasm
 do
-  shasum -а256 $f >> ../../tools/neutron_dao_checksums.txt
+  shasum -a256 $f >> ../../tools/neutron_dao_checksums.txt
 done
 
 cd ../../tools
@@ -39,7 +39,7 @@ echo "Writing neutron_tge_checksums.txt..."
 rm -f ../../tools/neutron_tge_checksums.txt
 for f in *.wasm
 do
-  shasum -а256 $f >> ../../tools/neutron_tge_checksums.txt
+  shasum -a256 $f >> ../../tools/neutron_tge_checksums.txt
 done
 
 npx @neutron-org/get-artifacts neutron-dao -b $NEUTRON_DAO_BRANCH
