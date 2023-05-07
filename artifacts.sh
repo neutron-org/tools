@@ -16,6 +16,14 @@ rm -f ../neutron/contracts/*
 rm -f ../neutron/contracts_thirdparty/*
 cd ../neutron/contracts/
 npx @neutron-org/get-artifacts neutron-dao -b $NEUTRON_DAO_BRANCH
+
+echo "Writing neutron_dao_checksums.txt..."
+rm -f ../../tools/neutron_dao_checksums.txt
+for f in *.wasm
+do
+  sha256sum $f >> ../../tools/neutron_dao_checksums.txt
+done
+
 cd ../../tools
 
 echo "############################################################################################################"
@@ -24,8 +32,17 @@ echo "##########################################################################
 
 rm -f ./artifacts/*
 cd ./artifacts/
-npx @neutron-org/get-artifacts neutron-dao -b $NEUTRON_DAO_BRANCH
+
 npx @neutron-org/get-artifacts neutron-tge-contracts -b $NEUTRON_TGE_BRANCH
+
+echo "Writing neutron_tge_checksums.txt..."
+rm -f ../../tools/neutron_tge_checksums.txt
+for f in *.wasm
+do
+  sha256sum $f >> ../../tools/neutron_tge_checksums.txt
+done
+
+npx @neutron-org/get-artifacts neutron-dao -b $NEUTRON_DAO_BRANCH
 cd ..
 
 rm -rf .tmp
@@ -131,8 +148,8 @@ docker run --rm -v "$(pwd)":/code \
 		--platform linux/amd64 \
 		cosmwasm/workspace-optimizer:0.12.11 > /dev/null 2>&1
 
-echo "Adding daodao_checksums.txt..."
-cp artifacts/checksums.txt ../../daodao_checksums.txt
+echo "Adding daodao_checksums.txt (only cwd_voting_cw4.wasm)..."
+cat artifacts/checksums.txt | grep cwd_voting_cw4.wasm >> ../../daodao_checksums.txt
 
 echo "Adding cw4_voting.wasm..."
 cp artifacts/cwd_voting_cw4.wasm ../../../neutron/contracts_thirdparty/cw4_voting.wasm
@@ -140,5 +157,3 @@ cp artifacts/cwd_voting_cw4.wasm ../../../neutron/contracts_thirdparty/cw4_votin
 echo "############################################################################################################"
 echo "################## Done ####################################################################################"
 echo "############################################################################################################"
-
-rm -r .tmp
