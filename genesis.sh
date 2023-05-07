@@ -11,9 +11,8 @@ echo "##########################################################################
 rm -f ./neutron
 rm -f ./tools
 
-git clone git@github.com:neutron-org/neutron.git
+git clone --depth 1 --branch $NEUTRON_BRANCH git@github.com:neutron-org/neutron.git
 cd ./neutron
-git checkout $NEUTRON_BRANCH
 mkdir contracts
 mkdir contracts_thirdparty
 
@@ -24,9 +23,8 @@ echo "##########################################################################
 echo "################# Cloning Tools and checking out $TOOLS_BRANCH #############################################"
 echo "############################################################################################################"
 
-git clone git@github.com:neutron-org/tools.git
+git clone --depth 1  --branch $TOOLS_BRANCH git@github.com:neutron-org/tools.git
 cd ./tools
-git checkout $TOOLS_BRANCH
 mkdir artifacts
 
 cd ..
@@ -42,7 +40,7 @@ cd ./tools
 cd ..
 
 echo "############################################################################################################"
-echo "################# Sarting Neutron  #########################################################################"
+echo "################# Starting Neutron  #########################################################################"
 echo "############################################################################################################"
 
 
