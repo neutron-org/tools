@@ -63,6 +63,7 @@ echo "##########################################################################
 
 cp ./neutron/data/neutron-1/config/genesis.json ./tools/genesis.json
 cat ./neutron/contracts_to_code_ids.txt >> ./tools/contracts_to_code_ids.txt
+cp ./neutron/result.json ./tools/first_phase_result.json
 
 echo "Done."
 

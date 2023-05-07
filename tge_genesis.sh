@@ -5,13 +5,15 @@ cp genesis.json ./home/config/genesis.json
 
 CONTRACTS_TO_CODE_IDS=${CONTRACTS_TO_CODE_IDS:-"contracts_to_code_ids.txt"}
 
-NEUTRON_DAO_ADDRESS="neutron1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrstdxvff"
-RESERVE_CONTRACT_ADDRESS="neutron13we0myxwzlpx8l5ark8elw5gj5d59dl6cjkzmt80c5q5cv5rt54qvzkv2a"
+FIRST_PHASE_RESULT=$(cat "first_phase_result.txt")
+
+NEUTRON_DAO_ADDRESS=$(jq -r '.neutron.core.address' "$FIRST_PHASE_RESULT")
+RESERVE_CONTRACT_ADDRESS=$(jq -r '.reserve.address' "$FIRST_PHASE_RESULT")
 ASTROPORT_MULTISIG_ADDRESS="neutron1xle8l3h0wkcp6tsxmkc6n4vqyfkhwnukevwwsk"
 TOKEN_INFO_MANAGER_MULTISIG_ADDRESS="neutron1zfw930csx0k5qzf35vndaulwada4wa3pwtg5hy8rmnnx35wdyhssd2rtlz"
 TOKEN_ISSUER_MULTISIG_ADDRESS_2="neutron1d9m09dzfvjzep2jaypg9a80zslvr7jhcary57a"
 FOUNDATION_MULTISIG_ADDRESS="neutron1cvsh2c2vasktkh7krt2w2dhyt0njs0adh5ewqv"
-NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS="neutron1f6jlx7d9y408tlzue7r2qcf79plp549n30yzqjajjud8vm7m4vdspg933s"
+NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS=$(jq -r '.neutron.voting.vaults.neutron.address' "$FIRST_PHASE_RESULT")
 
 TGE_START_DATE_TS=1684922400  # Wed May 24 2023 10:00:00 GMT+0000
 DAY=86400
@@ -144,7 +146,7 @@ DAO_CONTRACTS_BINARIES_DIR=${DAO_CONTRACTS_BINARIES_DIR:-./artifacts}
 ASTROPORT_CONTRACTS_BINARIES_DIR=${ASTROPORT_CONTRACTS_BINARIES_DIR:-./artifacts} # TODO
 GENESIS_PATH=${GENESIS_PATH:-./genesis.json}
 
-INSTANCE_ID_COUNTER=19
+INSTANCE_ID_COUNTER=$(jq -r '.next_instance_id' "$FIRST_PHASE_RESULT")
 
 
 # https://github.com/neutron-org/neutron-tge-contracts
