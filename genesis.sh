@@ -46,6 +46,11 @@ echo "##########################################################################
 
 cd ./neutron/
 pwd
+make install > /dev/null 2>&1
+echo "PLEASE ENTER RELAYER MNEMONIC FOR MAINNET:"
+if ! neutrond keys show relayer_production --keyring-backend test; then
+    neutrond keys add relayer_production --recover --keyring-backend test
+fi
 make CHAIN_ID=neutron-1 start > /dev/null 2>&1
 
 echo "Done."
