@@ -3,7 +3,6 @@ resolver = "2"
 members = [
     "packages/*",
     "contracts/factory",
-    "contracts/",
     "contracts/pair",
     "contracts/pair_stable",
     "contracts/tokenomics/xastro_token",
