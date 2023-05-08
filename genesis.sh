@@ -8,8 +8,8 @@ echo "##########################################################################
 echo "################# Cloning Neutron and checking out $NEUTRON_BRANCH #########################################"
 echo "############################################################################################################"
 
-rm -f ./neutron
-rm -f ./tools
+rm -rf ./neutron
+rm -rf ./tools
 
 git clone --depth 1 --branch $NEUTRON_BRANCH git@github.com:neutron-org/neutron.git
 cd ./neutron
