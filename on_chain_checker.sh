@@ -7,7 +7,7 @@
 #######################################################################################################################
 #######################################################################################################################
 
-echo "### Checking account balances:\n"
+echo "### Checking account balances:"
 
 NEUTRON_DAO_ADDRESS="neutron1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrstdxvff"
 VESTING_LTI_CONTRACT_ADDRESS="neutron1a5xz4zm0gkpcf92ddm7fw8pghg2mf4wm6cyu6cgcruq35upf7auslnnfye"
