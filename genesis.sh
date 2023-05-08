@@ -78,7 +78,7 @@ echo "Starting neutrond..."
 neutrond add-consumer-section --home home
 neutrond start --home home > /dev/null 2>&1 &
 
-echo "Waiting 60 seconds for Neutron to start..."
+echo "Waiting 30 seconds for Neutron to start..."
 sleep 30
 
 echo "############################################################################################################"
@@ -111,5 +111,12 @@ function set_genesis_param() {
 CHAIN_START_TIME="2023-05-10T15:00:00.000000Z"
 
 set_genesis_param genesis_time "\"$CHAIN_START_TIME\","
+set_genesis_param reward_denoms "[\"untrn\"],"
+set_genesis_param provider_reward_denoms "[\"uatom\"]"
+
+if ! jq -e . genesis.json >/dev/null 2>&1; then
+    echo "genesis appears to become incorrect json" >&2
+    exit 1
+fi
 
 echo "Done."
