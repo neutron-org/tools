@@ -91,7 +91,7 @@ echo "################# Running checks #########################################
 echo "############################################################################################################"
 
 sh ./on_chain_checker.sh
-python checksums_checker.py
+python3 checksums_checker.py
 
 cd ..
 
