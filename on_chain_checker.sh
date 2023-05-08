@@ -37,7 +37,7 @@ TOTAL_SUPPLY_EXPECTED="1000000000000000"
 
 VESTING_LTI_CONTRACT_BALANCE=$(neutrond q bank balances $VESTING_LTI_CONTRACT_ADDRESS --output --json | jq --raw-output ".balances[0].amount")
 
-SUM_OF_VESTING_LTI_ACCOUNTS_ALLOCATIONS=$(neutrond query wasm contract-state smart neutron1a5xz4zm0gkpcf92ddm7fw8pghg2mf4wm6cyu6cgcruq35upf7auslnnfye '{"vesting_accounts": {"limit": 100}}' --output json | jq "[.data.vesting_accounts[].info.schedules[0].end_point.amount | tonumber] | add")
+SUM_OF_VESTING_LTI_ACCOUNTS_ALLOCATIONS=$(neutrond query wasm contract-state smart $VESTING_LTI_CONTRACT_ADDRESS '{"vesting_accounts": {"limit": 100}}' --output json | jq "[.data.vesting_accounts[].info.schedules[0].end_point.amount | tonumber] | add")
 
 if [[ "$VESTING_LTI_CONTRACT_BALANCE" == "$VESTING_LTI_CONTRACT_BALANCE_EXPECTED" ]]
   then
@@ -52,6 +52,58 @@ if [[ "$SUM_OF_VESTING_LTI_ACCOUNTS_ALLOCATIONS" == "$VESTING_LTI_CONTRACT_BALAN
   else
        echo "[X] SUM_OF_VESTING_LTI_ACCOUNTS_ALLOCATIONS is $SUM_OF_VESTING_LTI_ACCOUNTS_ALLOCATIONS, expected $VESTING_LTI_CONTRACT_BALANCE_EXPECTED"
 fi
+
+VESTING_LTI_ACCOUNTS_ALLOCATIONS=$(neutrond query wasm contract-state smart $VESTING_LTI_CONTRACT_ADDRESS '{"vesting_accounts": {"limit": 100}}' --output json | jq ".data.vesting_accounts" | jq 'sort_by(.address)')
+
+# Get the length of the JSON array
+NUM_VESTING_ACCOUNTS=$(echo $VESTING_LTI_ACCOUNTS_ALLOCATIONS | jq 'length')
+
+EXPECTED_NUM_VESTING_ACCOUNTS=16
+EXPECTED_SCHEDULE_START_TS=1715335200  # Fri May 10 2024 10:00:00 GMT+0000
+EXPECTED_SCHEDULE_END_TS=1809943200  # Mon May 10 2027 10:00:00 GMT+0000
+
+if [ $NUM_VESTING_ACCOUNTS -eq 16 ]; then
+     echo "NUM_VESTING_ACCOUNTS is O.K."
+  else
+     echo "[X] NUM_VESTING_ACCOUNTS is $NUM_VESTING_ACCOUNTS, expected $EXPECTED_NUM_VESTING_ACCOUNTS"
+     exit 1
+fi
+
+for ((i=0; i<$NUM_VESTING_ACCOUNTS; i++)); do
+     address=$(echo $VESTING_LTI_ACCOUNTS_ALLOCATIONS | jq -r ".[$i].address")
+
+     echo "Checking VESTING_LTI_ACCOUNT $address"
+
+     vesting_info=$(echo $VESTING_LTI_ACCOUNTS_ALLOCATIONS | jq -r ".[$i].info.schedules")
+     NUM_SCHEDULES=$(echo $vesting_info | jq 'length')
+
+     if [ $NUM_SCHEDULES -eq 1 ];
+     then
+          echo "    NUM_SCHEDULES is O.K."
+     else
+          echo "    [X] NUM_SCHEDULES is $NUM_SCHEDULES, expected 1"
+          continue
+     fi
+
+     SCHEDULE_START_TS=$(echo $vesting_info | jq -r ".[0].start_point.time")
+     SCHEDULE_END_TS=$(echo $vesting_info | jq -r ".[0].end_point.time")
+
+     if [ $SCHEDULE_START_TS -eq $EXPECTED_SCHEDULE_START_TS ];
+     then
+          echo "    SCHEDULE_START_TS is O.K."
+     else
+          echo "    [X] SCHEDULE_START_TS is $SCHEDULE_START_TS, expected $EXPECTED_SCHEDULE_START_TS"
+     fi
+
+     if [ $SCHEDULE_END_TS -eq $EXPECTED_SCHEDULE_END_TS ];
+     then
+          echo "    SCHEDULE_END_TS is O.K."
+     else
+          echo "    [X] SCHEDULE_END_TS is $SCHEDULE_END_TS, expected $EXPECTED_SCHEDULE_END_TS"
+     fi
+done
+
+
 
 # ---------------------------------------------------------------------------------------------------------------------
 
