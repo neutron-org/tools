@@ -13,7 +13,7 @@ ASTROPORT_MULTISIG_ADDRESS="neutron1xle8l3h0wkcp6tsxmkc6n4vqyfkhwnukevwwsk"
 TOKEN_INFO_MANAGER_MULTISIG_ADDRESS="neutron1zfw930csx0k5qzf35vndaulwada4wa3pwtg5hy8rmnnx35wdyhssd2rtlz"
 TOKEN_ISSUER_MULTISIG_ADDRESS_2="neutron1d9m09dzfvjzep2jaypg9a80zslvr7jhcary57a"
 FOUNDATION_MULTISIG_ADDRESS="neutron1cvsh2c2vasktkh7krt2w2dhyt0njs0adh5ewqv"
-NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS=$(echo $FIRST_PHASE_RESULT | jq -r '.neutron.voting.vaults.neutron.address')
+NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS=$(echo $FIRST_PHASE_RESULT | jq -r '.neutron.voting.address')
 
 TGE_START_DATE_TS=1684922400  # Wed May 24 2023 10:00:00 GMT+0000
 DAY=86400
