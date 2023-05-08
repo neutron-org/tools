@@ -102,7 +102,14 @@ echo "##########################################################################
 echo "################# Adjusting genesis start time #############################################################"
 echo "############################################################################################################"
 
+function set_genesis_param() {
+  param_name=$1
+  param_value=$2
+  sed -i -e "s/\"$param_name\":.*/\"$param_name\": $param_value/g" "$GENESIS_PATH"
+}
+
 CHAIN_START_TIME="2023-05-10T15:00:00.000000Z"
-sed -i "s/\"genesis_time\":.*/\"genesis_time\": \"$CHAIN_START_TIME\",/g" ./genesis.json
+
+set_genesis_param genesis_time "\"$CHAIN_START_TIME\","
 
 echo "Done."
