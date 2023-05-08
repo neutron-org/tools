@@ -21,7 +21,7 @@ echo "Writing neutron_dao_checksums.txt..."
 rm -f ../../tools/neutron_dao_checksums.txt
 for f in *.wasm
 do
-  sha256sum $f >> ../../tools/neutron_dao_checksums.txt
+  shasum -a256 "$f" >> ../../tools/neutron_dao_checksums.txt
 done
 
 cd ../../tools
@@ -39,7 +39,7 @@ echo "Writing neutron_tge_checksums.txt..."
 rm -f ../../tools/neutron_tge_checksums.txt
 for f in *.wasm
 do
-  sha256sum $f >> ../../tools/neutron_tge_checksums.txt
+  shasum -a256 "$f" >> ../../tools/neutron_tge_checksums.txt
 done
 
 npx @neutron-org/get-artifacts neutron-dao -b $NEUTRON_DAO_BRANCH
@@ -53,9 +53,10 @@ echo "##########################################################################
 echo "################## Building Astroport core contracts for the TOOLS repo ####################################"
 echo "############################################################################################################"
 
-git clone git@github.com:astroport-fi/astroport-core.git
+git clone --depth 1 --branch $ASTROPORT_CORE_VERSION git@github.com:astroport-fi/astroport-core.git
 cd astroport-core
-git checkout -q $ASTROPORT_CORE_VERSION
+cp ../../fake-cargo-tomls/Cargo-astroport-core.toml ./Cargo.toml
+cargo update
 
 echo "Building binaries..."
 docker run --rm -v "$(pwd)":/code \
@@ -91,9 +92,10 @@ echo "##########################################################################
 echo "################## Building Astroport IBC contracts for the TOOLS repo #####################################"
 echo "############################################################################################################"
 
-git clone git@github.com:astroport-fi/astroport_ibc.git
+git clone --depth 1 --branch $ASTROPORT_IBC_VERSION git@github.com:astroport-fi/astroport_ibc.git
 cd astroport_ibc
-git checkout -q $ASTROPORT_IBC_VERSION
+cp ../../fake-cargo-tomls/Cargo-astroport-ibc.toml ./Cargo.toml
+cargo update
 
 echo "Building binaries..."
 docker run --rm -v "$(pwd)":/code \
@@ -113,9 +115,10 @@ echo "##########################################################################
 echo "################## Building CosmWasm Plus contracts for the Neutron repo ###################################"
 echo "############################################################################################################"
 
-git clone git@github.com:CosmWasm/cw-plus.git
+git clone --depth 1 --branch $CW_PLUS_VERSION git@github.com:CosmWasm/cw-plus.git
 cd cw-plus
-git checkout -q $CW_PLUS_VERSION
+cp ../../fake-cargo-tomls/Cargo-cw-plus.toml ./Cargo.toml
+cargo update
 
 echo "Building binaries..."
 docker run --rm -v "$(pwd)":/code \
@@ -137,9 +140,12 @@ echo "##########################################################################
 echo "################## Building DA0DA0 contracts for the Neutron repo ##########################################"
 echo "############################################################################################################"
 
-git clone git@github.com:DA0-DA0/dao-contracts.git
+git clone --depth 1 git@github.com:DA0-DA0/dao-contracts.git
 cd dao-contracts
+git fetch origin $DAODAO_VERSION
 git checkout -q $DAODAO_VERSION
+cp ../../fake-cargo-tomls/Cargo-dao-dao.toml ./Cargo.toml
+cargo update
 
 echo "Building binaries..."
 docker run --rm -v "$(pwd)":/code \

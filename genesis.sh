@@ -8,12 +8,11 @@ echo "##########################################################################
 echo "################# Cloning Neutron and checking out $NEUTRON_BRANCH #########################################"
 echo "############################################################################################################"
 
-rm -f ./neutron
-rm -f ./tools
+rm -rf ./neutron
+rm -rf ./tools
 
-git clone git@github.com:neutron-org/neutron.git
+git clone --depth 1 --branch $NEUTRON_BRANCH git@github.com:neutron-org/neutron.git
 cd ./neutron
-git checkout $NEUTRON_BRANCH
 mkdir contracts
 mkdir contracts_thirdparty
 
@@ -24,9 +23,8 @@ echo "##########################################################################
 echo "################# Cloning Tools and checking out $TOOLS_BRANCH #############################################"
 echo "############################################################################################################"
 
-git clone git@github.com:neutron-org/tools.git
+git clone --depth 1  --branch $TOOLS_BRANCH git@github.com:neutron-org/tools.git
 cd ./tools
-git checkout $TOOLS_BRANCH
 mkdir artifacts
 
 cd ..
@@ -42,7 +40,7 @@ cd ./tools
 cd ..
 
 echo "############################################################################################################"
-echo "################# Sarting Neutron  #########################################################################"
+echo "################# Starting Neutron  #########################################################################"
 echo "############################################################################################################"
 
 
@@ -60,6 +58,7 @@ echo "##########################################################################
 
 cp ./neutron/data/neutron-1/config/genesis.json ./tools/genesis.json
 cat ./neutron/contracts_to_code_ids.txt >> ./tools/contracts_to_code_ids.txt
+cp ./neutron/result.json ./tools/first_phase_result.json
 
 echo "Done."
 
@@ -87,7 +86,7 @@ echo "################# Running checks #########################################
 echo "############################################################################################################"
 
 sh ./on_chain_checker.sh
-python checksums_checker.py
+python3 checksums_checker.py
 
 cd ..
 
@@ -98,4 +97,19 @@ echo "##########################################################################
 cp ./tools/home/config/genesis.json ./
 
 pkill -f neutrond
+
+echo "############################################################################################################"
+echo "################# Adjusting genesis start time #############################################################"
+echo "############################################################################################################"
+
+function set_genesis_param() {
+  param_name=$1
+  param_value=$2
+  sed -i -e "s/\"$param_name\":.*/\"$param_name\": $param_value/g" genesis.json
+}
+
+CHAIN_START_TIME="2023-05-10T15:00:00.000000Z"
+
+set_genesis_param genesis_time "\"$CHAIN_START_TIME\","
+
 echo "Done."
