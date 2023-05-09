@@ -103,16 +103,26 @@ echo "################# Adjusting genesis start time ###########################
 echo "############################################################################################################"
 
 function set_genesis_param() {
-  param_name=$1
-  param_value=$2
+  local param_name=$1
+  local param_value=$2
   sed -i -e "s/\"$param_name\":.*/\"$param_name\": $param_value/g" genesis.json
+}
+
+function set_genesis_param_jq() {
+  local param_name=$1
+  local param_value=$2
+  cat genesis.json | jq "$param_name = $param_value" > g.json
 }
 
 CHAIN_START_TIME="2023-05-10T15:00:00.000000Z"
 
-set_genesis_param genesis_time "\"$CHAIN_START_TIME\","
-set_genesis_param reward_denoms "[\"untrn\"],"
-set_genesis_param provider_reward_denoms "[\"uatom\"]"
+set_genesis_param     genesis_time                                                            "\"$CHAIN_START_TIME\","
+set_genesis_param     reward_denoms                                                           "[\"untrn\"],"
+set_genesis_param     provider_reward_denoms                                                  "[\"uatom\"]"
+set_genesis_param_jq  .app_state.feerefunder.params.min_fee.ack_fee[0].amount                 "\"100000\""
+set_genesis_param_jq  .app_state.feerefunder.params.min_fee.timeout_fee[0].amount             "\"100000\""
+set_genesis_param_jq  .app_state.interchainqueries.params.query_deposit[0].amount             "\"10000000\""
+set_genesis_param_jq  .app_state.tokenfactory.params.denom_creation_fee[0].amount             "\"100000000\""
 
 if ! jq -e . genesis.json >/dev/null 2>&1; then
     echo "genesis appears to become incorrect json" >&2
