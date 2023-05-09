@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-NEUTRON_DAO_BRANCH=main
+NEUTRON_DAO_BRANCH=fix/credits-vault-description
 NEUTRON_TGE_BRANCH=main
 ASTROPORT_CORE_VERSION=v2.8.0
 ASTROPORT_IBC_VERSION=v1.1.0
