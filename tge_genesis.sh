@@ -14,6 +14,7 @@ TOKEN_INFO_MANAGER_MULTISIG_ADDRESS="neutron1zfw930csx0k5qzf35vndaulwada4wa3pwtg
 TOKEN_ISSUER_MULTISIG_ADDRESS_2="neutron1d9m09dzfvjzep2jaypg9a80zslvr7jhcary57a"
 FOUNDATION_MULTISIG_ADDRESS="neutron1cvsh2c2vasktkh7krt2w2dhyt0njs0adh5ewqv"
 NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS=$(echo $FIRST_PHASE_RESULT | jq -r '.neutron.voting.address')
+AA_DAO_ADDRESS="neutron1jggracsvp6fkw0ktf544lpda6dwrrxggz65g45"
 
 TGE_START_DATE_TS=1684922400  # Wed May 24 2023 10:00:00 GMT+0000
 DAY=86400
@@ -387,7 +388,7 @@ CREDITS_UPDATE_CONFIG_MSG='{
 
 AIRDROP_INIT_MSG='{
   "credits_address": "'"$CREDITS_CONTRACT_ADDRESS"'",
-  "reserve_address": "'"$RESERVE_CONTRACT_ADDRESS"'",
+  "reserve_address": "'"$AA_DAO_ADDRESS"'",
   "merkle_root": "'"$AIRDROP_MERKLE_ROOT"'",
   "airdrop_start": '$AIRDROP_START',
   "vesting_start": '$AIRDROP_VESTING_START',
