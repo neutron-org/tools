@@ -85,7 +85,7 @@ echo "##########################################################################
 echo "################# Running checks ###########################################################################"
 echo "############################################################################################################"
 
-sh ./on_chain_checker.sh
+bash ./on_chain_checker.sh
 python3 checksums_checker.py
 
 cd ..
@@ -99,7 +99,7 @@ cp ./tools/home/config/genesis.json ./
 pkill -f neutrond
 
 echo "############################################################################################################"
-echo "################# Adjusting genesis start time #############################################################"
+echo "################# Adjusting genesis parameters #############################################################"
 echo "############################################################################################################"
 
 function set_genesis_param() {
@@ -111,21 +111,30 @@ function set_genesis_param() {
 function set_genesis_param_jq() {
   local param_name=$1
   local param_value=$2
-  cat genesis.json | jq "$param_name = $param_value" > g.json
+  cat genesis.json | jq "$param_name = $param_value" > genesis.json.tmp
+  mv genesis.json.tmp genesis.json
 }
 
 CHAIN_START_TIME="2023-05-10T15:00:00.000000Z"
 
+echo "Setting genesis_time..."
 set_genesis_param     genesis_time                                                            "\"$CHAIN_START_TIME\","
+echo "Setting reward_denoms..."
 set_genesis_param     reward_denoms                                                           "[\"untrn\"],"
+echo "Setting provider_reward_denoms..."
 set_genesis_param     provider_reward_denoms                                                  "[\"uatom\"]"
+
+echo "Setting .app_state.feerefunder.params.min_fee.ack_fee..."
 set_genesis_param_jq  .app_state.feerefunder.params.min_fee.ack_fee[0].amount                 "\"100000\""
+echo "Setting .app_state.feerefunder.params.min_fee.timeout_fee..."
 set_genesis_param_jq  .app_state.feerefunder.params.min_fee.timeout_fee[0].amount             "\"100000\""
+echo "Setting .app_state.interchainqueries.params.query_deposit..."
 set_genesis_param_jq  .app_state.interchainqueries.params.query_deposit[0].amount             "\"10000000\""
+echo "Setting .app_state.tokenfactory.params.denom_creation_fee..."
 set_genesis_param_jq  .app_state.tokenfactory.params.denom_creation_fee[0].amount             "\"100000000\""
 
 if ! jq -e . genesis.json >/dev/null 2>&1; then
-    echo "genesis appears to become incorrect json" >&2
+    echo "[X] Genesis is not a valid JSON after modifications!" >&2
     exit 1
 fi
 
