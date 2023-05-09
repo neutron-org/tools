@@ -133,7 +133,7 @@ set_genesis_param_jq  .app_state.interchainqueries.params.query_deposit[0].amoun
 echo "Setting .app_state.tokenfactory.params.denom_creation_fee..."
 set_genesis_param_jq  .app_state.tokenfactory.params.denom_creation_fee[0].amount             "\"100000000\""
 echo "Setting .consensus_params.block.params.max_gas..."
-set_genesis_param_jq  .consensus_params.block.params.max_gas                                  "\"30000000\""
+set_genesis_param_jq  .consensus_params.block.max_gas                                         "\"30000000\""
 
 if ! jq -e . genesis.json >/dev/null 2>&1; then
     echo "[X] Genesis is not a valid JSON after modifications!" >&2
