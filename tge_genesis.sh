@@ -2,18 +2,19 @@
 set -e
 
 cp genesis.json ./home/config/genesis.json
-
+CHAIN_ID=${CHAIN_ID:-"test-1"}
 CONTRACTS_TO_CODE_IDS=${CONTRACTS_TO_CODE_IDS:-"contracts_to_code_ids.txt"}
 
 NEUTRON_DAO_ADDRESS="neutron1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrstdxvff"
 RESERVE_CONTRACT_ADDRESS="neutron13we0myxwzlpx8l5ark8elw5gj5d59dl6cjkzmt80c5q5cv5rt54qvzkv2a"
 ASTROPORT_MULTISIG_ADDRESS="neutron1xle8l3h0wkcp6tsxmkc6n4vqyfkhwnukevwwsk"
-TOKEN_INFO_MANAGER_MULTISIG_ADDRESS="neutron1zfw930csx0k5qzf35vndaulwada4wa3pwtg5hy8rmnnx35wdyhssd2rtlz"
+TOKEN_INFO_MANAGER_MULTISIG_ADDRESS="neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2"
 TOKEN_ISSUER_MULTISIG_ADDRESS_2="neutron1d9m09dzfvjzep2jaypg9a80zslvr7jhcary57a"
 FOUNDATION_MULTISIG_ADDRESS="neutron1cvsh2c2vasktkh7krt2w2dhyt0njs0adh5ewqv"
 NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS="neutron1f6jlx7d9y408tlzue7r2qcf79plp549n30yzqjajjud8vm7m4vdspg933s"
 
-TGE_START_DATE_TS=1687979431  # Wed May 24 2023 10:00:00 GMT+0000
+NOW=$(date +%s)
+let TGE_START_DATE_TS="$NOW + 600"  # TGE START DATE
 DAY=86400
 
 # ACCOUNTS
@@ -170,6 +171,7 @@ ASTROPORT_GENERATOR_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_generator
 ASTROPORT_FACTORY_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_factory.wasm
 ASTROPORT_PAIR_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_pair.wasm
 ASTROPORT_PAIR_STABLE_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_pair_stable.wasm
+ASTROPORT_PAIR_CL_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_pair_concentrated.wasm
 ASTROPORT_TOKEN_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_xastro_token.wasm
 ASTROPORT_NATIVE_COIN_REGISTRY_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_native_coin_registry.wasm
 ASTROPORT_VESTING_BINARY=$ASTROPORT_CONTRACTS_BINARIES_DIR/astroport_vesting.wasm
@@ -245,6 +247,7 @@ ASTROPORT_VESTING_CONTRACT_BINARY_ID=$(store_binary "$ASTROPORT_VESTING_BINARY" 
 ASTROPORT_MAKER_CONTRACT_BINARY_ID=$(store_binary "$ASTROPORT_MAKER_BINARY" "$ASTROPORT_MULTISIG_ADDRESS")
 ASTROPORT_ROUTER_CONTRACT_BINARY_ID=$(store_binary "$ASTROPORT_ROUTER_BINARY" "$ASTROPORT_MULTISIG_ADDRESS")
 ASTROPORT_PAIR_STABLE_CONTRACT_BINARY_ID=$(store_binary "$ASTROPORT_PAIR_STABLE_BINARY" "$ASTROPORT_MULTISIG_ADDRESS")
+ASTROPORT_PAIR_CL_CONTRACT_BINARY_ID=$(store_binary "$ASTROPORT_PAIR_CL_BINARY" "$ASTROPORT_MULTISIG_ADDRESS")
 
 # Contracts addresses pregeneration
 # ORDER IS IMPORTANT HERE
@@ -286,7 +289,9 @@ SET_UNTRN_PRECISION_MSG='{
       [
         "untrn",
         6
-      ]
+      ],
+      ["uibcatom", 6],
+      ["uibcusdc", 6]
     ]
   }
 }'
@@ -298,6 +303,16 @@ ASTROPORT_FACTORY_INIT_MSG='{
       "code_id": '"${ASTROPORT_PAIR_CONTRACT_BINARY_ID}"',
       "pair_type": {
         "xyk": {}
+      },
+      "total_fee_bps": 30,
+      "maker_fee_bps": 3333,
+      "is_disabled": false,
+      "is_generator_disabled": false
+    },
+    {
+      "code_id": '"${ASTROPORT_PAIR_CL_CONTRACT_BINARY_ID}"',
+      "pair_type": {
+        "custom": "concentrated"
       },
       "total_fee_bps": 30,
       "maker_fee_bps": 3333,
@@ -722,6 +737,38 @@ ADD_VESTING_ACCOUNT_MESSAGE='
 }
 '
 
+SET_AUCTION_DENOMS='
+{
+  "set_token_info": {
+    "atom_denom": "uibcatom",
+    "usdc_denom": "uibcusdc"
+  }
+}'
+
+CREATE_PAIR_ATOM_MSG='
+{
+   "create_pair": {
+      "pair_type": { "xyk": {} },
+      "asset_infos": [
+        { "native_token": {"denom": "untrn"} },
+        { "native_token": {"denom": "uibcatom"} }
+      ]
+    }
+}
+'
+
+CREATE_PAIR_USDC_MSG='
+{
+   "create_pair": {
+      "pair_type": { "xyk": {} },
+      "asset_infos": [
+        { "native_token": { "denom": "untrn" } },
+        { "native_token": { "denom": "uibcusdc" } }
+      ]
+    }
+}
+'
+
 #Top up auction contract with some NTRNs
 $BINARY add-genesis-account $AUCTION_CONTRACT_ADDRESS $AUCTION_AMOUNT --home ./home
 
@@ -752,6 +799,44 @@ instantiate_contract $VESTING_LTI_CONTRACT_BINARY_ID "$VESTING_LTI_INIT_MSG" "VE
 instantiate_contract $INVESTORS_VESTING_VAULT_BINARY_ID "$INVESTORS_VESTING_VAULT_MSG" "neutron.voting.vaults.investors" "$NEUTRON_DAO_ADDRESS"
 
 execute_contract $VESTING_LTI_CONTRACT_ADDRESS "$SET_VESTING_TOKEN_MSG" "$FOUNDATION_MULTISIG_ADDRESS"
+execute_contract $AUCTION_CONTRACT_ADDRESS "$SET_AUCTION_DENOMS" "$NEUTRON_DAO_ADDRESS"
+
+execute_contract $ASTROPORT_FACTORY_CONTRACT_ADDRESS "$CREATE_PAIR_USDC_MSG" "$TOKEN_INFO_MANAGER_MULTISIG_ADDRESS"
+execute_contract $ASTROPORT_FACTORY_CONTRACT_ADDRESS "$CREATE_PAIR_ATOM_MSG" "$TOKEN_INFO_MANAGER_MULTISIG_ADDRESS"
+
+SET_ATOM_VESTING_TOKEN_MSG='{
+  "set_vesting_token": {
+    "vesting_token": {
+      "token": { "contract_addr": "'"$ASTRO_ATOM_PAIR_LP_TOKEN_ADDRESS"'" }
+    }
+  }
+}'
+SET_USDC_VESTING_TOKEN_MSG='{
+  "set_vesting_token": {
+    "vesting_token": {
+      "token": { "contract_addr": "'"$ASTRO_USDC_PAIR_LP_TOKEN_ADDRESS"'" }
+    }
+  }
+}'
+
+execute_contract $ATOM_LP_VESTING_CONTRACT_ADDRESS "$SET_ATOM_VESTING_TOKEN_MSG" "$TOKEN_INFO_MANAGER_MULTISIG_ADDRESS"
+execute_contract $USDC_LP_VESTING_CONTRACT_ADDRESS "$SET_USDC_VESTING_TOKEN_MSG" "$TOKEN_INFO_MANAGER_MULTISIG_ADDRESS"
+
+ASTROPORT_GENERATOR_INIT_MSG='{
+  "astro_token": {
+    "native_token": {
+      "denom": "untrn"
+    }
+  },
+  "factory": "'"$ASTROPORT_FACTORY_CONTRACT_ADDRESS"'",
+  "owner": "'"$CONTRACT_ADMIN"'",
+  "start_block": "1",
+  "tokens_per_block": "100",
+  "vesting_contract": "'"$VESTING_ATOM_LP_CONTRACT_ADDRESS"'",
+  "whitelist_code_id": 0
+}'
+
+ASTROPORT_GENERATOR_CONTRACT_ADDRESS=$(instantiate_contract $ASTROPORT_GENERATOR_CONTRACT_BINARY_ID "$ASTROPORT_GENERATOR_INIT_MSG" "astroport_generator" "$TOKEN_INFO_MANAGER_MULTISIG_ADDRESS")
 
 # Add Lockdrop and Credits vault to Neutron DAO Voting Registry
 execute_contract "$NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS" "$ADD_CREDITS_VAULT_MSG" "$NEUTRON_DAO_ADDRESS"
@@ -782,6 +867,7 @@ echo "ASTROPORT_VESTING_CONTRACT_BINARY_ID:" $ASTROPORT_VESTING_CONTRACT_BINARY_
 echo "ASTROPORT_MAKER_CONTRACT_BINARY_ID:" $ASTROPORT_MAKER_CONTRACT_BINARY_ID
 echo "ASTROPORT_ROUTER_CONTRACT_BINARY_ID:" $ASTROPORT_ROUTER_CONTRACT_BINARY_ID
 echo "ASTROPORT_PAIR_STABLE_CONTRACT_BINARY_ID:" $ASTROPORT_PAIR_STABLE_CONTRACT_BINARY_ID
+echo "ASTROPORT_PAIR_CL_CONTRACT_BINARY_ID:" $ASTROPORT_PAIR_CL_CONTRACT_BINARY_ID
 echo "ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_ADDRESS:" $ASTROPORT_NATIVE_COIN_REGISTRY_CONTRACT_ADDRESS
 echo "ASTROPORT_SATELLITE_CONTRACT_ADDRESS:" $ASTROPORT_SATELLITE_CONTRACT_ADDRESS
 echo "ASTROPORT_FACTORY_CONTRACT_ADDRESS:" $ASTROPORT_FACTORY_CONTRACT_ADDRESS
