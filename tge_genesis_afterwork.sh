@@ -22,7 +22,7 @@ TOKEN_INFO_MANAGER_MULTISIG_ADDRESS="neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xa
 function query_contract() {
   CONTRACT=$1
   MESSAGE=$2
-  $BINARY query wasm contract-state smart $CONTRACT "${MESSAGE}" --output json --chain-id $CHAIN_ID
+  $BINARY query wasm contract-state smart $CONTRACT "${MESSAGE}" --output json --chain-id $CHAIN_ID --home=home
 }
 
 # wait for tx with timeout
@@ -56,7 +56,7 @@ function execute_contract() {
   CONTRACT=$1
   MESSAGE=$2
   SENDER=$3
-  local RES=$($BINARY tx wasm execute $CONTRACT "${MESSAGE}" --from "$SENDER" --keyring-backend=$KEYRING  --node $NODE --output json --chain-id $CHAIN_ID --broadcast-mode async -y --gas auto --gas-prices 0.025untrn --gas-adjustment 1.5)
+  local RES=$($BINARY tx wasm execute $CONTRACT "${MESSAGE}" --from "$SENDER" --keyring-backend=$KEYRING  --node $NODE --output json --chain-id $CHAIN_ID --broadcast-mode async -y --gas auto --home=home --gas-prices 0.025untrn --gas-adjustment 1.5)
   RES=$(wait_for_tx $(echo $RES | jq -r '.txhash'))
   echo "$RES"
 }
