@@ -99,3 +99,10 @@ SET_USDC_VESTING_TOKEN_MSG='{
 
 execute_contract $ATOM_LP_VESTING_CONTRACT_ADDRESS "$SET_ATOM_VESTING_TOKEN_MSG" "$TOKEN_INFO_MANAGER_MULTISIG_ADDRESS"
 execute_contract $USDC_LP_VESTING_CONTRACT_ADDRESS "$SET_USDC_VESTING_TOKEN_MSG" "$TOKEN_INFO_MANAGER_MULTISIG_ADDRESS"
+
+
+SET_ASSET_INFOS_ATOM='{"set_asset_infos": [{"native_token":{"denom":"untrn"}},{"native_token":{"denom":"uibcatom"}}]}'
+SET_ASSET_INFOS_USDC='{"set_asset_infos": [{"native_token":{"denom":"untrn"}},{"native_token":{"denom":"uibcusdc"}}]}'
+
+execute_contract $ATOM_TWAP_CONTRACT_ADDRESS "$SET_ASSET_INFOS_ATOM" "$TOKEN_INFO_MANAGER_MULTISIG_ADDRESS"
+execute_contract $USDC_TWAP_CONTRACT_ADDRESS "$SET_ASSET_INFOS_USDC" "$TOKEN_INFO_MANAGER_MULTISIG_ADDRESS"
