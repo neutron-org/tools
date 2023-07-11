@@ -80,8 +80,6 @@ LOCKDROP_MSG='{
 
 execute_contract $LOCKDROP_CONTRACT_ADDRESS "$LOCKDROP_MSG" "$TOKEN_INFO_MANAGER_MULTISIG_ADDRESS"
 
-exit
-
 SET_ATOM_VESTING_TOKEN_MSG='{
   "set_vesting_token": {
     "vesting_token": {
