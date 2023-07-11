@@ -104,3 +104,19 @@ SET_ASSET_INFOS_USDC='{"set_asset_infos": [{"native_token":{"denom":"untrn"}},{"
 
 execute_contract $ATOM_TWAP_CONTRACT_ADDRESS "$SET_ASSET_INFOS_ATOM" "$TOKEN_INFO_MANAGER_MULTISIG_ADDRESS"
 execute_contract $USDC_TWAP_CONTRACT_ADDRESS "$SET_ASSET_INFOS_USDC" "$TOKEN_INFO_MANAGER_MULTISIG_ADDRESS"
+
+## update auction config and set pool_info
+
+UPDATE_POOL_INFO_MSG='
+{
+    "set_token_info": {
+      "pool_info": {
+        "ntrn_usdc_pool_address": "'"$ASTRO_USDC_PAIR_TOKEN_ADDRESS"'", 
+        "ntrn_usdc_lp_token_address": "'"$ASTRO_USDC_PAIR_LP_TOKEN_ADDRESS"'", 
+        "ntrn_atom_pool_address":"'"$ASTRO_ATOM_PAIR_TOKEN_ADDRESS"'", 
+        "ntrn_atom_lp_token_address":"'"$ASTRO_ATOM_PAIR_LP_TOKEN_ADDRESS"'"
+      }
+  }
+}
+'
+execute_contract $AUCTION_CONTRACT_ADDRESS "$UPDATE_POOL_INFO_MSG" "$TOKEN_INFO_MANAGER_MULTISIG_ADDRESS"
