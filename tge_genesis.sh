@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+rm -rf ./home/
+mkdir -p ./home/config/
 cp genesis.json ./home/config/genesis.json
 CHAIN_ID=${CHAIN_ID:-"test-1"}
 CONTRACTS_TO_CODE_IDS=${CONTRACTS_TO_CODE_IDS:-"contracts_to_code_ids.txt"}
@@ -146,6 +148,14 @@ ASTROPORT_CONTRACTS_BINARIES_DIR=${ASTROPORT_CONTRACTS_BINARIES_DIR:-./artifacts
 GENESIS_PATH=${GENESIS_PATH:-./genesis.json}
 
 INSTANCE_ID_COUNTER=23
+
+DEMO_MNEMONIC_1="banner spread envelope side kite person disagree path silver will brother under couch edit food venture squirrel civil budget number acquire point work mass"
+DEMO_MNEMONIC_2="veteran try aware erosion drink dance decade comic dawn museum release episode original list ability owner size tuition surface ceiling depth seminar capable only"
+DEMO_MNEMONIC_3="obscure canal because tomorrow tribe sibling describe satoshi kiwi upgrade bless empty math trend erosion oblige donate label birth chronic hazard ensure wreck shine"
+
+echo "$DEMO_MNEMONIC_1" | $BINARY keys add demowallet1 --home ./home --recover --keyring-backend=test
+echo "$DEMO_MNEMONIC_2" | $BINARY keys add demowallet2 --home ./home --recover --keyring-backend=test
+echo "$DEMO_MNEMONIC_3" | $BINARY keys add demowallet3 --home ./home --recover --keyring-backend=test
 
 
 # https://github.com/neutron-org/neutron-tge-contracts
