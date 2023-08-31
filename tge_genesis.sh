@@ -468,6 +468,11 @@ ADD_LOCKDROP_VAULT_MSG='{
     "new_voting_vault_contract": "'"$LOCKDROP_VAULT_CONTRACT_ADDRESS"'"
   }
 }'
+ADD_VESTING_LP_VAULT_MSG='{
+  "add_voting_vault": {
+    "new_voting_vault_contract": "'"$LP_VESTING_VAULT_CONTRACT_ADDRESS"'"
+  }
+}'
 VESTING_INVESTORS_INIT_MSG='{
   "owner": "'"$TOKEN_ISSUER_MULTISIG_ADDRESS_2"'",
   "token_info_manager": "'"$TOKEN_ISSUER_MULTISIG_ADDRESS_2"'"
@@ -874,8 +879,9 @@ ASTROPORT_ASTRO_VESTING_SETUP_MSG='
 
 execute_contract_w_funds "$ASTROPORT_VESTING_CONTRACT_ADDRESS" "$ASTROPORT_ASTRO_VESTING_SETUP_MSG" "$ASTROPORT_MULTISIG_ADDRESS" "100000000uibcastro"
 
-# Add Lockdrop and Credits vault to Neutron DAO Voting Registry
+# Add Lockdrop, Vesting LP and Credits vault to Neutron DAO Voting Registry
 execute_contract "$NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS" "$ADD_CREDITS_VAULT_MSG" "$NEUTRON_DAO_ADDRESS"
+execute_contract "$NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS" "$ADD_VESTING_LP_VAULT_MSG" "$NEUTRON_DAO_ADDRESS"
 execute_contract "$NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS" "$ADD_LOCKDROP_VAULT_MSG" "$NEUTRON_DAO_ADDRESS"
 
 echo "" > contracts.txt
