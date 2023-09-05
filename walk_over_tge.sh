@@ -89,3 +89,7 @@ neutrond q wasm contract-state smart neutron1x85d7sktyv3ke4re90cj4nf6205a94tm4kl
 echo "new pools generator"
 neutrond tx wasm execute neutron1u4npx7xvprwanpru7utv8haq99rtfmdzzw6p3hpfc38n7zmzm42q8mtymn '{"setup_pools":{"pools":[["neutron1vs2jgdhesdhtzd07kzu9sdfwh39hs4qkn9q9m80dq35mguw2e6vsp62964", "1"]]}}' --keyring-backend=test --from=demowallet1 --chain-id=test-1 --gas auto --broadcast-mode block --gas-adjustment 1.5 --gas-prices 0.025untrn --node $NODE -y 
 neutrond tx wasm execute neutron1u4npx7xvprwanpru7utv8haq99rtfmdzzw6p3hpfc38n7zmzm42q8mtymn '{"setup_pools":{"pools":[["neutron19tq9qujlfmtwz808u4dkqgu2s0dajc907ve4gma4kgt4ymftuqvsqvzmze", "1"]]}}' --keyring-backend=test --from=demowallet1 --chain-id=test-1 --gas auto --broadcast-mode block --gas-adjustment 1.5 --gas-prices 0.025untrn --node $NODE -y
+
+echo "update twap one more time"
+neutrond tx wasm execute neutron1ntq7vz509nt4fx3yngltgt4svrggsgaept7tzpsmzeh8mek5utwstsj7eg '{"update": {}}' --keyring-backend=test --from=demowallet1 --chain-id=test-1 --gas auto --broadcast-mode block --gas-adjustment 1.5 --gas-prices 0.025untrn --node $NODE -y
+neutrond tx wasm execute neutron1t3j72wyv83hddv54psva3q7gqzarh5jhsqu64n8u5594u8ul4sxsxrjc0m '{"update": {}}' --keyring-backend=test --from=demowallet1 --chain-id=test-1 --gas auto --broadcast-mode block --gas-adjustment 1.5 --gas-prices 0.025untrn --node $NODE -y

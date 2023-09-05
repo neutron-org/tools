@@ -133,7 +133,7 @@ PRICE_FEED_EXECUTE_GAS="5000000"
 PRICE_FEED_MULTIPLIER="1000000"
 PRICE_FEED_SYMBOLS='["ATOM", "USDC"]'
 
-TWAP_UPDATE_PERIOD=60 # seconds, 3600 * 24 * 7
+TWAP_UPDATE_PERIOD=20 # seconds, 3600 * 24 * 7
 
 
 #----------------------------------------------------------------------------------------------------------------------
