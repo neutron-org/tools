@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+rm -rf ./home/
+mkdir -p ./home/config/
 cp genesis.json ./home/config/genesis.json
 CHAIN_ID=${CHAIN_ID:-"test-1"}
 CONTRACTS_TO_CODE_IDS=${CONTRACTS_TO_CODE_IDS:-"contracts_to_code_ids.txt"}
@@ -131,7 +133,7 @@ PRICE_FEED_EXECUTE_GAS="5000000"
 PRICE_FEED_MULTIPLIER="1000000"
 PRICE_FEED_SYMBOLS='["ATOM", "USDC"]'
 
-TWAP_UPDATE_PERIOD=60 # seconds, 3600 * 24 * 7
+TWAP_UPDATE_PERIOD=20 # seconds, 3600 * 24 * 7
 
 
 #----------------------------------------------------------------------------------------------------------------------
@@ -147,13 +149,21 @@ GENESIS_PATH=${GENESIS_PATH:-./genesis.json}
 
 INSTANCE_ID_COUNTER=23
 
+DEMO_MNEMONIC_1="banner spread envelope side kite person disagree path silver will brother under couch edit food venture squirrel civil budget number acquire point work mass"
+DEMO_MNEMONIC_2="veteran try aware erosion drink dance decade comic dawn museum release episode original list ability owner size tuition surface ceiling depth seminar capable only"
+DEMO_MNEMONIC_3="obscure canal because tomorrow tribe sibling describe satoshi kiwi upgrade bless empty math trend erosion oblige donate label birth chronic hazard ensure wreck shine"
+
+echo "$DEMO_MNEMONIC_1" | $BINARY keys add demowallet1 --home ./home --recover --keyring-backend=test
+echo "$DEMO_MNEMONIC_2" | $BINARY keys add demowallet2 --home ./home --recover --keyring-backend=test
+echo "$DEMO_MNEMONIC_3" | $BINARY keys add demowallet3 --home ./home --recover --keyring-backend=test
+
 
 # https://github.com/neutron-org/neutron-tge-contracts
 LOCKDROP_BINARY=$TGE_CONTRACTS_BINARIES_DIR/neutron_lockdrop.wasm
 AUCTION_BINARY=$TGE_CONTRACTS_BINARIES_DIR/neutron_auction.wasm
 CREDITS_BINARY=$TGE_CONTRACTS_BINARIES_DIR/credits.wasm
 AIRDROP_BINARY=$TGE_CONTRACTS_BINARIES_DIR/cw20_merkle_airdrop.wasm
-PRICE_FEED_BINARY=$TGE_CONTRACTS_BINARIES_DIR/neutron_price_feed.wasm
+PRICE_FEED_BINARY=$TGE_CONTRACTS_BINARIES_DIR/neutron_price_feed_mock.wasm
 TWAP_ORACLE_BINARY=$TGE_CONTRACTS_BINARIES_DIR/astroport_oracle.wasm
 LP_VESTING_BINARY=$TGE_CONTRACTS_BINARIES_DIR/vesting_lp.wasm
 VESTING_INVESTORS_BINARY=$TGE_CONTRACTS_BINARIES_DIR/vesting_investors.wasm
@@ -466,6 +476,11 @@ ADD_CREDITS_VAULT_MSG='{
 ADD_LOCKDROP_VAULT_MSG='{
   "add_voting_vault": {
     "new_voting_vault_contract": "'"$LOCKDROP_VAULT_CONTRACT_ADDRESS"'"
+  }
+}'
+ADD_VESTING_LP_VAULT_MSG='{
+  "add_voting_vault": {
+    "new_voting_vault_contract": "'"$LP_VESTING_VAULT_CONTRACT_ADDRESS"'"
   }
 }'
 VESTING_INVESTORS_INIT_MSG='{
@@ -874,8 +889,9 @@ ASTROPORT_ASTRO_VESTING_SETUP_MSG='
 
 execute_contract_w_funds "$ASTROPORT_VESTING_CONTRACT_ADDRESS" "$ASTROPORT_ASTRO_VESTING_SETUP_MSG" "$ASTROPORT_MULTISIG_ADDRESS" "100000000uibcastro"
 
-# Add Lockdrop and Credits vault to Neutron DAO Voting Registry
+# Add Lockdrop, Vesting LP and Credits vault to Neutron DAO Voting Registry
 execute_contract "$NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS" "$ADD_CREDITS_VAULT_MSG" "$NEUTRON_DAO_ADDRESS"
+execute_contract "$NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS" "$ADD_VESTING_LP_VAULT_MSG" "$NEUTRON_DAO_ADDRESS"
 execute_contract "$NEUTRON_VOTING_REGISTRY_CONTRACT_ADDRESS" "$ADD_LOCKDROP_VAULT_MSG" "$NEUTRON_DAO_ADDRESS"
 
 echo "" > contracts.txt
