@@ -133,5 +133,14 @@
         "msg": "e30K"
       }
     }
+  },
+  {
+    "wasm": {
+      "migrate": {
+        "contract_addr": "neutron1dmd56h7hlevuwssp203fgc2uh0qdtwep2m735fzksuavgq3naslqp0ehvx",
+        "new_code_id": 261,
+        "msg": "e30K"
+      }
+    }
   }
 ]

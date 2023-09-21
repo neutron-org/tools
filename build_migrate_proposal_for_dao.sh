@@ -47,7 +47,7 @@ function store_code() {
 function extract_hash() {
     RES=$1
     HASH=$(echo $RES | jq -r '.txhash')
-    CODE_ID=$(curl $REST/txs/$HASH | jq '.logs[0].events[1].attributes[1].value')
+    CODE_ID=$(curl $REST/cosmos/tx/v1beta1/txs/$HASH | jq '.tx_response.logs[0].events[1].attributes[1].value')
     CODE_ID_NUM=${CODE_ID//\"/}
 
     echo $CODE_ID_NUM
@@ -63,7 +63,7 @@ OVERRULE_PROPOSAL=neutron12pwnhtv7yat2s30xuf4gdk9qm85v4j3e6p44let47pdffpklcxlq56
 OVERRULE_PRE_PROPOSAL=neutron1w798gp0zqv3s9hjl3jlnwxtwhykga6rn93p46q2crsdqhaj3y4gsum0096
 VOTING_REGISTRY=neutron1f6jlx7d9y408tlzue7r2qcf79plp549n30yzqjajjud8vm7m4vdspg933s
 NTRN_VAULT=neutron1qeyjez6a9dwlghf9d6cy44fxmsajztw257586akk6xn6k88x0gus5djz4e
-CREDITS_VAULT=neutron13we0myxwzlpx8l5ark8elw5gj5d59dl6cjkzmt80c5q5cv5rt54qvzkv2a
+CREDITS_VAULT=neutron1rxwzsw37ulveefk20575mlxl3hzhzv9k46c8gklfkt4g2vk4w3tse8usrs
 LOCKDROP_VAULT=neutron1f8gs4rp232ngyta3g2efwfkznymvv85du7qm9y0mhvjxpp3cq68qgquudm
 LP_VESTING_VAULT=neutron1adavpfxyp5kgs3zp0n0vkc37qakeh5eqwxqxzysgg0ahlx82rmsqp4rnz8
 SECURITY_SUBDAO=neutron1fuyxwxlsgjkfjmxfthq8427dm2am3ya3cwcdr8gls29l7jadtazsuyzwcc
@@ -72,7 +72,8 @@ SECURITY_SINGLE_PRE_PROPOSAL=neutron1zjd5lwhch4ndnmayqxurja4x5y5mavy9ktrk6fzsyza
 SECURITY_SUBDAO_VOTING=neutron1wastjc07zuuy46mzzl3egz4uzy6fs59752grxqvz8zlsqccpv2wqhjw0cl
 SECURITY_CW4=neutron1hyja4uyjktpeh0fxzuw2fmjudr85rk2qu98fa6nuh6d4qru9l0ssh3kgnu
 
-# OTHER contracts?
+# NEW
+INVESTORS_VESTING_VAULT=neutron1dmd56h7hlevuwssp203fgc2uh0qdtwep2m735fzksuavgq3naslqp0ehvx
 
 # ===== STORE
 NEW_MAIN_DAO_CODE_RES=$(store_code "new_artifacts_dao/cwd_core.wasm")
@@ -252,6 +253,15 @@ MIGRATE_MSGS='[
             "migrate": {
                 "contract_addr": "'"${SECURITY_SINGLE_PRE_PROPOSAL}"'",
                 "new_code_id": '"${NEW_SUBDAO_PRE_PROPOSE_SINGLE_CODE_ID}"',
+                "msg": "'"${MIGRATE_MSG_BASE64}"'"
+            }
+        }
+    },
+    {
+        "wasm": {
+            "migrate": {
+                "contract_addr": "'"${INVESTORS_VESTING_VAULT}"'",
+                "new_code_id": '"${NEW_INVESTORS_VESTING_VAULT_CODE_ID}"',
                 "msg": "'"${MIGRATE_MSG_BASE64}"'"
             }
         }
