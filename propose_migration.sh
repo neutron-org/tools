@@ -1,13 +1,13 @@
 #!/bin/bash
 
 PRE_PROPOSE_CONTRACT_ADDRESS=neutron1hulx7cgvpfcvg83wk5h96sedqgn72n026w6nl47uht554xhvj9nsgs8v0z
-MIGRATION_MSGS=$(cat migrate_proposal.json)
+MIGRATION_MSGS=$(cat migrate_proposal_for_dao.json)
 
 PROPOSAL_MSG='{
     "propose": {
         "msg": {
             "propose": {
-                "title": "migrate proposal",
+                "title": "migrate proposal for dao",
                 "description": "blah-blah",
                 "msgs": '"${MIGRATION_MSGS}"'
             }
