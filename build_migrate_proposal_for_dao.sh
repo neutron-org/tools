@@ -303,7 +303,7 @@ MIGRATE_MSGS='[
             "migrate": {
                 "contract_addr": "'"${GRANTS_SUBDAO}"'",
                 "new_code_id": '"${NEW_SUBDAO_CORE_CODE_ID}"',
-                "msg": "'"${MIGRATE_MSG_BASE64}"'"
+                "msg": "'"${FROM_COMPATIBLE_BASE64}"'"
             }
         }
     },
