@@ -21,7 +21,7 @@
     "wasm": {
       "migrate": {
         "contract_addr": "neutron1hulx7cgvpfcvg83wk5h96sedqgn72n026w6nl47uht554xhvj9nsgs8v0z",
-        "new_code_id": 248,
+        "new_code_id": 264,
         "msg": "e30K"
       }
     }
@@ -39,7 +39,7 @@
     "wasm": {
       "migrate": {
         "contract_addr": "neutron1up07dctjqud4fns75cnpejr4frmjtddzsmwgcktlyxd4zekhwecqt2h8u6",
-        "new_code_id": 250,
+        "new_code_id": 265,
         "msg": "e30K"
       }
     }
@@ -110,6 +110,15 @@
   {
     "wasm": {
       "migrate": {
+        "contract_addr": "neutron1dmd56h7hlevuwssp203fgc2uh0qdtwep2m735fzksuavgq3naslqp0ehvx",
+        "new_code_id": 261,
+        "msg": "e30K"
+      }
+    }
+  },
+  {
+    "wasm": {
+      "migrate": {
         "contract_addr": "neutron1fuyxwxlsgjkfjmxfthq8427dm2am3ya3cwcdr8gls29l7jadtazsuyzwcc",
         "new_code_id": 257,
         "msg": "e30K"
@@ -130,15 +139,6 @@
       "migrate": {
         "contract_addr": "neutron1zjd5lwhch4ndnmayqxurja4x5y5mavy9ktrk6fzsyzan4wcgawnqjk5g26",
         "new_code_id": 258,
-        "msg": "e30K"
-      }
-    }
-  },
-  {
-    "wasm": {
-      "migrate": {
-        "contract_addr": "neutron1dmd56h7hlevuwssp203fgc2uh0qdtwep2m735fzksuavgq3naslqp0ehvx",
-        "new_code_id": 261,
         "msg": "e30K"
       }
     }
