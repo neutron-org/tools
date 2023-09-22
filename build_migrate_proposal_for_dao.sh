@@ -67,54 +67,72 @@ CREDITS_VAULT=neutron1rxwzsw37ulveefk20575mlxl3hzhzv9k46c8gklfkt4g2vk4w3tse8usrs
 LOCKDROP_VAULT=neutron1f8gs4rp232ngyta3g2efwfkznymvv85du7qm9y0mhvjxpp3cq68qgquudm
 LP_VESTING_VAULT=neutron1adavpfxyp5kgs3zp0n0vkc37qakeh5eqwxqxzysgg0ahlx82rmsqp4rnz8
 SECURITY_SUBDAO=neutron1fuyxwxlsgjkfjmxfthq8427dm2am3ya3cwcdr8gls29l7jadtazsuyzwcc
-SECURITY_SINGLE_PROPOSAL=neutron15m728qxvtat337jdu2f0uk6pu905kktrxclgy36c0wd822tpxcmqvnrurt
-SECURITY_SINGLE_PRE_PROPOSAL=neutron1zjd5lwhch4ndnmayqxurja4x5y5mavy9ktrk6fzsyzan4wcgawnqjk5g26
-SECURITY_SUBDAO_VOTING=neutron1wastjc07zuuy46mzzl3egz4uzy6fs59752grxqvz8zlsqccpv2wqhjw0cl
+SECURITY_SUBDAO_SINGLE_PROPOSAL=neutron15m728qxvtat337jdu2f0uk6pu905kktrxclgy36c0wd822tpxcmqvnrurt
+SECURITY_SUBDAO_SINGLE_PRE_PROPOSAL=neutron1zjd5lwhch4ndnmayqxurja4x5y5mavy9ktrk6fzsyzan4wcgawnqjk5g26
+SECURITY_SUBDAO_VOTING=NOT_MIGRATED_neutron1wastjc07zuuy46mzzl3egz4uzy6fs59752grxqvz8zlsqccpv2wqhjw0cl
 SECURITY_CW4=neutron1hyja4uyjktpeh0fxzuw2fmjudr85rk2qu98fa6nuh6d4qru9l0ssh3kgnu
+
+GRANTS_SUBDAO=neutron1zjdv3u6svlazlydmje2qcp44yqkt0059chz8gmyl5yrklmgv6fzq9chelu
+GRANTS_SUBDAO_SINGLE_PROPOSAL=neutron14n7jt2qkngxtgr7dgdt50g4xn2a29llz79h9y25lrsqyxrwmngmsmt9kta
+GRANTS_SUBDAO_SINGLE_PRE_PROPOSAL=neutron1s0fjev2pmgyaj0uthszzp3tpx59yp2p07vwhj0467sl9j343dk9qss6x9w
+GRANTS_SUBDAO_VOTING=NOT_MIGRATED
 
 # NEW
 INVESTORS_VESTING_VAULT=neutron1dmd56h7hlevuwssp203fgc2uh0qdtwep2m735fzksuavgq3naslqp0ehvx
 
 # ===== STORE
 NEW_MAIN_DAO_CODE_RES=$(store_code "new_artifacts_dao/cwd_core.wasm")
-NEW_PROPOSAL_SINGLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_proposal_single.wasm")
-NEW_PRE_PROPOSE_SINGLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_pre_propose_single.wasm")
-NEW_PROPOSAL_MULTIPLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_proposal_multiple.wasm")
-NEW_PRE_PROPOSE_MULTIPLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_pre_propose_multiple.wasm")
-NEW_PRE_PROPOSE_OVERRULE_CODE_RES=$(store_code "new_artifacts_dao/cwd_pre_propose_overrule.wasm")
-NEW_VOTING_REGISTRY_CODE_RES=$(store_code "new_artifacts_dao/neutron_voting_registry.wasm")
-NEW_NEUTRON_VAULT_CODE_RES=$(store_code "new_artifacts_dao/neutron_vault.wasm")
-NEW_CREDITS_VAULT_CODE_RES=$(store_code "new_artifacts_dao/credits_vault.wasm")
-NEW_LOCKDROP_VAULT_CODE_RES=$(store_code "new_artifacts_dao/lockdrop_vault.wasm")
-NEW_LP_VESTING_VAULT_CODE_RES=$(store_code "new_artifacts_dao/vesting_lp_vault.wasm")
-NEW_SUBDAO_CORE_CODE_RES=$(store_code "new_artifacts_dao/cwd_subdao_core.wasm")
-NEW_SUBDAO_PRE_PROPOSE_SINGLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_subdao_pre_propose_single.wasm")
-NEW_SUBDAO_TIMELOCK_SINGLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_subdao_timelock_single.wasm")
-NEW_SUBDAO_PROPOSAL_SINGLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_subdao_proposal_single.wasm")
-NEW_INVESTORS_VESTING_VAULT_CODE_RES=$(store_code "new_artifacts_dao/investors_vesting_vault.wasm")
-NEW_DISTRIBUTION_CODE_RES=$(store_code "new_artifacts_dao/neutron_distribution.wasm")
-NEW_RESERVE_CODE_RES=$(store_code "new_artifacts_dao/neutron_reserve.wasm")
-
-echo "sleeping..."
-sleep 30
-
 NEW_MAIN_DAO_CODE_ID=$(extract_hash "$NEW_MAIN_DAO_CODE_RES")
+
+NEW_PROPOSAL_SINGLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_proposal_single.wasm")
 NEW_PROPOSAL_SINGLE_CODE_ID=$(extract_hash "$NEW_PROPOSAL_SINGLE_CODE_RES")
+
+NEW_PRE_PROPOSE_SINGLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_pre_propose_single.wasm")
 NEW_PRE_PROPOSE_SINGLE_CODE_ID=$(extract_hash "$NEW_PRE_PROPOSE_SINGLE_CODE_RES")
+
+NEW_PROPOSAL_MULTIPLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_proposal_multiple.wasm")
 NEW_PROPOSAL_MULTIPLE_CODE_ID=$(extract_hash "$NEW_PROPOSAL_MULTIPLE_CODE_RES")
+
+NEW_PRE_PROPOSE_MULTIPLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_pre_propose_multiple.wasm")
 NEW_PRE_PROPOSE_MULTIPLE_CODE_ID=$(extract_hash "$NEW_PRE_PROPOSE_MULTIPLE_CODE_RES")
+
+NEW_PRE_PROPOSE_OVERRULE_CODE_RES=$(store_code "new_artifacts_dao/cwd_pre_propose_overrule.wasm")
 NEW_PRE_PROPOSE_OVERRULE_CODE_ID=$(extract_hash "$NEW_PRE_PROPOSE_OVERRULE_CODE_RES")
+
+NEW_VOTING_REGISTRY_CODE_RES=$(store_code "new_artifacts_dao/neutron_voting_registry.wasm")
 NEW_VOTING_REGISTRY_CODE_ID=$(extract_hash "$NEW_VOTING_REGISTRY_CODE_RES")
+
+NEW_NEUTRON_VAULT_CODE_RES=$(store_code "new_artifacts_dao/neutron_vault.wasm")
 NEW_NEUTRON_VAULT_CODE_ID=$(extract_hash "$NEW_NEUTRON_VAULT_CODE_RES")
+
+NEW_CREDITS_VAULT_CODE_RES=$(store_code "new_artifacts_dao/credits_vault.wasm")
 NEW_CREDITS_VAULT_CODE_ID=$(extract_hash "$NEW_CREDITS_VAULT_CODE_RES")
+
+NEW_LOCKDROP_VAULT_CODE_RES=$(store_code "new_artifacts_dao/lockdrop_vault.wasm")
 NEW_LOCKDROP_VAULT_CODE_ID=$(extract_hash "$NEW_LOCKDROP_VAULT_CODE_RES")
+
+NEW_LP_VESTING_VAULT_CODE_RES=$(store_code "new_artifacts_dao/vesting_lp_vault.wasm")
 NEW_LP_VESTING_VAULT_CODE_ID=$(extract_hash "$NEW_LP_VESTING_VAULT_CODE_RES")
+
+NEW_SUBDAO_CORE_CODE_RES=$(store_code "new_artifacts_dao/cwd_subdao_core.wasm")
 NEW_SUBDAO_CORE_CODE_ID=$(extract_hash "$NEW_SUBDAO_CORE_CODE_RES")
+
+NEW_SUBDAO_PRE_PROPOSE_SINGLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_subdao_pre_propose_single.wasm")
 NEW_SUBDAO_PRE_PROPOSE_SINGLE_CODE_ID=$(extract_hash "$NEW_SUBDAO_PRE_PROPOSE_SINGLE_CODE_RES")
+
+NEW_SUBDAO_TIMELOCK_SINGLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_subdao_timelock_single.wasm")
 NEW_SUBDAO_TIMELOCK_SINGLE_CODE_ID=$(extract_hash "$NEW_SUBDAO_TIMELOCK_SINGLE_CODE_RES")
+
+NEW_SUBDAO_PROPOSAL_SINGLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_subdao_proposal_single.wasm")
 NEW_SUBDAO_PROPOSAL_SINGLE_CODE_ID=$(extract_hash "$NEW_SUBDAO_PROPOSAL_SINGLE_CODE_RES")
+
+NEW_INVESTORS_VESTING_VAULT_CODE_RES=$(store_code "new_artifacts_dao/investors_vesting_vault.wasm")
 NEW_INVESTORS_VESTING_VAULT_CODE_ID=$(extract_hash "$NEW_INVESTORS_VESTING_VAULT_CODE_RES")
+
+NEW_DISTRIBUTION_CODE_RES=$(store_code "new_artifacts_dao/neutron_distribution.wasm")
 NEW_DISTRIBUTION_CODE_ID=$(extract_hash "$NEW_DISTRIBUTION_CODE_RES")
+
+NEW_RESERVE_CODE_RES=$(store_code "new_artifacts_dao/neutron_reserve.wasm")
 NEW_RESERVE_CODE_ID=$(extract_hash "$NEW_RESERVE_CODE_RES")
 
 # ===== MIGRATE
@@ -242,7 +260,7 @@ MIGRATE_MSGS='[
     {
         "wasm": {
             "migrate": {
-                "contract_addr": "'"${SECURITY_SINGLE_PROPOSAL}"'",
+                "contract_addr": "'"${SECURITY_SUBDAO_SINGLE_PROPOSAL}"'",
                 "new_code_id": '"${NEW_SUBDAO_PROPOSAL_SINGLE_CODE_ID}"',
                 "msg": "'"${MIGRATE_MSG_BASE64}"'"
             }
@@ -251,7 +269,7 @@ MIGRATE_MSGS='[
     {
         "wasm": {
             "migrate": {
-                "contract_addr": "'"${SECURITY_SINGLE_PRE_PROPOSAL}"'",
+                "contract_addr": "'"${SECURITY_SUBDAO_SINGLE_PRE_PROPOSAL}"'",
                 "new_code_id": '"${NEW_SUBDAO_PRE_PROPOSE_SINGLE_CODE_ID}"',
                 "msg": "'"${MIGRATE_MSG_BASE64}"'"
             }
@@ -265,10 +283,35 @@ MIGRATE_MSGS='[
                 "msg": "'"${MIGRATE_MSG_BASE64}"'"
             }
         }
+    },
+    {
+        "wasm": {
+            "migrate": {
+                "contract_addr": "'"${GRANTS_SUBDAO}"'",
+                "new_code_id": '"${NEW_SUBDAO_CORE_CODE_ID}"',
+                "msg": "'"${MIGRATE_MSG_BASE64}"'"
+            }
+        }
+    },
+    {
+        "wasm": {
+            "migrate": {
+                "contract_addr": "'"${GRANTS_SUBDAO_SINGLE_PROPOSAL}"'",
+                "new_code_id": '"${NEW_SUBDAO_PROPOSAL_SINGLE_CODE_ID}"',
+                "msg": "'"${MIGRATE_MSG_BASE64}"'"
+            }
+        }
+    },
+    {
+        "wasm": {
+            "migrate": {
+                "contract_addr": "'"${GRANTS_SUBDAO_SINGLE_PRE_PROPOSAL}"'",
+                "new_code_id": '"${NEW_SUBDAO_PRE_PROPOSE_SINGLE_CODE_ID}"',
+                "msg": "'"${MIGRATE_MSG_BASE64}"'"
+            }
+        }
     }
 ]'
-
-# TODO: no investors vault upgrade here
 
 echo $MIGRATE_MSGS | jq . > migrate_proposal_for_dao.json
 
