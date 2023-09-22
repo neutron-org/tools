@@ -55,6 +55,8 @@ function extract_hash() {
     echo $CODE_ID_NUM
 }
 
+
+
 # Production contract addresses
 MAIN_DAO=neutron1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrstdxvff
 SINGLE_PROPOSAL=neutron1436kxs0w2es6xlqpp9rd35e3d0cjnw4sv8j3a7483sgks29jqwgshlt6zh
@@ -68,6 +70,7 @@ NTRN_VAULT=neutron1qeyjez6a9dwlghf9d6cy44fxmsajztw257586akk6xn6k88x0gus5djz4e
 CREDITS_VAULT=neutron1rxwzsw37ulveefk20575mlxl3hzhzv9k46c8gklfkt4g2vk4w3tse8usrs
 LOCKDROP_VAULT=neutron1f8gs4rp232ngyta3g2efwfkznymvv85du7qm9y0mhvjxpp3cq68qgquudm
 LP_VESTING_VAULT=neutron1adavpfxyp5kgs3zp0n0vkc37qakeh5eqwxqxzysgg0ahlx82rmsqp4rnz8
+INVESTORS_VESTING_VAULT=neutron1dmd56h7hlevuwssp203fgc2uh0qdtwep2m735fzksuavgq3naslqp0ehvx
 
 SECURITY_SUBDAO=neutron1fuyxwxlsgjkfjmxfthq8427dm2am3ya3cwcdr8gls29l7jadtazsuyzwcc
 SECURITY_SUBDAO_SINGLE_PROPOSAL=neutron15m728qxvtat337jdu2f0uk6pu905kktrxclgy36c0wd822tpxcmqvnrurt
@@ -80,8 +83,10 @@ GRANTS_SUBDAO_SINGLE_PROPOSAL=neutron14n7jt2qkngxtgr7dgdt50g4xn2a29llz79h9y25lrs
 GRANTS_SUBDAO_SINGLE_PRE_PROPOSAL=neutron1s0fjev2pmgyaj0uthszzp3tpx59yp2p07vwhj0467sl9j343dk9qss6x9w
 # GRANTS_SUBDAO_VOTING=NOT_MIGRATED
 
-# NEW
-INVESTORS_VESTING_VAULT=neutron1dmd56h7hlevuwssp203fgc2uh0qdtwep2m735fzksuavgq3naslqp0ehvx
+DISTRIBUTION=neutron1dk9c86h7gmvuaq89cv72cjhq4c97r2wgl5gyfruv6shquwspalgq5u7sy5
+RESERVE=neutron13we0myxwzlpx8l5ark8elw5gj5d59dl6cjkzmt80c5q5cv5rt54qvzkv2a
+
+
 
 # ===== STORE
 NEW_MAIN_DAO_CODE_RES=$(store_code "new_artifacts_dao/cwd_core.wasm")
@@ -126,6 +131,7 @@ NEW_SUBDAO_CORE_CODE_ID=$(extract_hash "$NEW_SUBDAO_CORE_CODE_RES")
 NEW_SUBDAO_PRE_PROPOSE_SINGLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_subdao_pre_propose_single.wasm")
 NEW_SUBDAO_PRE_PROPOSE_SINGLE_CODE_ID=$(extract_hash "$NEW_SUBDAO_PRE_PROPOSE_SINGLE_CODE_RES")
 
+# TODO: use for grants subdao
 NEW_SUBDAO_TIMELOCK_SINGLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_subdao_timelock_single.wasm")
 NEW_SUBDAO_TIMELOCK_SINGLE_CODE_ID=$(extract_hash "$NEW_SUBDAO_TIMELOCK_SINGLE_CODE_RES")
 
@@ -313,29 +319,29 @@ MIGRATE_MSGS='[
                 "msg": "'"${MIGRATE_MSG_BASE64}"'"
             }
         }
+    },
+    {
+        "wasm": {
+            "migrate": {
+                "contract_addr": "'"${DISTRIBUTION}"'",
+                "new_code_id": '"${NEW_DISTRIBUTION_CODE_ID}"',
+                "msg": "'"${MIGRATE_MSG_BASE64}"'"
+            }
+        }
+    },
+    {
+        "wasm": {
+            "migrate": {
+                "contract_addr": "'"${RESERVE}"'",
+                "new_code_id": '"${NEW_RESERVE_CODE_ID}"',
+                "msg": "'"${MIGRATE_MSG_BASE64}"'"
+            }
+        }
     }
 ]'
 
-# TODO: Q: do we need to upgrade lido bridge?
-
 echo $MIGRATE_MSGS | jq . > migrate_proposal_for_dao.json
 
-# !!! Q: DON't NEED TO UPDATE CW4 contracts?
-  #  {
-  #       "wasm": {
-  #           "migrate": {
-  #               "contract_addr": "'"${SECURITY_SUBDAO_VOTING}"'",
-  #               "new_code_id": '"${CW4_VOTING_CONTRACT_BINARY_ID}"',
-  #               "msg": "'"${MIGRATE_MSG_BASE64}"'"
-  #           }
-  #       }
-  #   },
-  #  {
-  #       "wasm": {
-  #           "migrate": {
-  #               "contract_addr": "'"${SECURITY_CW4}"'",
-  #               "new_code_id": '"${}"',
-  #               "msg": "'"${MIGRATE_MSG_BASE64}"'"
-  #           }
-  #       }
-  #   },
+
+# Questions:
+# TODO: Q: do we need to upgrade lido bridge?

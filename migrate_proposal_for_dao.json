@@ -169,5 +169,23 @@
         "msg": "e30K"
       }
     }
+  },
+  {
+    "wasm": {
+      "migrate": {
+        "contract_addr": "neutron1dk9c86h7gmvuaq89cv72cjhq4c97r2wgl5gyfruv6shquwspalgq5u7sy5",
+        "new_code_id": 266,
+        "msg": "e30K"
+      }
+    }
+  },
+  {
+    "wasm": {
+      "migrate": {
+        "contract_addr": "neutron13we0myxwzlpx8l5ark8elw5gj5d59dl6cjkzmt80c5q5cv5rt54qvzkv2a",
+        "new_code_id": 267,
+        "msg": "e30K"
+      }
+    }
   }
 ]
