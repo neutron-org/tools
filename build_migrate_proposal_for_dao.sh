@@ -40,6 +40,8 @@ function store_code() {
     --home ${KEYS_HOME} \
     --node ${TESTNET_RPC} \
     -y)
+
+    sleep 5
    
    echo $RES
 }
