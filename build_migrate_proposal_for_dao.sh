@@ -148,6 +148,11 @@ NEW_RESERVE_CODE_ID=$(extract_hash "$NEW_RESERVE_CODE_RES")
 EMPTY_MIGRATE_MSG='{}'
 MIGRATE_MSG_BASE64=$(json_to_base64 "$EMPTY_MIGRATE_MSG")
 
+MULTIPLE_MIGRATE_MSG='{
+    "from_compatible": {} 
+}'
+FROM_COMPATIBLE_BASE64=$(json_to_base64 "$MULTIPLE_MIGRATE_MSG")
+
 MIGRATE_MSGS='[
     {
         "wasm": {
@@ -181,7 +186,7 @@ MIGRATE_MSGS='[
             "migrate": {
                 "contract_addr": "'"${MULTIPLE_PROPOSAL}"'",
                 "new_code_id": '"${NEW_PROPOSAL_MULTIPLE_CODE_ID}"',
-                "msg": "'"${MIGRATE_MSG_BASE64}"'"
+                "msg": "'"${FROM_COMPATIBLE_BASE64}"'"
             }
         }
     },
@@ -271,7 +276,7 @@ MIGRATE_MSGS='[
             "migrate": {
                 "contract_addr": "'"${SECURITY_SUBDAO}"'",
                 "new_code_id": '"${NEW_SUBDAO_CORE_CODE_ID}"',
-                "msg": "'"${MIGRATE_MSG_BASE64}"'"
+                "msg": "'"${FROM_COMPATIBLE_BASE64}"'"
             }
         }
     },

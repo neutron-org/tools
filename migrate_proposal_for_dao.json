@@ -31,7 +31,7 @@
       "migrate": {
         "contract_addr": "neutron1pvrwmjuusn9wh34j7y520g8gumuy9xtl3gvprlljfdpwju3x7ucsj3fj40",
         "new_code_id": 249,
-        "msg": "e30K"
+        "msg": "ewogICAgImZyb21fY29tcGF0aWJsZSI6IHt9IAp9Cg=="
       }
     }
   },
@@ -121,7 +121,7 @@
       "migrate": {
         "contract_addr": "neutron1fuyxwxlsgjkfjmxfthq8427dm2am3ya3cwcdr8gls29l7jadtazsuyzwcc",
         "new_code_id": 257,
-        "msg": "e30K"
+        "msg": "ewogICAgImZyb21fY29tcGF0aWJsZSI6IHt9IAp9Cg=="
       }
     }
   },
