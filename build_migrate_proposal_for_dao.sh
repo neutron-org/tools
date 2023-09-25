@@ -148,10 +148,10 @@ NEW_RESERVE_CODE_ID=$(extract_hash "$NEW_RESERVE_CODE_RES")
 EMPTY_MIGRATE_MSG='{}'
 MIGRATE_MSG_BASE64=$(json_to_base64 "$EMPTY_MIGRATE_MSG")
 
-MULTIPLE_MIGRATE_MSG='{
-    "from_compatible": {} 
+FROM_COMPATIBLE='{
+    "from_compatible": {}
 }'
-FROM_COMPATIBLE_BASE64=$(json_to_base64 "$MULTIPLE_MIGRATE_MSG")
+FROM_COMPATIBLE_BASE64=$(json_to_base64 "$FROM_COMPATIBLE")
 
 MIGRATE_MSGS='[
     {
@@ -347,6 +347,6 @@ MIGRATE_MSGS='[
 
 echo $MIGRATE_MSGS | jq . > migrate_proposal_for_dao.json
 
-
 # Questions:
-# TODO: Q: do we need to upgrade lido bridge?
+# - do we need to upgrade lido bridge?
+# - do we use subdao_proposal_timelock code id for grants subdao proposal or not?
