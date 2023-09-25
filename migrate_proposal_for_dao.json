@@ -129,7 +129,7 @@
     "wasm": {
       "migrate": {
         "contract_addr": "neutron15m728qxvtat337jdu2f0uk6pu905kktrxclgy36c0wd822tpxcmqvnrurt",
-        "new_code_id": 260,
+        "new_code_id": 264,
         "msg": "e30K"
       }
     }
@@ -156,7 +156,7 @@
     "wasm": {
       "migrate": {
         "contract_addr": "neutron14n7jt2qkngxtgr7dgdt50g4xn2a29llz79h9y25lrsqyxrwmngmsmt9kta",
-        "new_code_id": 260,
+        "new_code_id": 264,
         "msg": "e30K"
       }
     }
