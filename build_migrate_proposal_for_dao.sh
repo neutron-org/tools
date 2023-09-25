@@ -15,14 +15,12 @@ function check_json() {
 }
 
 BINARY=neutrond
-#TESTNET_RPC=https://rpc-falcron.pion-1.ntrn.tech:443
 TESTNET_RPC=http://65.109.239.170:26657
 DEPLOYER=neutrond_demowallet_2
 KEYS_HOME=~/.neutrond
 DEPLOYER_ADDR=$(${BINARY} keys show ${DEPLOYER} --keyring-backend test -a --home ${KEYS_HOME})
 TESTNET_CHAINID=neutron-1
 GAS_PRICES=0.9untrn
-# GAS=45000000untrn
 REST=http://65.109.239.170:1317
 
 # given the contract address on mainnet, gets contract from mainnet, stores it on testnet and returns contract code_id
@@ -41,9 +39,9 @@ function store_code() {
     --node ${TESTNET_RPC} \
     -y)
 
-    sleep 5
+  sleep 5
    
-   echo $RES
+  echo $RES
 }
 
 function extract_hash() {
@@ -91,58 +89,76 @@ RESERVE=neutron13we0myxwzlpx8l5ark8elw5gj5d59dl6cjkzmt80c5q5cv5rt54qvzkv2a
 # ===== STORE
 NEW_MAIN_DAO_CODE_RES=$(store_code "new_artifacts_dao/cwd_core.wasm")
 NEW_MAIN_DAO_CODE_ID=$(extract_hash "$NEW_MAIN_DAO_CODE_RES")
+echo $NEW_MAIN_DAO_CODE_ID
 
 NEW_PROPOSAL_SINGLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_proposal_single.wasm")
 NEW_PROPOSAL_SINGLE_CODE_ID=$(extract_hash "$NEW_PROPOSAL_SINGLE_CODE_RES")
+echo $NEW_PROPOSAL_SINGLE_CODE_ID
 
 NEW_PRE_PROPOSE_SINGLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_pre_propose_single.wasm")
 NEW_PRE_PROPOSE_SINGLE_CODE_ID=$(extract_hash "$NEW_PRE_PROPOSE_SINGLE_CODE_RES")
+echo $NEW_PRE_PROPOSE_SINGLE_CODE_ID
 
 NEW_PROPOSAL_MULTIPLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_proposal_multiple.wasm")
 NEW_PROPOSAL_MULTIPLE_CODE_ID=$(extract_hash "$NEW_PROPOSAL_MULTIPLE_CODE_RES")
+echo $NEW_PROPOSAL_MULTIPLE_CODE_ID
 
 NEW_PRE_PROPOSE_MULTIPLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_pre_propose_multiple.wasm")
 NEW_PRE_PROPOSE_MULTIPLE_CODE_ID=$(extract_hash "$NEW_PRE_PROPOSE_MULTIPLE_CODE_RES")
+echo $NEW_PRE_PROPOSE_MULTIPLE_CODE_ID
 
 NEW_PRE_PROPOSE_OVERRULE_CODE_RES=$(store_code "new_artifacts_dao/cwd_pre_propose_overrule.wasm")
 NEW_PRE_PROPOSE_OVERRULE_CODE_ID=$(extract_hash "$NEW_PRE_PROPOSE_OVERRULE_CODE_RES")
+echo $NEW_PRE_PROPOSE_OVERRULE_CODE_ID
 
 NEW_VOTING_REGISTRY_CODE_RES=$(store_code "new_artifacts_dao/neutron_voting_registry.wasm")
 NEW_VOTING_REGISTRY_CODE_ID=$(extract_hash "$NEW_VOTING_REGISTRY_CODE_RES")
+echo $NEW_VOTING_REGISTRY_CODE_ID
 
 NEW_NEUTRON_VAULT_CODE_RES=$(store_code "new_artifacts_dao/neutron_vault.wasm")
 NEW_NEUTRON_VAULT_CODE_ID=$(extract_hash "$NEW_NEUTRON_VAULT_CODE_RES")
+echo $NEW_NEUTRON_VAULT_CODE_ID
 
 NEW_CREDITS_VAULT_CODE_RES=$(store_code "new_artifacts_dao/credits_vault.wasm")
 NEW_CREDITS_VAULT_CODE_ID=$(extract_hash "$NEW_CREDITS_VAULT_CODE_RES")
+echo $NEW_CREDITS_VAULT_CODE_ID
 
 NEW_LOCKDROP_VAULT_CODE_RES=$(store_code "new_artifacts_dao/lockdrop_vault.wasm")
 NEW_LOCKDROP_VAULT_CODE_ID=$(extract_hash "$NEW_LOCKDROP_VAULT_CODE_RES")
+echo $NEW_LOCKDROP_VAULT_CODE_ID
 
 NEW_LP_VESTING_VAULT_CODE_RES=$(store_code "new_artifacts_dao/vesting_lp_vault.wasm")
 NEW_LP_VESTING_VAULT_CODE_ID=$(extract_hash "$NEW_LP_VESTING_VAULT_CODE_RES")
+echo $NEW_LP_VESTING_VAULT_CODE_ID
 
 NEW_INVESTORS_VESTING_VAULT_CODE_RES=$(store_code "new_artifacts_dao/investors_vesting_vault.wasm")
 NEW_INVESTORS_VESTING_VAULT_CODE_ID=$(extract_hash "$NEW_INVESTORS_VESTING_VAULT_CODE_RES")
+echo $NEW_INVESTORS_VESTING_VAULT_CODE_ID
 
 NEW_SUBDAO_CORE_CODE_RES=$(store_code "new_artifacts_dao/cwd_subdao_core.wasm")
 NEW_SUBDAO_CORE_CODE_ID=$(extract_hash "$NEW_SUBDAO_CORE_CODE_RES")
+echo $NEW_SUBDAO_CORE_CODE_ID
 
 NEW_SUBDAO_PRE_PROPOSE_SINGLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_subdao_pre_propose_single.wasm")
 NEW_SUBDAO_PRE_PROPOSE_SINGLE_CODE_ID=$(extract_hash "$NEW_SUBDAO_PRE_PROPOSE_SINGLE_CODE_RES")
+echo $NEW_SUBDAO_PRE_PROPOSE_SINGLE_CODE_ID
 
 # TODO: use for grants subdao
 NEW_SUBDAO_TIMELOCK_SINGLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_subdao_timelock_single.wasm")
 NEW_SUBDAO_TIMELOCK_SINGLE_CODE_ID=$(extract_hash "$NEW_SUBDAO_TIMELOCK_SINGLE_CODE_RES")
+echo $NEW_SUBDAO_TIMELOCK_SINGLE_CODE_ID
 
 NEW_SUBDAO_PROPOSAL_SINGLE_CODE_RES=$(store_code "new_artifacts_dao/cwd_subdao_proposal_single.wasm")
 NEW_SUBDAO_PROPOSAL_SINGLE_CODE_ID=$(extract_hash "$NEW_SUBDAO_PROPOSAL_SINGLE_CODE_RES")
+echo $NEW_SUBDAO_PROPOSAL_SINGLE_CODE_ID
 
 NEW_DISTRIBUTION_CODE_RES=$(store_code "new_artifacts_dao/neutron_distribution.wasm")
 NEW_DISTRIBUTION_CODE_ID=$(extract_hash "$NEW_DISTRIBUTION_CODE_RES")
+echo $NEW_DISTRIBUTION_CODE_ID
 
 NEW_RESERVE_CODE_RES=$(store_code "new_artifacts_dao/neutron_reserve.wasm")
 NEW_RESERVE_CODE_ID=$(extract_hash "$NEW_RESERVE_CODE_RES")
+echo $NEW_RESERVE_CODE_ID
 
 # ===== MIGRATE
 EMPTY_MIGRATE_MSG='{}'
