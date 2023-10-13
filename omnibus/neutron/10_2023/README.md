@@ -1,8 +1,10 @@
 # Omnibus 10 2023
 
-1. (Optional) prepare contracts in `$ARTIFACTS_DIR` dir and upload with `bash omnibus_upload_code.sh`
-2. fill `codes.env` manually or with help of p.1.
-3. run `bash omnibus_build_proposal.sh > proposal.json` to build a proposal msg.
+1. Edit .env if necessary
+2. (Optional) prepare contracts in `$ARTIFACTS_DIR` dir and upload with `bash omnibus_upload_code.sh > codes.env`
+3. fill `codes.env` manually or with help of p.1.
+4. run `bash omnibus_build_proposal.sh > proposal.json` to build a proposal msg.
+5. submit and execute `proposal.json` with commands from `submit.sh`
 
 ## codes required for proposal
 
