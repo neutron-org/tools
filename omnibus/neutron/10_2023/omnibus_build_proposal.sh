@@ -2,6 +2,20 @@
 
 . codes.env
 
+function json_to_base64() {
+  MSG=$1
+  check_json "$MSG"
+  echo "$MSG" | base64 | tr -d "\n"
+}
+
+function check_json() {
+  MSG=$1
+  if ! jq -e . >/dev/null 2>&1 <<<"$MSG"; then
+      echo "Failed to parse JSON for $MSG" >&2
+      exit 1
+  fi
+}
+
 function empty_migration() {
     ADDRESS=$1
     CODE=$2
@@ -17,6 +31,28 @@ function empty_migration() {
     }'
     echo $MSG
 }
+
+function from_compatible_migration() {
+    ADDRESS=$1
+    CODE=$2
+    FROM_COMPATIBLE='{
+    "from_compatible": {}
+    }'
+    FROM_COMPATIBLE_BASE64=$(json_to_base64 "$FROM_COMPATIBLE")
+
+    MSG='{
+    "wasm":{
+        "migrate":{
+            "contract_addr":"'"${ADDRESS}"'",
+            "new_code_id": '"${CODE}"',
+            "msg":"'"${FROM_COMPATIBLE_BASE64}"'"
+        }
+    }
+    }'
+    echo $MSG
+}
+
+
 
 #NEW_MAIN_DAO_CODE_ID
 MAIN_DAO=neutron1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrstdxvff
@@ -54,16 +90,16 @@ MSG='{
         "description": "to make it actual",
         "msgs": [
         '$(empty_migration $MAIN_DAO $NEW_MAIN_DAO_CODE_ID)',
-        '$(empty_migration $SECURITY_SUBDAO $NEW_SUBDAO_CORE_ID)',
-        '$(empty_migration $GRANTS_SUBDAO $NEW_SUBDAO_CORE_ID)',
+        '$(from_compatible_migration $SECURITY_SUBDAO $NEW_SUBDAO_CORE_ID)',
+        '$(from_compatible_migration $GRANTS_SUBDAO $NEW_SUBDAO_CORE_ID)',
         '$(empty_migration $PROPOSAL_OVERRULE $NEW_PROPOSAL_SINGLE_CODE_ID)',
         '$(empty_migration $PROPOSAL_SINGLE $NEW_PROPOSAL_SINGLE_CODE_ID)',
         '$(empty_migration $PRE_POPOSE_SINGLE_OVERRULE $NEW_PRE_PROPOSE_OVERRULE_CODE_ID)',
-        '$(empty_migration $PROPOSAL_MULTIPLE $NEW_PROPOSAL_MULTIPLE_CODE_ID)',
+        '$(from_compatible_migration $PROPOSAL_MULTIPLE $NEW_PROPOSAL_MULTIPLE_CODE_ID)',
         '$(empty_migration $SUBDAO_TIMELOCK_SINGLE $NEW_SUBDAO_TIMELOCK_SINGLE_CODE_ID)',
         '$(empty_migration $VOTING_REGISTRY $NEW_VOTING_REGISTRY_CODE_ID)',
         '$(empty_migration $VESTING_GRANTS_SUBDAO $NEW_TGE_VESTING_GRANTS_SUBDAO_CODE_ID)',
-        '$(bash ./build_subdao_update_msg.sh)',
+        '$(bash ./build_subdao_update_msg.sh)'
     ]
           }
     }

@@ -1,15 +1,7 @@
 #!/bin/bash
 
-
-BINARY=/home/swelf/src/lido/neutron/build/neutrond
-TESTNET_RPC=http://157.90.251.178:26657
-DEPLOYER=neutrond_demowallet_2
-KEYS_HOME=~/.neutrond
+. .env
 DEPLOYER_ADDR=$(${BINARY} keys show ${DEPLOYER} --keyring-backend test -a --home ${KEYS_HOME})
-TESTNET_CHAINID=neutron-gamme-1
-GAS_PRICES=0.9untrn
-REST=http://157.90.251.178:1317
-ARTIFACTS_DIR=new_artifacts_dao
 
 # given the contract address on mainnet, gets contract from mainnet, stores it on testnet and returns contract code_id
 function store_code() {
