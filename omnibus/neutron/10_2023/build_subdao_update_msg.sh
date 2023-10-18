@@ -75,7 +75,7 @@ SECURITY_SUBDAO_PREPROPOSAL_NO_TIMELOCK='{
                   "addr":"neutron1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrstdxvff"
                }
             },
-            "code_id":'"${NEW_SUBDAO_PREPROPOSE_SINGLE_NO_TIMELOCK_CODE_ID}"',
+            "code_id":'"${NEW_SECURITY_SUBDAO_PREPROPOSE_CODE_ID}"',
             "msg":"'$(json_to_base64 "${SECURITY_SUBDAO_PREPROPOSAL}")'",
             "label":"neutron.subdaos.security.pre_propose.no_timelock"
          }
