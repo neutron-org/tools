@@ -61,6 +61,10 @@ MAIN_DAO=neutron1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrstdxvff
 SECURITY_SUBDAO=neutron1fuyxwxlsgjkfjmxfthq8427dm2am3ya3cwcdr8gls29l7jadtazsuyzwcc
 GRANTS_SUBDAO=neutron1zjdv3u6svlazlydmje2qcp44yqkt0059chz8gmyl5yrklmgv6fzq9chelu
 
+#NEW_SUBDAO_PROPOSAL_SINGLE_CODE_ID
+SECURITY_SUBDAO_PROPOSAL=neutron15m728qxvtat337jdu2f0uk6pu905kktrxclgy36c0wd822tpxcmqvnrurt
+GRANTS_SUBDAO_PROPOSAL=neutron14n7jt2qkngxtgr7dgdt50g4xn2a29llz79h9y25lrsqyxrwmngmsmt9kta
+
 #NEW_PROPOSAL_SINGLE_CODE_ID
 PROPOSAL_OVERRULE=neutron12pwnhtv7yat2s30xuf4gdk9qm85v4j3e6p44let47pdffpklcxlq56v0te
 PROPOSAL_SINGLE=neutron1436kxs0w2es6xlqpp9rd35e3d0cjnw4sv8j3a7483sgks29jqwgshlt6zh
@@ -88,6 +92,10 @@ VESTING_GRANTS_SUBDAO=neutron1atjemf7fjkkstae45q6dhuskvxlmnt9ndm05srd7jwhpxq9fhd
 
 #NEW_SECURITY_SUBDAO_PREPROPOSE_CODE_ID
 SECURITY_SUBDAO_PREPROPOSE=neutron1zjd5lwhch4ndnmayqxurja4x5y5mavy9ktrk6fzsyzan4wcgawnqjk5g26
+GRANTS_SUBDAO_PREPROPOSE=neutron1s0fjev2pmgyaj0uthszzp3tpx59yp2p07vwhj0467sl9j343dk9qss6x9w
+
+#NEW_RESERVE_CODE_ID=
+RESERVE=neutron13we0myxwzlpx8l5ark8elw5gj5d59dl6cjkzmt80c5q5cv5rt54qvzkv2a
 
 
 
@@ -108,10 +116,13 @@ MSG='{
         '$(empty_migration $PRE_POPOSE_SINGLE_OVERRULE $NEW_PRE_PROPOSE_OVERRULE_CODE_ID)',
         '$(from_compatible_migration $PROPOSAL_MULTIPLE $NEW_PROPOSAL_MULTIPLE_CODE_ID)',
         '$(empty_migration $SUBDAO_TIMELOCK_SINGLE $NEW_SUBDAO_TIMELOCK_SINGLE_CODE_ID)',
-        '$(empty_migration $SECURITY_SUBDAO_PREPROPOSE $SECURITY_SUBDAO_PREPROPOSE_CODE_ID)',
+        '$(empty_migration $SECURITY_SUBDAO_PROPOSAL $NEW_SUBDAO_PROPOSAL_SINGLE_CODE_ID)',
+        '$(empty_migration $GRANTS_SUBDAO_PROPOSAL $NEW_SUBDAO_PROPOSAL_SINGLE_CODE_ID)',
+        '$(empty_migration $SECURITY_SUBDAO_PREPROPOSE $NEW_SECURITY_SUBDAO_PREPROPOSE_CODE_ID)',
+        '$(empty_migration $GRANTS_SUBDAO_PREPROPOSE $NEW_SECURITY_SUBDAO_PREPROPOSE_CODE_ID)',
         '$(empty_migration $VOTING_REGISTRY $NEW_VOTING_REGISTRY_CODE_ID)',
         '$(empty_migration $VESTING_GRANTS_SUBDAO $NEW_TGE_VESTING_GRANTS_SUBDAO_CODE_ID)',
-        '$(bash ./build_subdao_update_msg.sh)'
+        '$(empty_migration $RESERVE $NEW_RESERVE_CODE_ID)'
     ]
           }
     }
@@ -119,4 +130,4 @@ MSG='{
 }
 '
 echo $MSG
-
+#        '$(bash ./build_subdao_update_msg.sh)'

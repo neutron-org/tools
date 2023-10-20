@@ -6,7 +6,7 @@ DEPLOYER_ADDR=$(${BINARY} keys show ${DEPLOYER} --keyring-backend test -a --home
 PROPOSAL=$(cat ./proposal.json)
 
 #bond
-# ${BINARY} tx wasm execute neutron1qeyjez6a9dwlghf9d6cy44fxmsajztw257586akk6xn6k88x0gus5djz4e '{"bond":{}}' --amount 10000000000000untrn --from demowallet2 --gas 200000 --gas-prices 0.0025untrn --keyring-backend test --home ${KEYS_HOME} --chain-id=neutron-1 -y --broadcast-mode block --node ${TESTNET_RPC}
+#${BINARY} tx wasm execute neutron1qeyjez6a9dwlghf9d6cy44fxmsajztw257586akk6xn6k88x0gus5djz4e '{"bond":{}}' --amount 10000000000000untrn --from demowallet2 --gas 200000 --gas-prices 0.0025untrn --keyring-backend test --home ${KEYS_HOME} --chain-id=neutron-1 -y --broadcast-mode block --node ${TESTNET_RPC}
 
 RES=$(${BINARY} tx wasm execute  neutron1hulx7cgvpfcvg83wk5h96sedqgn72n026w6nl47uht554xhvj9nsgs8v0z "$PROPOSAL" --from demowallet2 --amount 1000000000untrn --gas-adjustment 1.4 --gas auto --gas-prices 0.0025untrn --keyring-backend test --home ${KEYS_HOME} --chain-id=neutron-1 -y --broadcast-mode block --node ${TESTNET_RPC} --output json)
 echo $RES

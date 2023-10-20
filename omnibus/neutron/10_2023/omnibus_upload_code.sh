@@ -8,10 +8,11 @@ function store_code() {
   CONTRACT_PATH=$1
 
   RES=$($BINARY tx wasm store "$CONTRACT_PATH" \
-    --gas 5000000 \
+    --gas auto \
+    --gas-adjustment 1.2 \
     --gas-prices ${GAS_PRICES} \
     --chain-id ${TESTNET_CHAINID} \
-    --broadcast-mode=block \
+    --broadcast-mode=sync \
     --from "$DEPLOYER" \
     --keyring-backend test \
     --output json \
@@ -22,8 +23,17 @@ function store_code() {
   echo $RES
 }
 
+function extract_gas() {
+    RES=$1
+    HASH=$(echo $RES | jq -r '.txhash')
+    GAS=$(curl $REST/cosmos/tx/v1beta1/txs/$HASH | jq '.tx_response.gas_used')
+
+    echo $GAS
+}
+
 function extract_hash() {
     RES=$1
+    sleep 20
     HASH=$(echo $RES | jq -r '.txhash')
     CODE_ID=$(curl $REST/cosmos/tx/v1beta1/txs/$HASH | jq '.tx_response.logs[0].events[1].attributes[1].value')
     CODE_ID_NUM=${CODE_ID//\"/}
@@ -47,9 +57,6 @@ NEW_PROPOSAL_SINGLE_CODE_RES=$(store_code "${ARTIFACTS_DIR}/cwd_proposal_single.
 NEW_PROPOSAL_SINGLE_CODE_ID=$(extract_hash "$NEW_PROPOSAL_SINGLE_CODE_RES")
 echo NEW_PROPOSAL_SINGLE_CODE_ID=$NEW_PROPOSAL_SINGLE_CODE_ID
 
-NEW_SUBDAO_PROPOSAL_SINGLE_CODE_RES=$(store_code "${ARTIFACTS_DIR}/cwd_proposal_single.wasm")
-NEW_SUBDAO_PROPOSAL_SINGLE_CODE_ID=$(extract_hash "$NEW_SUBDAO_PROPOSAL_SINGLE_CODE_RES")
-echo NEW_SUBDAO_PROPOSAL_SINGLE_CODE_ID=$NEW_SUBDAO_PROPOSAL_SINGLE_CODE_ID
 
 NEW_PRE_PROPOSE_SINGLE_CODE_RES=$(store_code "${ARTIFACTS_DIR}/cwd_pre_propose_single.wasm")
 NEW_PRE_PROPOSE_SINGLE_CODE_ID=$(extract_hash "$NEW_PRE_PROPOSE_SINGLE_CODE_RES")
@@ -71,6 +78,10 @@ NEW_SUBDAO_TIMELOCK_SINGLE_CODE_RES=$(store_code "${ARTIFACTS_DIR}/cwd_subdao_ti
 NEW_SUBDAO_TIMELOCK_SINGLE_CODE_ID=$(extract_hash "$NEW_SUBDAO_TIMELOCK_SINGLE_CODE_RES")
 echo NEW_SUBDAO_TIMELOCK_SINGLE_CODE_ID=$NEW_SUBDAO_TIMELOCK_SINGLE_CODE_ID
 
+NEW_SUBDAO_PROPOSAL_SINGLE_CODE_RES=$(store_code "${ARTIFACTS_DIR}/cwd_subdao_proposal_single.wasm")
+NEW_SUBDAO_PROPOSAL_SINGLE_CODE_ID=$(extract_hash "$NEW_SUBDAO_PROPOSAL_SINGLE_CODE_RES")
+echo NEW_SUBDAO_PROPOSAL_SINGLE_CODE_ID=$NEW_SUBDAO_PROPOSAL_SINGLE_CODE_ID
+
 NEW_SECURITY_SUBDAO_PREPROPOSE_CODE_RES=$(store_code "${ARTIFACTS_DIR}/cwd_security_subdao_pre_propose.wasm")
 NEW_SECURITY_SUBDAO_PREPROPOSE_CODE_ID=$(extract_hash "$NEW_SECURITY_SUBDAO_PREPROPOSE_CODE_RES")
 echo NEW_SECURITY_SUBDAO_PREPROPOSE_CODE_ID=$NEW_SECURITY_SUBDAO_PREPROPOSE_CODE_ID
@@ -83,4 +94,8 @@ echo NEW_SUBDAO_PREPROPOSE_SINGLE_CODE_ID=$NEW_SUBDAO_PREPROPOSE_SINGLE_CODE_ID
 NEW_TGE_VESTING_GRANTS_SUBDAO_CODE_RES=$(store_code "${ARTIFACTS_DIR}/vesting_investors.wasm")
 NEW_TGE_VESTING_GRANTS_SUBDAO_CODE_ID=$(extract_hash "$NEW_TGE_VESTING_GRANTS_SUBDAO_CODE_RES")
 echo NEW_TGE_VESTING_GRANTS_SUBDAO_CODE_ID=$NEW_TGE_VESTING_GRANTS_SUBDAO_CODE_ID
+
+NEW_RESERVE_CODE_RES=$(store_code "${ARTIFACTS_DIR}/neutron_reserve.wasm")
+NEW_RESERVE_CODE_ID=$(extract_hash "$NEW_RESERVE_CODE_RES")
+echo NEW_RESERVE_CODE_ID=$NEW_RESERVE_CODE_ID
 
