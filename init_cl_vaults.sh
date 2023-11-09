@@ -21,7 +21,7 @@ NEW_LOCKDROP_VAULT_CL_INST_MSG='{
 
 echo "Instantiate lockdrop vault"
 RES=$(neutrond tx wasm instantiate $NEW_LOCKDROP_VAULT_CL_CODE_ID "$NEW_LOCKDROP_VAULT_CL_INST_MSG" \
-    --admin $NEUTRON_DAO_ADDRESS --keyring-backend=test --from=demowallet1 --chain-id=test-1 \
+    --admin $NEUTRON_DAO_ADDRESS --keyring-backend=test --from=demowallet1 --chain-id=neutron-1 \
     --gas 2000000 --gas-prices 0.025untrn --label "lockdrop_vault_cl" --output json --broadcast-mode block -y)
 
 LOCKDROP_VAULT_CL_CONTRACT_ADDRESS=$(echo $RES | jq -r '.logs[0].events[0].attributes[0].value')
@@ -42,7 +42,7 @@ NEW_VESTING_LP_VAULT_CL_INST_MSG='{
 
 echo "Instantiate vesting lp vault"
 RES=$(neutrond tx wasm instantiate $NEW_VESTING_LP_VAULT_CL_CODE_ID "$NEW_VESTING_LP_VAULT_CL_INST_MSG" \
-    --admin $NEUTRON_DAO_ADDRESS --keyring-backend=test --from=demowallet1 --chain-id=test-1 \
+    --admin $NEUTRON_DAO_ADDRESS --keyring-backend=test --from=demowallet1 --chain-id=neutron-1 \
     --gas 2000000 --gas-prices 0.025untrn --label "vesting_lp_vault_cl" --output json --broadcast-mode block -y)
 
 LP_VESTING_VAULT_CL_CONTRACT_ADDRESS=$(echo $RES | jq -r '.logs[0].events[0].attributes[0].value')

@@ -81,9 +81,9 @@ VESTING_LP_USDC_MIGRATE_MSG='{
 }'
 VESTING_LP_USDC_MIGRATE_MSG_BASE64=$(json_to_base64 "$VESTING_LP_USDC_MIGRATE_MSG")
 
-# migrate Voting registry
-VOTING_REGISTRY_MIGRATE_MSG='{}'
-VOTING_REGISTRY_MIGRATE_MSG_BASE64=$(json_to_base64 "$VOTING_REGISTRY_MIGRATE_MSG")
+## migrate Voting registry
+#VOTING_REGISTRY_MIGRATE_MSG='{}'
+#VOTING_REGISTRY_MIGRATE_MSG_BASE64=$(json_to_base64 "$VOTING_REGISTRY_MIGRATE_MSG")
 
 # deactivate xyk vaults
 DEACTIVATE_LOCKDROP_XYK_VAULT_MSG='{
@@ -149,15 +149,6 @@ MIGRATE_MSGS='[
                 "contract_addr": "'"${VESTING_LP_ATOM_CONTRACT_ADDRESS}"'",
                 "new_code_id": '"${NEW_VESTING_LP_CODE_ID}"',
                 "msg": "'"${VESTING_LP_ATOM_MIGRATE_MSG_BASE64}"'"
-            }
-        }
-    },
-    {
-        "wasm": {
-            "migrate": {
-                "contract_addr": "'"${VOTING_REGISTRY_ADDRESS}"'",
-                "new_code_id": '"${NEW_VOTING_REGISTRY_CODE_ID}"',
-                "msg": "'"${VOTING_REGISTRY_MIGRATE_MSG_BASE64}"'"
             }
         }
     },
