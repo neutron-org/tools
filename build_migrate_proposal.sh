@@ -45,14 +45,14 @@ RESERVE_MIGRATE_MSG='{
     "ntrn_atom_xyk_pair": "neutron1e22zh5p8meddxjclevuhjmfj69jxfsa8uu3jvht72rv9d8lkhves6t8veq",
     "ntrn_atom_cl_pair": "neutron1awv05macyxcf2flhaggmjxnyyz76qfaa3jeueheqd0c5ltzmty7s74yjn0",
     "ntrn_usdc_xyk_pair": "neutron1l3gtxnwjuy65rzk63k352d52ad0f2sh89kgrqwczgt56jc8nmc3qh5kag3",
-    "ntrn_usdc_cl_pair": "FILL"
+    "ntrn_usdc_cl_pair": "neutron1fqxx5ef3u9ekfd5z8rrut0chsr035ska596htzsgn7lmshwly89sk9vwxc"
 }'
 RESERVE_MIGRATE_MSG_BASE64=$(json_to_base64 "$RESERVE_MIGRATE_MSG")
 
 # migrate Lockdrop
 LOCKDROP_MIGRATE_MSG='{
-    "new_atom_token": "FILL",
-    "new_usdc_token": "FILL",
+    "new_atom_token": "neutron1ms9w8ene57ka6adn88ueaux7eewfvhmuykdrtev6ummcnf8mn3usr2yhmc",
+    "new_usdc_token": "neutron193870yxq46d8sg5x5he867hudusenv98aqe5pn5gmhsdppnqjzpsakaems",
     "max_slippage": "0.5"
 }'
 LOCKDROP_MIGRATE_MSG_BASE64=$(json_to_base64 "$LOCKDROP_MIGRATE_MSG")
@@ -64,7 +64,7 @@ VESTING_LP_ATOM_MIGRATE_MSG='{
     "paired_denom": "ibc/C4CFF46FD6DE35CA4CF4CE031E643C8FDC9BA4B99AE598E9B0ED98FE3A2319F9",
     "xyk_pair": "neutron1e22zh5p8meddxjclevuhjmfj69jxfsa8uu3jvht72rv9d8lkhves6t8veq",
     "cl_pair": "neutron1awv05macyxcf2flhaggmjxnyyz76qfaa3jeueheqd0c5ltzmty7s74yjn0",
-    "new_lp_token": "FILL",
+    "new_lp_token": "neutron1ms9w8ene57ka6adn88ueaux7eewfvhmuykdrtev6ummcnf8mn3usr2yhmc",
     "batch_size": 50
 }'
 VESTING_LP_ATOM_MIGRATE_MSG_BASE64=$(json_to_base64 "$VESTING_LP_ATOM_MIGRATE_MSG")
@@ -75,8 +75,8 @@ VESTING_LP_USDC_MIGRATE_MSG='{
     "ntrn_denom": "untrn",
     "paired_denom": "ibc/F082B65C88E4B6D5EF1DB243CDA1D331D002759E938A0F5CD3FFDC5D53B3E349",
     "xyk_pair": "neutron1l3gtxnwjuy65rzk63k352d52ad0f2sh89kgrqwczgt56jc8nmc3qh5kag3",
-    "cl_pair": "FILL",
-    "new_lp_token": "FILL",
+    "cl_pair": "neutron1fqxx5ef3u9ekfd5z8rrut0chsr035ska596htzsgn7lmshwly89sk9vwxc",
+    "new_lp_token": "neutron193870yxq46d8sg5x5he867hudusenv98aqe5pn5gmhsdppnqjzpsakaems",
     "batch_size": 50
 }'
 VESTING_LP_USDC_MIGRATE_MSG_BASE64=$(json_to_base64 "$VESTING_LP_USDC_MIGRATE_MSG")
