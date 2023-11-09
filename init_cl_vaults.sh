@@ -1,15 +1,19 @@
 #!/bin/bash
 
 NEUTRON_DAO_ADDRESS=neutron1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrstdxvff
-LOCKDROP_CONTRACT_ADDRESS=neutron1zt8m8ffpdrztjyqj0hmv8wgcz2cv3y4euk474znth4hnsn3vzaes32wtx2
-USDC_LP_VESTING_CONTRACT_ADDRESS=neutron1mzr9spaqlxq0pp34r0cahntfp3htpy8dps399aflafqwx2f6235qdhwflr
-ATOM_LP_VESTING_CONTRACT_ADDRESS=neutron16y75jj4ftlcjvfa0gscnklzaj20pfe97mczpg2e8a7znyjzzafaq67dj0v
+LOCKDROP_CONTRACT_ADDRESS=neutron1ryhxe5fzczelcfmrhmcw9x2jsqy677fw59fsctr09srk24lt93eszwlvyj
+USDC_LP_VESTING_CONTRACT_ADDRESS=neutron1wgzzn83hhcc5asrtslqvaw2wuqqkfulgac7ze94dmqkrxu8nsensmy9dkv
+ATOM_LP_VESTING_CONTRACT_ADDRESS=neutron1kkwp7pd4ts6gukm3e820kyftz4vv5jqtmal8pwqezrnq2ddycqasr87x9p
 ATOM_CL_POOL_ADDRESS=neutron1wawu0fe6jy2w9ngaf89xs3mwgfsm0fpdtumfls4wx3ltwcp7amqqwdvcm6
 USDC_CL_POOL_ADDRESS=neutron1w7qp3uppv9sl8xxnq7cdnn5xje5utz0a482rfafpu5zkf6vltnxslejmvm
 
+
+echo NEW_VESTING_LP_VAULT_CL_CODE_ID=467
+echo NEW_LOCKDROP_VAULT_CL_CODE_ID=468
+
 # LOCKDROP
 
-NEW_LOCKDROP_VAULT_CL_CODE_ID=50
+NEW_LOCKDROP_VAULT_CL_CODE_ID=468
 NEW_LOCKDROP_VAULT_CL_INST_MSG='{
     "name": "Lockdrop CL voting vault",
     "description": "Lockdrop vault for CL pairs",
@@ -29,7 +33,7 @@ echo LOCKDROP_VAULT_CL_CONTRACT_ADDRESS=$LOCKDROP_VAULT_CL_CONTRACT_ADDRESS
 
 # VESTING LP
 
-NEW_VESTING_LP_VAULT_CL_CODE_ID=49
+NEW_VESTING_LP_VAULT_CL_CODE_ID=467
 NEW_VESTING_LP_VAULT_CL_INST_MSG='{
     "name": "Vesting LP CL voting vault",
     "description": "Vesting LP voting vault for CL pairs",

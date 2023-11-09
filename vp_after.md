@@ -98,7 +98,7 @@ neutrond q wasm cs smart neutron1f6jlx7d9y408tlzue7r2qcf79plp549n30yzqjajjud8vm7
 
 ## user info in Lockdrop
 
-neutrond q wasm cs smart neutron1zt8m8ffpdrztjyqj0hmv8wgcz2cv3y4euk474znth4hnsn3vzaes32wtx2 '{"user_info": {"address": "neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2"}}' --output json | jq .
+neutrond q wasm cs smart neutron1ryhxe5fzczelcfmrhmcw9x2jsqy677fw59fsctr09srk24lt93eszwlvyj '{"user_info": {"address": "neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2"}}' --output json | jq .
 {
   "data": {
     "total_ntrn_rewards": "3347298317607",
@@ -140,7 +140,7 @@ neutrond q wasm cs smart neutron1zt8m8ffpdrztjyqj0hmv8wgcz2cv3y4euk474znth4hnsn3
   }
 }
 
-neutrond q wasm cs smart neutron1zt8m8ffpdrztjyqj0hmv8wgcz2cv3y4euk474znth4hnsn3vzaes32wtx2 '{"user_info": {"address": "neutron10h9stc5v6ntgeygf5xf945njqq5h32r54rf7kf"}}' --output json | jq .
+neutrond q wasm cs smart neutron1ryhxe5fzczelcfmrhmcw9x2jsqy677fw59fsctr09srk24lt93eszwlvyj '{"user_info": {"address": "neutron10h9stc5v6ntgeygf5xf945njqq5h32r54rf7kf"}}' --output json | jq .
 {
   "data": {
     "total_ntrn_rewards": "6694596055764",
@@ -184,36 +184,36 @@ neutrond q wasm cs smart neutron1zt8m8ffpdrztjyqj0hmv8wgcz2cv3y4euk474znth4hnsn3
 
 ## user lockup at height
 
-neutrond q wasm cs smart neutron1zt8m8ffpdrztjyqj0hmv8wgcz2cv3y4euk474znth4hnsn3vzaes32wtx2 '{"query_user_lockup_total_at_height": {"user_address": "neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2", "pool_type": "USDC", "height": 266}}' --output json | jq .
+neutrond q wasm cs smart neutron1ryhxe5fzczelcfmrhmcw9x2jsqy677fw59fsctr09srk24lt93eszwlvyj '{"query_user_lockup_total_at_height": {"user_address": "neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2", "pool_type": "USDC", "height": 266}}' --output json | jq .
 {
   "data": "275461668805"
 }
 
-neutrond q wasm cs smart neutron1zt8m8ffpdrztjyqj0hmv8wgcz2cv3y4euk474znth4hnsn3vzaes32wtx2 '{"query_user_lockup_total_at_height": {"user_address": "neutron10h9stc5v6ntgeygf5xf945njqq5h32r54rf7kf", "pool_type": "USDC", "height": 266}}' --output json | jq .
+neutrond q wasm cs smart neutron1ryhxe5fzczelcfmrhmcw9x2jsqy677fw59fsctr09srk24lt93eszwlvyj '{"query_user_lockup_total_at_height": {"user_address": "neutron10h9stc5v6ntgeygf5xf945njqq5h32r54rf7kf", "pool_type": "USDC", "height": 266}}' --output json | jq .
 {
   "data": "550923338611"
 }
 
 ## USDC's vesting lp unclaimed amount
 
-neutrond q wasm cs smart neutron1mzr9spaqlxq0pp34r0cahntfp3htpy8dps399aflafqwx2f6235qdhwflr '{"historical_extension": {"msg": {"unclaimed_amount_at_height": {"address": "neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2", "height": 266}}}}' --output json | jq .
+neutrond q wasm cs smart neutron1wgzzn83hhcc5asrtslqvaw2wuqqkfulgac7ze94dmqkrxu8nsensmy9dkv '{"historical_extension": {"msg": {"unclaimed_amount_at_height": {"address": "neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2", "height": 266}}}}' --output json | jq .
 {
   "data": "275483312392"
 }
 
-neutrond q wasm cs smart neutron1mzr9spaqlxq0pp34r0cahntfp3htpy8dps399aflafqwx2f6235qdhwflr '{"historical_extension": {"msg": {"unclaimed_amount_at_height": {"address": "neutron10h9stc5v6ntgeygf5xf945njqq5h32r54rf7kf", "height": 266}}}}' --output json | jq .
+neutrond q wasm cs smart neutron1wgzzn83hhcc5asrtslqvaw2wuqqkfulgac7ze94dmqkrxu8nsensmy9dkv '{"historical_extension": {"msg": {"unclaimed_amount_at_height": {"address": "neutron10h9stc5v6ntgeygf5xf945njqq5h32r54rf7kf", "height": 266}}}}' --output json | jq .
 {
   "data": "550949816905"
 }
 
 ## ATOM's vesting lp unclaimed amount
 
-neutrond q wasm cs smart neutron16y75jj4ftlcjvfa0gscnklzaj20pfe97mczpg2e8a7znyjzzafaq67dj0v '{"historical_extension": {"msg": {"unclaimed_amount_at_height": {"address": "neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2", "height": 266}}}}' --output json | jq .
+neutrond q wasm cs smart neutron1kkwp7pd4ts6gukm3e820kyftz4vv5jqtmal8pwqezrnq2ddycqasr87x9p '{"historical_extension": {"msg": {"unclaimed_amount_at_height": {"address": "neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2", "height": 266}}}}' --output json | jq .
 {
   "data": "874938585246"
 }
 
-neutrond q wasm cs smart neutron16y75jj4ftlcjvfa0gscnklzaj20pfe97mczpg2e8a7znyjzzafaq67dj0v '{"historical_extension": {"msg": {"unclaimed_amount_at_height": {"address": "neutron10h9stc5v6ntgeygf5xf945njqq5h32r54rf7kf", "height": 266}}}}' --output json | jq .
+neutrond q wasm cs smart neutron1kkwp7pd4ts6gukm3e820kyftz4vv5jqtmal8pwqezrnq2ddycqasr87x9p '{"historical_extension": {"msg": {"unclaimed_amount_at_height": {"address": "neutron10h9stc5v6ntgeygf5xf945njqq5h32r54rf7kf", "height": 266}}}}' --output json | jq .
 {
   "data": "1749400609809"
 }

@@ -11,7 +11,7 @@
   {
     "wasm": {
       "migrate": {
-        "contract_addr": "neutron1zt8m8ffpdrztjyqj0hmv8wgcz2cv3y4euk474znth4hnsn3vzaes32wtx2",
+        "contract_addr": "neutron1ryhxe5fzczelcfmrhmcw9x2jsqy677fw59fsctr09srk24lt93eszwlvyj",
         "new_code_id": 43,
         "msg": "ewogICAgIm5ld19hdG9tX3Rva2VuIjogIm5ldXRyb24xdnMyamdkaGVzZGh0emQwN2t6dTlzZGZ3aDM5aHM0cWtuOXE5bTgwZHEzNW1ndXcyZTZ2c3A2Mjk2NCIsCiAgICAibmV3X3VzZGNfdG9rZW4iOiAibmV1dHJvbjE5dHE5cXVqbGZtdHd6ODA4dTRka3FndTJzMGRhamM5MDd2ZTRnbWE0a2d0NHltZnR1cXZzcXZ6bXplIiwKICAgICJtYXhfc2xpcHBhZ2UiOiAiMC41Igp9Cg=="
       }
@@ -20,7 +20,7 @@
   {
     "wasm": {
       "migrate": {
-        "contract_addr": "neutron1mzr9spaqlxq0pp34r0cahntfp3htpy8dps399aflafqwx2f6235qdhwflr",
+        "contract_addr": "neutron1wgzzn83hhcc5asrtslqvaw2wuqqkfulgac7ze94dmqkrxu8nsensmy9dkv",
         "new_code_id": 46,
         "msg": "ewogICAgIm1heF9zbGlwcGFnZSI6ICIwLjUiLAogICAgIm50cm5fZGVub20iOiAidW50cm4iLAogICAgInBhaXJlZF9kZW5vbSI6ICJ1aWJjdXNkYyIsCiAgICAieHlrX3BhaXIiOiAibmV1dHJvbjE3MDdjY3dhcHNxdGtjZWVmcWF4dG02aGx5N2p4bXl0eHgzZGxlam44a2VkcnFmMnJqbG5zaHc1Mmd3IiwKICAgICJjbF9wYWlyIjogIm5ldXRyb24xdzdxcDN1cHB2OXNsOHh4bnE3Y2RubjV4amU1dXR6MGE0ODJyZmFmcHU1emtmNnZsdG54c2xlam12bSIsCiAgICAibmV3X2xwX3Rva2VuIjogIm5ldXRyb24xOXRxOXF1amxmbXR3ejgwOHU0ZGtxZ3UyczBkYWpjOTA3dmU0Z21hNGtndDR5bWZ0dXF2c3F2em16ZSIsCiAgICAiYmF0Y2hfc2l6ZSI6IDUwCn0K"
       }
@@ -29,7 +29,7 @@
   {
     "wasm": {
       "migrate": {
-        "contract_addr": "neutron16y75jj4ftlcjvfa0gscnklzaj20pfe97mczpg2e8a7znyjzzafaq67dj0v",
+        "contract_addr": "neutron1kkwp7pd4ts6gukm3e820kyftz4vv5jqtmal8pwqezrnq2ddycqasr87x9p",
         "new_code_id": 46,
         "msg": "ewogICAgIm1heF9zbGlwcGFnZSI6ICIwLjUiLAogICAgIm50cm5fZGVub20iOiAidW50cm4iLAogICAgInBhaXJlZF9kZW5vbSI6ICJ1aWJjYXRvbSIsCiAgICAieHlrX3BhaXIiOiAibmV1dHJvbjFzcjl6bTJwcTN4cnJ1N2w3Z3o2MzJ0MnJxczljYWV0OXh1bHd2YXBjcWFncTlweXRrY2dxNm0zZDZuIiwKICAgICJjbF9wYWlyIjogIm5ldXRyb24xd2F3dTBmZTZqeTJ3OW5nYWY4OXhzM213Z2ZzbTBmcGR0dW1mbHM0d3gzbHR3Y3A3YW1xcXdkdmNtNiIsCiAgICAibmV3X2xwX3Rva2VuIjogIm5ldXRyb24xdnMyamdkaGVzZGh0emQwN2t6dTlzZGZ3aDM5aHM0cWtuOXE5bTgwZHEzNW1ndXcyZTZ2c3A2Mjk2NCIsCiAgICAiYmF0Y2hfc2l6ZSI6IDEKfQo="
       }
