@@ -10,7 +10,7 @@ USDC_CL_POOL_ADDRESS=neutron1fqxx5ef3u9ekfd5z8rrut0chsr035ska596htzsgn7lmshwly89
 
 # LOCKDROP
 
-NEW_LOCKDROP_VAULT_CL_CODE_ID=493
+NEW_LOCKDROP_VAULT_CL_CODE_ID=460
 NEW_LOCKDROP_VAULT_CL_INST_MSG='{
     "name": "Lockdrop CL voting vault",
     "description": "Lockdrop vault for CL pairs",
@@ -30,7 +30,7 @@ echo LOCKDROP_VAULT_CL_CONTRACT_ADDRESS=$LOCKDROP_VAULT_CL_CONTRACT_ADDRESS
 
 # VESTING LP
 
-NEW_VESTING_LP_VAULT_CL_CODE_ID=492
+NEW_VESTING_LP_VAULT_CL_CODE_ID=459
 NEW_VESTING_LP_VAULT_CL_INST_MSG='{
     "name": "Vesting LP CL voting vault",
     "description": "Vesting LP voting vault for CL pairs",
