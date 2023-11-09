@@ -8,8 +8,9 @@ ATOM_CL_POOL_ADDRESS=neutron1awv05macyxcf2flhaggmjxnyyz76qfaa3jeueheqd0c5ltzmty7
 USDC_CL_POOL_ADDRESS=neutron1fqxx5ef3u9ekfd5z8rrut0chsr035ska596htzsgn7lmshwly89sk9vwxc
 
 
-echo NEW_VESTING_LP_VAULT_CL_CODE_ID=467
-echo NEW_LOCKDROP_VAULT_CL_CODE_ID=468
+
+echo NEW_VESTING_LP_VAULT_CL_CODE_ID=492
+echo NEW_LOCKDROP_VAULT_CL_CODE_ID=493
 
 # LOCKDROP
 
