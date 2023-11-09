@@ -1,0 +1,72 @@
+[global]
+log_level = 'info'
+
+[mode]
+
+[mode.clients]
+enabled = true
+refresh = true
+misbehaviour = true
+
+[mode.connections]
+enabled = true
+
+[mode.channels]
+enabled = true
+
+[mode.packets]
+enabled = true
+clear_interval = 150
+clear_on_start = true
+tx_confirmation = true
+
+[rest]
+enabled = true
+host = '127.0.0.1'
+port = 3000
+
+[telemetry]
+enabled = true
+host = '0.0.0.0'
+port = 3001
+
+[[chains]]
+id = 'neutron-1'
+# TODO
+rpc_addr = 'http://23.109.159.212:26657'
+grpc_addr = 'http://23.109.159.212:9090'
+websocket_addr = 'ws://23.109.159.212:26657/websocket'
+rpc_timeout = '10s'
+account_prefix = 'neutron'
+key_name = 'hermes-neutron'
+store_prefix = 'ibc'
+default_gas = 3000000
+max_gas = 10000000
+gas_price = { price = 0.005, denom = 'ibc/C4CFF46FD6DE35CA4CF4CE031E643C8FDC9BA4B99AE598E9B0ED98FE3A2319F9' }
+gas_multiplier = 1.1
+max_msg_num = 20
+max_tx_size = 180000
+clock_drift = '15s'
+max_block_time = '30s'
+
+trusting_period = '320hours'
+trust_threshold = { numerator = '1', denominator = '3' }
+#unbonding_period = '20days'
+ccv_consumer_chain = true
+
+[[chains]]
+id = 'cosmoshub-4'
+rpc_addr = 'https://cosmos-rpc.polkachu.com'
+grpc_addr = 'http://cosmos-grpc.polkachu.com:14990'
+websocket_addr = 'wss://cosmos-rpc.polkachu.com/websocket'
+rpc_timeout = '10s'
+account_prefix = 'cosmos'
+key_name = 'hermes-cosmos'
+store_prefix = 'ibc'
+max_gas = 3000000
+fee_granter = ''
+gas_price = { price = 0.0025, denom = 'uatom' }
+gas_multiplier = 1.1
+clock_drift = '10s'
+trusting_period = '14days'
+trust_threshold = { numerator = '1', denominator = '3' }
