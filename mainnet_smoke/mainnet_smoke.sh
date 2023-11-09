@@ -35,6 +35,8 @@ ASTROPORT_POOL_CONTRACT_ADDRESS="neutron1e22zh5p8meddxjclevuhjmfj69jxfsa8uu3jvht
 TRANSFER_CHANNEL_ID="TODO"
 TRANSFER_DESTINATION="cosmos1mwfj5j8v2aafqqnjekeqtupgc6894033nvtgre"
 TRANSFER_DESTINATION_NODE="TODO"
+CONNECTION_ID="TODO"
+VALIDATOR_ADDR="TODO"
 
 # ==================== testnet (PICK)
 GAS_PRICES="0.05untrn"
@@ -46,6 +48,8 @@ ASTROPORT_POOL_CONTRACT_ADDRESS="neutron1j9eaaudut70pk7mhfnc48qugul0z53s3ygan60x
 TRANSFER_CHANNEL_ID="channel-96"
 TRANSFER_DESTINATION="cosmos1mwfj5j8v2aafqqnjekeqtupgc6894033nvtgre"
 TRANSFER_DESTINATION_NODE="https://rpc.provider-sentry-01.rs-testnet.polypore.xyz:443"
+CONNECTION_ID="connection-42"
+VALIDATOR_ADDR="cosmos1arjwkww79m65csulawqngr7ngs4uqu5hx9ak2a"
 # node ./bin/ibcheetah.js https://rest-falcron.pion-1.ntrn.tech provider
 # cat out.json | fx 'x.filter(y => y.channel.port_id === "transfer" && y.channel.state === "STATE_OPEN" && y.connection.client_status === "Active")'
 
@@ -113,7 +117,7 @@ gaiad q ibc-transfer denom-trace TODO_IBC_DENOM --node $TRANSFER_DESTINATION_NOD
 
 ## Test ICA creation (requires neutron_interchain_txs contract)
 echo "Deploying ICA transactions contract"
-NEUTRON_INTERCHAIN_TXS_STORE_RES_1=$(neutrond tx wasm store ./artifacts/neutron_interchain_txs.wasm --from $TEST_WALLET --gas 500000 --gas-prices ${GAS_PRICES} --chain-id ${CHAINID} --keyring-backend test --home ${KEYS_HOME} --node ${NODE} --broadcast-mode=sync -y --output json)
+NEUTRON_INTERCHAIN_TXS_STORE_RES_1=$(neutrond tx wasm store ./artifacts/neutron_interchain_txs.wasm --from $TEST_WALLET --gas 5000000 --gas-prices ${GAS_PRICES} --chain-id ${CHAINID} --keyring-backend test --home ${KEYS_HOME} --node ${NODE} --broadcast-mode=sync -y --output json)
 NEUTRON_INTERCHAIN_TXS_STORE_RES=$(neutrond q tx $(echo $NEUTRON_INTERCHAIN_TXS_STORE_RES_1 | jq -r '.txhash') --output json)
 NEUTRON_INTERCHAIN_TXS_CODE_ID=$(echo $NEUTRON_INTERCHAIN_TXS_STORE_RES | jq -r '.logs[0].events[1].attributes[1].value')
 echo "NEUTRON_INTERCHAIN_TXS_CODE_ID: ${NEUTRON_INTERCHAIN_TXS_CODE_ID}"
@@ -123,8 +127,27 @@ NEUTRON_INTERCHAIN_TXS_INSTANTIATE_RES=$(neutrond q tx $(echo $NEUTRON_INTERCHAI
 NEUTRON_INTERCHAIN_TXS_ADDRESS=$(echo $NEUTRON_INTERCHAIN_TXS_INSTANTIATE_RES | jq -r '.logs[0].events[0].attributes[0].value')
 echo $NEUTRON_INTERCHAIN_TXS_ADDRESS
 
-
 ## Test ICA transaction (delegate) (requires neutron_interchain_txs contract)
+## Executing register ICA
+INFO='{"connection_id": "'"$CONNECTION_ID"'", "interchain_account_id": "test"}'
+REGISTER_ICA_MSG='{"register": '"$INFO"'}'
+REGISTER_ICA_RES_1=$(neutrond tx wasm execute $NEUTRON_INTERCHAIN_TXS_ADDRESS $REGISTER_ICA_MSG --from ${TEST_WALLET} --gas 50000000 --chain-id ${CHAINID} --broadcast-mode=sync --gas-prices ${GAS_PRICES}  -y --output json --keyring-backend test --home ${KEYS_HOME} --node ${NODE} --amount "100000untrn")
+REGISTER_ICA_RES=$(neutrond q tx $(echo $REGISTER_ICA_RES_1 | jq -r '.txhash') --output json)
+echo "Register ICA RES: $REGISTER_ICA_RES"
 
-# ========== NOT NEEDED STUFF
-# RES=$(neutrond q wasm contract-state smart $ASTROPORT_POOL_CONTRACT_ADDRESS '{"config":{}}' -o json | jq --raw-output ".data.owner")
+# TODO: does not work, why? (because ICA wasn't created?)
+ICA_QUERY='{"interchain_account_address": '"$INFO"'}'
+ICA_ADDRESS=$(neutrond q wasm contract-state smart $NEUTRON_INTERCHAIN_TXS_ADDRESS $ICA_QUERY -o json | jq --raw-output ".data.interchain_account_address")
+
+ICA_QUERY_2='{"interchain_account_address_from_contract": {"interchain_account_id": "test"}}'
+ICA_ADDRESS=$(neutrond q wasm contract-state smart $NEUTRON_INTERCHAIN_TXS_ADDRESS $ICA_QUERY_2 -o json | jq --raw-output ".data.interchain_account_address")
+
+## Executing delegate
+# TODO: send native money to the $ICA_ADDRESS
+INFO='{"interchain_account_id": "test", "validator": "'"$VALIDATOR_ADDR"'", "amount": "100000", "denom": "uatom"}'
+REGISTER_ICA_MSG='{"send": '"$INFO"'}'
+REGISTER_ICA_RES_1=$(neutrond tx wasm execute $NEUTRON_INTERCHAIN_TXS_ADDRESS $REGISTER_ICA_MSG --from ${TEST_WALLET} --gas 50000000 --chain-id ${CHAINID} --broadcast-mode=sync --gas-prices ${GAS_PRICES}  -y --output json --keyring-backend test --home ${KEYS_HOME} --node ${NODE} --amount "100000untrn")
+REGISTER_ICA_RES=$(neutrond q tx $(echo $REGISTER_ICA_RES_1 | jq -r '.txhash') --output json)
+
+# check
+gaiad q staking delegations $ICA_ADDRESS --node $TRANSFER_DESTINATION_NODE --output json
