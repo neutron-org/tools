@@ -37,6 +37,8 @@ TRANSFER_DESTINATION="cosmos1mwfj5j8v2aafqqnjekeqtupgc6894033nvtgre"
 TRANSFER_DESTINATION_NODE="TODO"
 CONNECTION_ID="TODO"
 VALIDATOR_ADDR="TODO"
+ICA_CONNECTION="TODO"
+ICA_NODE="TODO"
 
 # ==================== testnet (PICK)
 GAS_PRICES="0.05untrn"
@@ -49,7 +51,11 @@ TRANSFER_CHANNEL_ID="channel-96"
 TRANSFER_DESTINATION="cosmos1mwfj5j8v2aafqqnjekeqtupgc6894033nvtgre"
 TRANSFER_DESTINATION_NODE="https://rpc.provider-sentry-01.rs-testnet.polypore.xyz:443"
 CONNECTION_ID="connection-42"
-VALIDATOR_ADDR="cosmos1arjwkww79m65csulawqngr7ngs4uqu5hx9ak2a"
+ICA_NODE="https://rpc.sentry-01.theta-testnet.polypore.xyz:443"
+
+ICA_CONNECTION="connection-129"
+# VALIDATOR_ADDR="cosmos10v6wvdenee8r9l6wlsphcgur2ltl8ztkvhc8fw"
+VALIDATOR_ADDR="cosmosvaloper10v6wvdenee8r9l6wlsphcgur2ltl8ztkfrvj9a"
 # node ./bin/ibcheetah.js https://rest-falcron.pion-1.ntrn.tech provider
 # cat out.json | fx 'x.filter(y => y.channel.port_id === "transfer" && y.channel.state === "STATE_OPEN" && y.connection.client_status === "Active")'
 
@@ -129,7 +135,7 @@ echo $NEUTRON_INTERCHAIN_TXS_ADDRESS
 
 ## Test ICA transaction (delegate) (requires neutron_interchain_txs contract)
 ## Executing register ICA
-INFO='{"connection_id": "'"$CONNECTION_ID"'", "interchain_account_id": "test"}'
+INFO='{"connection_id": "'"$ICA_CONNECTION"'", "interchain_account_id": "test2"}'
 REGISTER_ICA_MSG='{"register": '"$INFO"'}'
 REGISTER_ICA_RES_1=$(neutrond tx wasm execute $NEUTRON_INTERCHAIN_TXS_ADDRESS $REGISTER_ICA_MSG --from ${TEST_WALLET} --gas 50000000 --chain-id ${CHAINID} --broadcast-mode=sync --gas-prices ${GAS_PRICES}  -y --output json --keyring-backend test --home ${KEYS_HOME} --node ${NODE} --amount "100000untrn")
 REGISTER_ICA_RES=$(neutrond q tx $(echo $REGISTER_ICA_RES_1 | jq -r '.txhash') --output json)
@@ -139,15 +145,28 @@ echo "Register ICA RES: $REGISTER_ICA_RES"
 ICA_QUERY='{"interchain_account_address": '"$INFO"'}'
 ICA_ADDRESS=$(neutrond q wasm contract-state smart $NEUTRON_INTERCHAIN_TXS_ADDRESS $ICA_QUERY -o json | jq --raw-output ".data.interchain_account_address")
 
-ICA_QUERY_2='{"interchain_account_address_from_contract": {"interchain_account_id": "test"}}'
-ICA_ADDRESS=$(neutrond q wasm contract-state smart $NEUTRON_INTERCHAIN_TXS_ADDRESS $ICA_QUERY_2 -o json | jq --raw-output ".data.interchain_account_address")
+ICA_QUERY_2='{"interchain_account_address_from_contract": {"interchain_account_id": "test2"}}'
+ICA_ADDRESS=$(neutrond q wasm contract-state smart $NEUTRON_INTERCHAIN_TXS_ADDRESS $ICA_QUERY_2 -o json | jq --raw-output ".data[0]")
 
-## Executing delegate
-# TODO: send native money to the $ICA_ADDRESS
-INFO='{"interchain_account_id": "test", "validator": "'"$VALIDATOR_ADDR"'", "amount": "100000", "denom": "uatom"}'
-REGISTER_ICA_MSG='{"send": '"$INFO"'}'
-REGISTER_ICA_RES_1=$(neutrond tx wasm execute $NEUTRON_INTERCHAIN_TXS_ADDRESS $REGISTER_ICA_MSG --from ${TEST_WALLET} --gas 50000000 --chain-id ${CHAINID} --broadcast-mode=sync --gas-prices ${GAS_PRICES}  -y --output json --keyring-backend test --home ${KEYS_HOME} --node ${NODE} --amount "100000untrn")
-REGISTER_ICA_RES=$(neutrond q tx $(echo $REGISTER_ICA_RES_1 | jq -r '.txhash') --output json)
+
+## send money to delegate to the contract
+gaiad tx bank send mainnet_smoke $ICA_ADDRESS 300000uatom --keyring-backend test  --home ~/.gaiad-theta/ --node $ICA_NODE --chain-id theta-testnet-001 --gas 100000 --gas-prices 0.01uatom
 
 # check
-gaiad q staking delegations $ICA_ADDRESS --node $TRANSFER_DESTINATION_NODE --output json
+gaiad q bank balances $ICA_ADDRESS --node $ICA_NODE
+
+## set ibc fees for interchaintxs contract
+SET_IBC_FEE_MSG='{"set_fees": {"recv_fee": "0", "ack_fee": "200000", "timeout_fee": "200000", "denom": "untrn"}}'
+SET_IBC_FEE_RES_1=$(neutrond tx wasm execute $NEUTRON_INTERCHAIN_TXS_ADDRESS $SET_IBC_FEE_MSG --from ${TEST_WALLET} --gas 50000000 --chain-id ${CHAINID} --broadcast-mode=sync --gas-prices ${GAS_PRICES}  -y --output json --keyring-backend test --home ${KEYS_HOME} --node ${NODE} --amount "100000untrn")
+SET_IBC_FEE_RES=$(neutrond q tx $(echo $SET_IBC_FEE_RES_1 | jq -r '.txhash') --output json)
+echo $SET_IBC_FEE_RES | jq -r '.raw_log'
+
+
+## Executing delegate
+INFO='{"interchain_account_id": "test2", "validator": "'"$VALIDATOR_ADDR"'", "amount": "100000", "denom": "uatom"}'
+DELEGATE_ICA_MSG='{"delegate": '"$INFO"'}'
+DELEGATE_ICA_RES_1=$(neutrond tx wasm execute $NEUTRON_INTERCHAIN_TXS_ADDRESS $DELEGATE_ICA_MSG --from ${TEST_WALLET} --gas 50000000 --chain-id ${CHAINID} --broadcast-mode=sync --gas-prices ${GAS_PRICES}  -y --output json --keyring-backend test --home ${KEYS_HOME} --node ${NODE} --amount "400000untrn")
+REGISTER_ICA_RES=$(neutrond q tx $(echo $DELEGATE_ICA_RES_1 | jq -r '.txhash') --output json)
+
+# check
+gaiad q staking delegations $ICA_ADDRESS --node $ICA_NODE --output json
