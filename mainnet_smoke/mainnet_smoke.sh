@@ -36,9 +36,9 @@ TRANSFER_CHANNEL_ID="TODO"
 TRANSFER_DESTINATION="cosmos1mwfj5j8v2aafqqnjekeqtupgc6894033nvtgre"
 TRANSFER_DESTINATION_NODE="TODO"
 CONNECTION_ID="TODO"
-VALIDATOR_ADDR="TODO"
-ICA_CONNECTION="TODO"
+ICA_CONNECTION_ID="TODO"
 ICA_NODE="TODO"
+VALIDATOR_ADDR="TODO"
 
 # ==================== testnet (PICK)
 GAS_PRICES="0.05untrn"
@@ -52,9 +52,7 @@ TRANSFER_DESTINATION="cosmos1mwfj5j8v2aafqqnjekeqtupgc6894033nvtgre"
 TRANSFER_DESTINATION_NODE="https://rpc.provider-sentry-01.rs-testnet.polypore.xyz:443"
 CONNECTION_ID="connection-42"
 ICA_NODE="https://rpc.sentry-01.theta-testnet.polypore.xyz:443"
-
-ICA_CONNECTION="connection-129"
-# VALIDATOR_ADDR="cosmos10v6wvdenee8r9l6wlsphcgur2ltl8ztkvhc8fw"
+ICA_CONNECTION_ID="connection-129"
 VALIDATOR_ADDR="cosmosvaloper10v6wvdenee8r9l6wlsphcgur2ltl8ztkfrvj9a"
 # node ./bin/ibcheetah.js https://rest-falcron.pion-1.ntrn.tech provider
 # cat out.json | fx 'x.filter(y => y.channel.port_id === "transfer" && y.channel.state === "STATE_OPEN" && y.connection.client_status === "Active")'
@@ -135,7 +133,7 @@ echo $NEUTRON_INTERCHAIN_TXS_ADDRESS
 
 ## Test ICA transaction (delegate) (requires neutron_interchain_txs contract)
 ## Executing register ICA
-INFO='{"connection_id": "'"$ICA_CONNECTION"'", "interchain_account_id": "test2"}'
+INFO='{"connection_id": "'"$ICA_CONNECTION_ID"'", "interchain_account_id": "test2"}'
 REGISTER_ICA_MSG='{"register": '"$INFO"'}'
 REGISTER_ICA_RES_1=$(neutrond tx wasm execute $NEUTRON_INTERCHAIN_TXS_ADDRESS $REGISTER_ICA_MSG --from ${TEST_WALLET} --gas 50000000 --chain-id ${CHAINID} --broadcast-mode=sync --gas-prices ${GAS_PRICES}  -y --output json --keyring-backend test --home ${KEYS_HOME} --node ${NODE} --amount "100000untrn")
 REGISTER_ICA_RES=$(neutrond q tx $(echo $REGISTER_ICA_RES_1 | jq -r '.txhash') --output json)
