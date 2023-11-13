@@ -87,8 +87,8 @@ echo "get new pairs"
 neutrond q wasm contract-state smart neutron1hptk0k5kng7hjy35vmh009qd5m6l33609nypgf2yc6nqnewduqasxplt4e '{"pairs":{}}' --chain-id=neutron-1  --node $NODE
 
 echo "new pools generator"
-neutrond tx wasm execute neutron1jz58yjay8uq8zkfw95ngyv3m2wfs2zjef9vdz75d9pa46fdtxc5sxtafny '{"setup_pools":{"pools":[["neutron1vs2jgdhesdhtzd07kzu9sdfwh39hs4qkn9q9m80dq35mguw2e6vsp62964", "1"]]}}' --keyring-backend=test --from=demowallet1 --chain-id=neutron-1 --gas auto --broadcast-mode block --gas-adjustment 1.5 --gas-prices 0.025untrn --node $NODE -y
-neutrond tx wasm execute neutron1jz58yjay8uq8zkfw95ngyv3m2wfs2zjef9vdz75d9pa46fdtxc5sxtafny '{"setup_pools":{"pools":[["neutron19tq9qujlfmtwz808u4dkqgu2s0dajc907ve4gma4kgt4ymftuqvsqvzmze", "1"]]}}' --keyring-backend=test --from=demowallet1 --chain-id=neutron-1 --gas auto --broadcast-mode block --gas-adjustment 1.5 --gas-prices 0.025untrn --node $NODE -y
+neutrond tx wasm execute neutron1jz58yjay8uq8zkfw95ngyv3m2wfs2zjef9vdz75d9pa46fdtxc5sxtafny '{"setup_pools":{"pools":[["neutron1ms9w8ene57ka6adn88ueaux7eewfvhmuykdrtev6ummcnf8mn3usr2yhmc", "0"]]}}' --keyring-backend=test --from=demowallet1 --chain-id=neutron-1 --gas auto --broadcast-mode block --gas-adjustment 1.5 --gas-prices 0.025untrn  -y
+neutrond tx wasm execute neutron1jz58yjay8uq8zkfw95ngyv3m2wfs2zjef9vdz75d9pa46fdtxc5sxtafny '{"setup_pools":{"pools":[["neutron193870yxq46d8sg5x5he867hudusenv98aqe5pn5gmhsdppnqjzpsakaems", "1"]]}}' --keyring-backend=test --from=demowallet1 --chain-id=neutron-1 --gas auto --broadcast-mode block --gas-adjustment 1.5 --gas-prices 0.025untrn --node $NODE -y
 
 echo "update twap one more time"
 # atom
