@@ -4,13 +4,13 @@ NEUTRON_DAO_ADDRESS=neutron1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrs
 LOCKDROP_CONTRACT_ADDRESS=neutron1ryhxe5fzczelcfmrhmcw9x2jsqy677fw59fsctr09srk24lt93eszwlvyj
 USDC_LP_VESTING_CONTRACT_ADDRESS=neutron1wgzzn83hhcc5asrtslqvaw2wuqqkfulgac7ze94dmqkrxu8nsensmy9dkv
 ATOM_LP_VESTING_CONTRACT_ADDRESS=neutron1kkwp7pd4ts6gukm3e820kyftz4vv5jqtmal8pwqezrnq2ddycqasr87x9p
-ATOM_CL_POOL_ADDRESS=neutron1awv05macyxcf2flhaggmjxnyyz76qfaa3jeueheqd0c5ltzmty7s74yjn0
-USDC_CL_POOL_ADDRESS=neutron1fqxx5ef3u9ekfd5z8rrut0chsr035ska596htzsgn7lmshwly89sk9vwxc
+ATOM_CL_POOL_ADDRESS=neutron1vf3chzldmyyltw9mv76wc5q2uy3t7j59ljv98u3kwsnfj0qd4crql4aets
+USDC_CL_POOL_ADDRESS=neutron1yz60tjqvdzmvk5gpstflv4vknnf50v09sm27uxv89gtn0eh9fcrq92utwx
 
 
 # LOCKDROP
 
-NEW_LOCKDROP_VAULT_CL_CODE_ID=460
+NEW_LOCKDROP_VAULT_CL_CODE_ID=472
 NEW_LOCKDROP_VAULT_CL_INST_MSG='{
     "name": "Lockdrop CL voting vault",
     "description": "Lockdrop vault for CL pairs",
@@ -30,7 +30,7 @@ echo LOCKDROP_VAULT_CL_CONTRACT_ADDRESS=$LOCKDROP_VAULT_CL_CONTRACT_ADDRESS
 #
 ## VESTING LP
 
-NEW_VESTING_LP_VAULT_CL_CODE_ID=459
+NEW_VESTING_LP_VAULT_CL_CODE_ID=471
 NEW_VESTING_LP_VAULT_CL_INST_MSG='{
     "name": "Vesting LP CL voting vault",
     "description": "Vesting LP voting vault for CL pairs",

@@ -51,8 +51,8 @@ neutrond q wasm cs smart neutron1f6jlx7d9y408tlzue7r2qcf79plp549n30yzqjajjud8vm7
 {}}' --output json | jq .
 {
 "data": {
-"power": "37673441058960",
-"height": 4321318
+"power": "37646599082577",
+"height": 4470215
 }
 }
 
@@ -61,7 +61,7 @@ neutrond q wasm cs smart neutron1f6jlx7d9y408tlzue7r2qcf79plp549n30yzqjajjud8vm7
 {
 "data": {
 "power": "51910",
-"height": 4321348
+"height": 4470237
 }
 }
 
@@ -69,15 +69,14 @@ neutrond q wasm cs smart neutron1f6jlx7d9y408tlzue7r2qcf79plp549n30yzqjajjud8vm7
 {"address": "neutron10h9stc5v6ntgeygf5xf945njqq5h32r54rf7kf"}}' --output json | jq .
 {
 "data": {
-"power": "13333333331800",
-"height": 119
+"power": "0",
+"height": 4470252
 }
 }
 
 ## user info in Lockdrop
 
-neutrond q wasm cs smart neutron1ryhxe5fzczelcfmrhmcw9x2jsqy677fw59fsctr09srk24lt93eszwlvyj '{"user_info": {"address": "
-neutron1tf06ek932vr8snlxjt2zq260ptrcd7pctyy3j0"}}' --output json | jq .
+neutrond q wasm cs smart neutron1ryhxe5fzczelcfmrhmcw9x2jsqy677fw59fsctr09srk24lt93eszwlvyj '{"user_info": {"address": "neutron1tf06ek932vr8snlxjt2zq260ptrcd7pctyy3j0"}}' --output json | jq .
 {
 "data": {
 "total_ntrn_rewards": "2336034142",
@@ -90,7 +89,7 @@ neutron1tf06ek932vr8snlxjt2zq260ptrcd7pctyy3j0"}}' --output json | jq .
 "ntrn_rewards": "2214382769",
 "duration": 31104000,
 "generator_ntrn_debt": "366023891",
-"claimable_generator_astro_debt": "370997160",
+"claimable_generator_astro_debt": "409553327",
 "generator_proxy_debt": [],
 "claimable_generator_proxy_debt": [],
 "unlock_timestamp": 1717063200,
@@ -105,7 +104,7 @@ neutron1tf06ek932vr8snlxjt2zq260ptrcd7pctyy3j0"}}' --output json | jq .
 "ntrn_rewards": "121651373",
 "duration": 31104000,
 "generator_ntrn_debt": "35103502",
-"claimable_generator_astro_debt": "35609625",
+"claimable_generator_astro_debt": "39313060",
 "generator_proxy_debt": [],
 "claimable_generator_proxy_debt": [],
 "unlock_timestamp": 1717063200,
@@ -114,42 +113,20 @@ neutron1tf06ek932vr8snlxjt2zq260ptrcd7pctyy3j0"}}' --output json | jq .
 "astroport_lp_transferred": null
 }
 ],
-"claimable_generator_ntrn_debt": "406606785",
+"claimable_generator_ntrn_debt": "448866387",
 "lockup_positions_index": 2
 }
 }
-
-neutrond q wasm cs smart neutron1ryhxe5fzczelcfmrhmcw9x2jsqy677fw59fsctr09srk24lt93eszwlvyj '{"user_info": {"address": "
-neutron10h9stc5v6ntgeygf5xf945njqq5h32r54rf7kf"}}' --output json | jq .
-{
-"data": {
-"total_ntrn_rewards": "0",
-"ntrn_transferred": false,
-"lockup_infos": [],
-"claimable_generator_ntrn_debt": "0",
-"lockup_positions_index": 0
-}
-}
-
 ## user lockup at height
 
-neutrond q wasm cs smart neutron1ryhxe5fzczelcfmrhmcw9x2jsqy677fw59fsctr09srk24lt93eszwlvyj '{"
-query_user_lockup_total_at_height": {"user_address": "neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2", "pool_type": "
-USDC", "height": 266}}' --output json | jq .
+neutrond q wasm cs smart neutron1ryhxe5fzczelcfmrhmcw9x2jsqy677fw59fsctr09srk24lt93eszwlvyj '{"query_user_lockup_total_at_height": {"user_address": "neutron1tf06ek932vr8snlxjt2zq260ptrcd7pctyy3j0", "pool_type": "USDC", "height": 2600006}}' --output json | jq .
 {
-"data": "275240857000"
-}
-
-neutrond q wasm cs smart neutron1ryhxe5fzczelcfmrhmcw9x2jsqy677fw59fsctr09srk24lt93eszwlvyj '{"
-query_user_lockup_total_at_height": {"user_address": "neutron10h9stc5v6ntgeygf5xf945njqq5h32r54rf7kf", "pool_type": "
-USDC", "height": 266}}' --output json | jq .
-{
-"data": "550481715000"
+"data": "29879000"
 }
 
 ## USDC's vesting lp unclaimed amount
 
-neutrond q wasm cs smart neutron1wgzzn83hhcc5asrtslqvaw2wuqqkfulgac7ze94dmqkrxu8nsensmy9dkv '{"historical_extension": {"msg": {"unclaimed_amount_at_height": {"address": "neutron1tf06ek932vr8snlxjt2zq260ptrcd7pctyy3j0", "height": 2600006}}}}'
+neutrond q wasm cs smart neutron1wgzzn83hhcc5asrtslqvaw2wuqqkfulgac7ze94dmqkrxu8nsensmy9dkv '{"historical_extension": {"msg": {"unclaimed_amount_at_height": {"address": "neutron1tf06ek932vr8snlxjt2zq260ptrcd7pctyy3j0", "height": 2606000}}}}'
 --output json | jq .
 data: "60"
 
@@ -160,6 +137,4 @@ neutrond q wasm cs smart neutron1kkwp7pd4ts6gukm3e820kyftz4vv5jqtmal8pwqezrnq2dd
 data: "618390318"
 --output: command not found
 
-neutrond q wasm cs smart neutron1kkwp7pd4ts6gukm3e820kyftz4vv5jqtmal8pwqezrnq2ddycqasr87x9p '{"historical_extension": {"msg": {"unclaimed_amount_at_height": {"address": "neutron10h9stc5v6ntgeygf5xf945njqq5h32r54rf7kf", "height": 266}}}}'
---output json | jq .
-data: "0"
+
