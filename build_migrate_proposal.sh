@@ -42,7 +42,7 @@ RESERVE_MIGRATE_MSG='{
     "atom_denom": "ibc/C4CFF46FD6DE35CA4CF4CE031E643C8FDC9BA4B99AE598E9B0ED98FE3A2319F9",
     "usdc_denom": "ibc/F082B65C88E4B6D5EF1DB243CDA1D331D002759E938A0F5CD3FFDC5D53B3E349",
     "ntrn_atom_xyk_pair": "neutron1e22zh5p8meddxjclevuhjmfj69jxfsa8uu3jvht72rv9d8lkhves6t8veq",
-    "ntrn_atom_cl_pair": "neutron1awv05macyxcf2flhaggmjxnyyz76qfaa3jeueheqd0c5ltzmty7s74yjn0",
+    "ntrn_atom_cl_pair": "neutron1vf3chzldmyyltw9mv76wc5q2uy3t7j59ljv98u3kwsnfj0qd4crql4aets",
     "ntrn_usdc_xyk_pair": "neutron1l3gtxnwjuy65rzk63k352d52ad0f2sh89kgrqwczgt56jc8nmc3qh5kag3",
     "ntrn_usdc_cl_pair": "neutron1yz60tjqvdzmvk5gpstflv4vknnf50v09sm27uxv89gtn0eh9fcrq92utwx"
 }'
@@ -50,8 +50,8 @@ RESERVE_MIGRATE_MSG_BASE64=$(json_to_base64 "$RESERVE_MIGRATE_MSG")
 
 # migrate Lockdrop
 LOCKDROP_MIGRATE_MSG='{
-    "new_atom_token": "neutron1ms9w8ene57ka6adn88ueaux7eewfvhmuykdrtev6ummcnf8mn3usr2yhmc",
-    "new_usdc_token": "neutron193870yxq46d8sg5x5he867hudusenv98aqe5pn5gmhsdppnqjzpsakaems",
+    "new_atom_token": "neutron18g53drwvady7kwknjauxke0za9dscv0yjyvwska2d7wsgw2gemlsl9unw8",
+    "new_usdc_token": "neutron1uywpz5esk0r3z7p7vl2h3vnqlrchra5phkex76z0rh2pckun0x9q3lj7va",
     "max_slippage": "0.5"
 }'
 LOCKDROP_MIGRATE_MSG_BASE64=$(json_to_base64 "$LOCKDROP_MIGRATE_MSG")
