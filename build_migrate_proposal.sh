@@ -31,9 +31,9 @@ NEW_LOCKDROP_VAULT_CL_CODE_ID=472
 
 # insert CL vault contract addresses here (from the ./init_cl_vaults.sh result):
 LOCKDROP_VAULT_XYK_CONTRACT_ADDRESS=neutron1f8gs4rp232ngyta3g2efwfkznymvv85du7qm9y0mhvjxpp3cq68qgquudm
-LOCKDROP_VAULT_CL_CONTRACT_ADDRESS=neutron10z7t8gzrepns5jn697vufcfp8h3zmw397dr7aexxvy5hcurw5aqq7c4u97
+LOCKDROP_VAULT_CL_CONTRACT_ADDRESS=neutron1jvp0fvh2dna48cmv6zsah2uylm336kjqp7tc7d59gp7yklrp5sns2z0e79
 LP_VESTING_VAULT_XYK_CONTRACT_ADDRESS=neutron1adavpfxyp5kgs3zp0n0vkc37qakeh5eqwxqxzysgg0ahlx82rmsqp4rnz8
-LP_VESTING_VAULT_CL_CONTRACT_ADDRESS=neutron1cmvc7wahx2ma2cy69flgumshtt0r7uyz5akw8mpjsde77n9rksusp5x3kz
+LP_VESTING_VAULT_CL_CONTRACT_ADDRESS=neutron1j044yawg9g25p7mup6e3d86fz97wlqjdvkrujyhpv9cqv5rr6hlsh3u29r
 
 # migrate Reserve
 RESERVE_MIGRATE_MSG='{
@@ -44,7 +44,7 @@ RESERVE_MIGRATE_MSG='{
     "ntrn_atom_xyk_pair": "neutron1e22zh5p8meddxjclevuhjmfj69jxfsa8uu3jvht72rv9d8lkhves6t8veq",
     "ntrn_atom_cl_pair": "neutron1awv05macyxcf2flhaggmjxnyyz76qfaa3jeueheqd0c5ltzmty7s74yjn0",
     "ntrn_usdc_xyk_pair": "neutron1l3gtxnwjuy65rzk63k352d52ad0f2sh89kgrqwczgt56jc8nmc3qh5kag3",
-    "ntrn_usdc_cl_pair": "neutron1fqxx5ef3u9ekfd5z8rrut0chsr035ska596htzsgn7lmshwly89sk9vwxc"
+    "ntrn_usdc_cl_pair": "neutron1yz60tjqvdzmvk5gpstflv4vknnf50v09sm27uxv89gtn0eh9fcrq92utwx"
 }'
 RESERVE_MIGRATE_MSG_BASE64=$(json_to_base64 "$RESERVE_MIGRATE_MSG")
 
@@ -62,9 +62,9 @@ VESTING_LP_ATOM_MIGRATE_MSG='{
     "ntrn_denom": "untrn",
     "paired_denom": "ibc/C4CFF46FD6DE35CA4CF4CE031E643C8FDC9BA4B99AE598E9B0ED98FE3A2319F9",
     "xyk_pair": "neutron1e22zh5p8meddxjclevuhjmfj69jxfsa8uu3jvht72rv9d8lkhves6t8veq",
-    "cl_pair": "neutron1awv05macyxcf2flhaggmjxnyyz76qfaa3jeueheqd0c5ltzmty7s74yjn0",
-    "new_lp_token": "neutron1ms9w8ene57ka6adn88ueaux7eewfvhmuykdrtev6ummcnf8mn3usr2yhmc",
-    "batch_size": 50,
+    "cl_pair": "neutron1vf3chzldmyyltw9mv76wc5q2uy3t7j59ljv98u3kwsnfj0qd4crql4aets",
+    "new_lp_token": "neutron18g53drwvady7kwknjauxke0za9dscv0yjyvwska2d7wsgw2gemlsl9unw8",
+    "batch_size": 30,
     "dust_threshold": "10"
 }'
 VESTING_LP_ATOM_MIGRATE_MSG_BASE64=$(json_to_base64 "$VESTING_LP_ATOM_MIGRATE_MSG")
@@ -75,9 +75,9 @@ VESTING_LP_USDC_MIGRATE_MSG='{
     "ntrn_denom": "untrn",
     "paired_denom": "ibc/F082B65C88E4B6D5EF1DB243CDA1D331D002759E938A0F5CD3FFDC5D53B3E349",
     "xyk_pair": "neutron1l3gtxnwjuy65rzk63k352d52ad0f2sh89kgrqwczgt56jc8nmc3qh5kag3",
-    "cl_pair": "neutron1fqxx5ef3u9ekfd5z8rrut0chsr035ska596htzsgn7lmshwly89sk9vwxc",
-    "new_lp_token": "neutron193870yxq46d8sg5x5he867hudusenv98aqe5pn5gmhsdppnqjzpsakaems",
-    "batch_size": 50,
+    "cl_pair": "neutron1yz60tjqvdzmvk5gpstflv4vknnf50v09sm27uxv89gtn0eh9fcrq92utwx",
+    "new_lp_token": "neutron1uywpz5esk0r3z7p7vl2h3vnqlrchra5phkex76z0rh2pckun0x9q3lj7va",
+    "batch_size": 30,
     "dust_threshold": "10"
 }'
 VESTING_LP_USDC_MIGRATE_MSG_BASE64=$(json_to_base64 "$VESTING_LP_USDC_MIGRATE_MSG")
