@@ -14,181 +14,218 @@ function check_json() {
   fi
 }
 
-RESERVE_CONTRACT_ADDRESS=neutron13we0myxwzlpx8l5ark8elw5gj5d59dl6cjkzmt80c5q5cv5rt54qvzkv2a
-LOCKDROP_CONTRACT_ADDRESS=neutron1ryhxe5fzczelcfmrhmcw9x2jsqy677fw59fsctr09srk24lt93eszwlvyj
-VESTING_LP_USDC_CONTRACT_ADDRESS=neutron1wgzzn83hhcc5asrtslqvaw2wuqqkfulgac7ze94dmqkrxu8nsensmy9dkv
-VESTING_LP_ATOM_CONTRACT_ADDRESS=neutron1kkwp7pd4ts6gukm3e820kyftz4vv5jqtmal8pwqezrnq2ddycqasr87x9p
+DAO_CORE_CODE_ID=512
+PRE_PROPOSE_MULTIPLE_CODE_ID=513
+PRE_PROPOSE_SINGLE_CODE_ID=514
+PRE_PROPOSE_OVERRULE_SINGLE_CODE_ID=515
+PROPOSE_MULTIPLE_CODE_ID=516
+PROPOSE_SINGLE_CODE_ID=517
+CREDITS_VAULT_CODE_ID=518
+INVESTORS_VAULT_CODE_ID=519
+LOCKDROP_VAULT_CODE_ID=520
+NEUTRON_VAULT_CODE_ID=521
+VESTING_LP_CODE_ID=522
+DISTIBUTION_CODE_ID=523
+RESERVE_CODE_ID=524
+VOTING_REGISTRY_CODE_ID=525
+
+
+SUBDAO_SECURITY_CORE_CODE_ID=526
+SUBDAO_SECURITY_PRE_PROPOSE_CODE_ID=527
+SUBDAO_SECURITY_PROPOSE_SINGLE_CODE_ID=528
+
+
+DAO_CORE_CODE_ADDRESS=neutron1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrstdxvff
+PRE_PROPOSE_MULTIPLE_ADDRESS=neutron1up07dctjqud4fns75cnpejr4frmjtddzsmwgcktlyxd4zekhwecqt2h8u6
+PRE_PROPOSE_SINGLE_ADDRESS=neutron1hulx7cgvpfcvg83wk5h96sedqgn72n026w6nl47uht554xhvj9nsgs8v0z
+PRE_PROPOSE_OVERRULE_ADDRESS=neutron1w798gp0zqv3s9hjl3jlnwxtwhykga6rn93p46q2crsdqhaj3y4gsum0096
+PROPOSE_OVERRULE_ADDRESS=neutron12pwnhtv7yat2s30xuf4gdk9qm85v4j3e6p44let47pdffpklcxlq56v0te
+PROPOSE_MULTIPLE_ADDRESS=neutron1pvrwmjuusn9wh34j7y520g8gumuy9xtl3gvprlljfdpwju3x7ucsj3fj40
+PROPOSE_SINGLE_CODE_ADDRESS=neutron1436kxs0w2es6xlqpp9rd35e3d0cjnw4sv8j3a7483sgks29jqwgshlt6zh
+CREDITS_VAULT_CODE_ADDRESS=neutron1rxwzsw37ulveefk20575mlxl3hzhzv9k46c8gklfkt4g2vk4w3tse8usrs
+INVESTORS_VAULT_ADDRESS=neutron1dmd56h7hlevuwssp203fgc2uh0qdtwep2m735fzksuavgq3naslqp0ehvx
+LOCKDROP_VAULT_ADDRESS=neutron1f8gs4rp232ngyta3g2efwfkznymvv85du7qm9y0mhvjxpp3cq68qgquudm
+VESTING_LP_VAULT_ADDRESS=neutron1adavpfxyp5kgs3zp0n0vkc37qakeh5eqwxqxzysgg0ahlx82rmsqp4rnz8
+NEUTRON_VAULT_ADDRESS=neutron1qeyjez6a9dwlghf9d6cy44fxmsajztw257586akk6xn6k88x0gus5djz4e
+DISTIBUTION_ADDRESS=neutron1dk9c86h7gmvuaq89cv72cjhq4c97r2wgl5gyfruv6shquwspalgq5u7sy5
+RESERVE_ADDRESS=neutron13we0myxwzlpx8l5ark8elw5gj5d59dl6cjkzmt80c5q5cv5rt54qvzkv2a
 VOTING_REGISTRY_ADDRESS=neutron1f6jlx7d9y408tlzue7r2qcf79plp549n30yzqjajjud8vm7m4vdspg933s
 
-# insert new contract versions code IDs here (from the ./store_new_contracts.sh result):
-NEW_LOCKDROP_CODE_ID=466
-NEW_LOCKDROP_VAULT_CODE_ID=467
-NEW_VESTING_LP_VAULT_CODE_ID=468
-NEW_VESTING_LP_CODE_ID=469
-NEW_RESERVE_CODE_ID=470
-NEW_VESTING_LP_VAULT_CL_CODE_ID=471
-NEW_LOCKDROP_VAULT_CL_CODE_ID=472
 
-# insert CL vault contract addresses here (from the ./init_cl_vaults.sh result):
-LOCKDROP_VAULT_XYK_CONTRACT_ADDRESS=neutron1f8gs4rp232ngyta3g2efwfkznymvv85du7qm9y0mhvjxpp3cq68qgquudm
-LOCKDROP_VAULT_CL_CONTRACT_ADDRESS=neutron1jvp0fvh2dna48cmv6zsah2uylm336kjqp7tc7d59gp7yklrp5sns2z0e79
-LP_VESTING_VAULT_XYK_CONTRACT_ADDRESS=neutron1adavpfxyp5kgs3zp0n0vkc37qakeh5eqwxqxzysgg0ahlx82rmsqp4rnz8
-LP_VESTING_VAULT_CL_CONTRACT_ADDRESS=neutron1j044yawg9g25p7mup6e3d86fz97wlqjdvkrujyhpv9cqv5rr6hlsh3u29r
+SUBDAO_SECURITY_CORE_ADDRESS=neutron1fuyxwxlsgjkfjmxfthq8427dm2am3ya3cwcdr8gls29l7jadtazsuyzwcc
+SUBDAO_SECURITY_PRE_PROPOSE_ADDRESS=neutron1zjd5lwhch4ndnmayqxurja4x5y5mavy9ktrk6fzsyzan4wcgawnqjk5g26
+SUBDAO_SECURITY_PROPOSE_ADDRESS=neutron15m728qxvtat337jdu2f0uk6pu905kktrxclgy36c0wd822tpxcmqvnrurt
 
 # migrate Reserve
-RESERVE_MIGRATE_MSG='{
-    "max_slippage": "0.5",
-    "ntrn_denom": "untrn",
-    "atom_denom": "ibc/C4CFF46FD6DE35CA4CF4CE031E643C8FDC9BA4B99AE598E9B0ED98FE3A2319F9",
-    "usdc_denom": "ibc/F082B65C88E4B6D5EF1DB243CDA1D331D002759E938A0F5CD3FFDC5D53B3E349",
-    "ntrn_atom_xyk_pair": "neutron1e22zh5p8meddxjclevuhjmfj69jxfsa8uu3jvht72rv9d8lkhves6t8veq",
-    "ntrn_atom_cl_pair": "neutron1vf3chzldmyyltw9mv76wc5q2uy3t7j59ljv98u3kwsnfj0qd4crql4aets",
-    "ntrn_usdc_xyk_pair": "neutron1l3gtxnwjuy65rzk63k352d52ad0f2sh89kgrqwczgt56jc8nmc3qh5kag3",
-    "ntrn_usdc_cl_pair": "neutron1yz60tjqvdzmvk5gpstflv4vknnf50v09sm27uxv89gtn0eh9fcrq92utwx"
-}'
-RESERVE_MIGRATE_MSG_BASE64=$(json_to_base64 "$RESERVE_MIGRATE_MSG")
+MIGRATE_MSG='{}'
+MIGRATE_MSG_BASE64=$(json_to_base64 "$MIGRATE_MSG")
 
-# migrate Lockdrop
-LOCKDROP_MIGRATE_MSG='{
-    "new_atom_token": "neutron18g53drwvady7kwknjauxke0za9dscv0yjyvwska2d7wsgw2gemlsl9unw8",
-    "new_usdc_token": "neutron1uywpz5esk0r3z7p7vl2h3vnqlrchra5phkex76z0rh2pckun0x9q3lj7va",
-    "max_slippage": "0.5"
-}'
-LOCKDROP_MIGRATE_MSG_BASE64=$(json_to_base64 "$LOCKDROP_MIGRATE_MSG")
-
-# Migrate Vesting lp atom
-VESTING_LP_ATOM_MIGRATE_MSG='{
-    "max_slippage": "0.5",
-    "ntrn_denom": "untrn",
-    "paired_denom": "ibc/C4CFF46FD6DE35CA4CF4CE031E643C8FDC9BA4B99AE598E9B0ED98FE3A2319F9",
-    "xyk_pair": "neutron1e22zh5p8meddxjclevuhjmfj69jxfsa8uu3jvht72rv9d8lkhves6t8veq",
-    "cl_pair": "neutron1vf3chzldmyyltw9mv76wc5q2uy3t7j59ljv98u3kwsnfj0qd4crql4aets",
-    "new_lp_token": "neutron18g53drwvady7kwknjauxke0za9dscv0yjyvwska2d7wsgw2gemlsl9unw8",
-    "batch_size": 30,
-    "dust_threshold": "10"
-}'
-VESTING_LP_ATOM_MIGRATE_MSG_BASE64=$(json_to_base64 "$VESTING_LP_ATOM_MIGRATE_MSG")
-
-# migrate Vesting lp usdc
-VESTING_LP_USDC_MIGRATE_MSG='{
-    "max_slippage": "0.5",
-    "ntrn_denom": "untrn",
-    "paired_denom": "ibc/F082B65C88E4B6D5EF1DB243CDA1D331D002759E938A0F5CD3FFDC5D53B3E349",
-    "xyk_pair": "neutron1l3gtxnwjuy65rzk63k352d52ad0f2sh89kgrqwczgt56jc8nmc3qh5kag3",
-    "cl_pair": "neutron1yz60tjqvdzmvk5gpstflv4vknnf50v09sm27uxv89gtn0eh9fcrq92utwx",
-    "new_lp_token": "neutron1uywpz5esk0r3z7p7vl2h3vnqlrchra5phkex76z0rh2pckun0x9q3lj7va",
-    "batch_size": 30,
-    "dust_threshold": "10"
-}'
-VESTING_LP_USDC_MIGRATE_MSG_BASE64=$(json_to_base64 "$VESTING_LP_USDC_MIGRATE_MSG")
-
-## migrate Voting registry
-#VOTING_REGISTRY_MIGRATE_MSG='{}'
-#VOTING_REGISTRY_MIGRATE_MSG_BASE64=$(json_to_base64 "$VOTING_REGISTRY_MIGRATE_MSG")
-
-# deactivate xyk vaults
-DEACTIVATE_LOCKDROP_XYK_VAULT_MSG='{
-    "deactivate_voting_vault": {
-        "voting_vault_contract": "'"${LOCKDROP_VAULT_XYK_CONTRACT_ADDRESS}"'"
-    }
-}'
-DEACTIVATE_LOCKDROP_XYK_VAULT_MSG_BASE64=$(json_to_base64 "$DEACTIVATE_LOCKDROP_XYK_VAULT_MSG")
-
-DEACTIVATE_VESTING_LP_XYK_VAULT_MSG='{
-    "deactivate_voting_vault": {
-        "voting_vault_contract": "'"${LP_VESTING_VAULT_XYK_CONTRACT_ADDRESS}"'"
-    }
-}'
-DEACTIVATE_VESTING_LP_XYK_VAULT_MSG_BASE64=$(json_to_base64 "$DEACTIVATE_VESTING_LP_XYK_VAULT_MSG")
-
-# add CL vaults
-ADD_LOCKDROP_CL_VAULT_MSG='{
-    "add_voting_vault": {
-        "new_voting_vault_contract": "'"${LOCKDROP_VAULT_CL_CONTRACT_ADDRESS}"'"
-    }
-}'
-ADD_LOCKDROP_CL_VAULT_MSG_BASE64=$(json_to_base64 "$ADD_LOCKDROP_CL_VAULT_MSG")
-
-ADD_VESTING_LP_CL_VAULT_MSG='{
-    "add_voting_vault": {
-        "new_voting_vault_contract": "'"${LP_VESTING_VAULT_CL_CONTRACT_ADDRESS}"'"
-    }
-}'
-ADD_VESTING_LP_CL_VAULT_MSG_BASE64=$(json_to_base64 "$ADD_VESTING_LP_CL_VAULT_MSG")
 
 MIGRATE_MSGS='[
     {
         "wasm": {
             "migrate": {
-                "contract_addr": "'"${RESERVE_CONTRACT_ADDRESS}"'",
-                "new_code_id": '"${NEW_RESERVE_CODE_ID}"',
-                "msg": "'"${RESERVE_MIGRATE_MSG_BASE64}"'"
+                "contract_addr": "'"${DAO_CORE_CODE_ADDRESS}"'",
+                "new_code_id": '"${DAO_CORE_CODE_ID}"',
+                "msg": "'"${MIGRATE_MSG_BASE64}"'"
             }
         }
     },
     {
-        "wasm": {
-            "migrate": {
-                "contract_addr": "'"${LOCKDROP_CONTRACT_ADDRESS}"'",
-                "new_code_id": '"${NEW_LOCKDROP_CODE_ID}"',
-                "msg": "'"${LOCKDROP_MIGRATE_MSG_BASE64}"'"
-            }
-        }
+         "wasm": {
+              "migrate": {
+                 "contract_addr": "'"${PRE_PROPOSE_MULTIPLE_ADDRESS}"'",
+                 "new_code_id": '"${PRE_PROPOSE_MULTIPLE_CODE_ID}"',
+                 "msg": "'"${MIGRATE_MSG_BASE64}"'"
+              }
+         }
     },
     {
-        "wasm": {
-            "migrate": {
-                "contract_addr": "'"${VESTING_LP_USDC_CONTRACT_ADDRESS}"'",
-                "new_code_id": '"${NEW_VESTING_LP_CODE_ID}"',
-                "msg": "'"${VESTING_LP_USDC_MIGRATE_MSG_BASE64}"'"
-            }
-        }
-    },
-    {
-        "wasm": {
-            "migrate": {
-                "contract_addr": "'"${VESTING_LP_ATOM_CONTRACT_ADDRESS}"'",
-                "new_code_id": '"${NEW_VESTING_LP_CODE_ID}"',
-                "msg": "'"${VESTING_LP_ATOM_MIGRATE_MSG_BASE64}"'"
-            }
-        }
-    },
-    {
-        "wasm": {
-            "execute": {
-                "contract_addr": "'"${VOTING_REGISTRY_ADDRESS}"'",
-                "msg": "'"${DEACTIVATE_LOCKDROP_XYK_VAULT_MSG_BASE64}"'",
-                "funds": []
-            }
-        }
-    },
-    {
-        "wasm": {
-            "execute": {
-                "contract_addr": "'"${VOTING_REGISTRY_ADDRESS}"'",
-                "msg": "'"${DEACTIVATE_VESTING_LP_XYK_VAULT_MSG_BASE64}"'",
-                "funds": []
-            }
-        }
-    },
-    {
-        "wasm": {
-            "execute": {
-                "contract_addr": "'"${VOTING_REGISTRY_ADDRESS}"'",
-                "msg": "'"${ADD_LOCKDROP_CL_VAULT_MSG_BASE64}"'",
-                "funds": []
-            }
-        }
-    },
-    {
-        "wasm": {
-            "execute": {
-                "contract_addr": "'"${VOTING_REGISTRY_ADDRESS}"'",
-                "msg": "'"${ADD_VESTING_LP_CL_VAULT_MSG_BASE64}"'",
-                "funds": []
-            }
-        }
-    }
+             "wasm": {
+                  "migrate": {
+                     "contract_addr": "'"${PRE_PROPOSE_SINGLE_ADDRESS}"'",
+                     "new_code_id": '"${PRE_PROPOSE_SINGLE_CODE_ID}"',
+                     "msg": "'"${MIGRATE_MSG_BASE64}"'"
+                  }
+           }
+   },
+   {
+         "wasm": {
+                "migrate": {
+                     "contract_addr": "'"${PRE_PROPOSE_OVERRULE_ADDRESS}"'",
+                        "new_code_id": '"${PRE_PROPOSE_OVERRULE_SINGLE_CODE_ID}"',
+                        "msg": "'"${MIGRATE_MSG_BASE64}"'"
+                    }
+         }
+   },
+   {
+           "wasm": {
+               "migrate": {
+                   "contract_addr": "'"${PROPOSE_OVERRULE_ADDRESS}"'",
+                   "new_code_id": '"${PROPOSE_SINGLE_CODE_ID}"',
+                   "msg": "'"${MIGRATE_MSG_BASE64}"'"
+               }
+           }
+   },
+   {
+              "wasm": {
+                  "migrate": {
+                      "contract_addr": "'"${PROPOSE_MULTIPLE_ADDRESS}"'",
+                      "new_code_id": '"${PROPOSE_MULTIPLE_CODE_ID}"',
+                      "msg": "'"${MIGRATE_MSG_BASE64}"'"
+                  }
+              }
+   },
+   {
+              "wasm": {
+                  "migrate": {
+                      "contract_addr": "'"${PROPOSE_SINGLE_CODE_ADDRESS}"'",
+                      "new_code_id": '"${PROPOSE_SINGLE_CODE_ID}"',
+                      "msg": "'"${MIGRATE_MSG_BASE64}"'"
+                  }
+              }
+      },
+      {
+                   "wasm": {
+                       "migrate": {
+                           "contract_addr": "'"${CREDITS_VAULT_CODE_ADDRESS}"'",
+                           "new_code_id": '"${CREDITS_VAULT_CODE_ID}"',
+                           "msg": "'"${MIGRATE_MSG_BASE64}"'"
+                       }
+                   }
+      },
+      {
+                 "wasm": {
+                     "migrate": {
+                         "contract_addr": "'"${INVESTORS_VAULT_ADDRESS}"'",
+                         "new_code_id": '"${INVESTORS_VAULT_CODE_ID}"',
+                         "msg": "'"${MIGRATE_MSG_BASE64}"'"
+                     }
+                 }
+      },
+      {
+                       "wasm": {
+                           "migrate": {
+                               "contract_addr": "'"${LOCKDROP_VAULT_ADDRESS}"'",
+                               "new_code_id": '"${LOCKDROP_VAULT_CODE_ID}"',
+                               "msg": "'"${MIGRATE_MSG_BASE64}"'"
+                           }
+                       }
+      },
+      {
+                             "wasm": {
+                                 "migrate": {
+                                     "contract_addr": "'"${VESTING_LP_VAULT_ADDRESS}"'",
+                                     "new_code_id": '"${VESTING_LP_CODE_ID}"',
+                                     "msg": "'"${MIGRATE_MSG_BASE64}"'"
+                                 }
+                             }
+      },
+      {
+                             "wasm": {
+                                 "migrate": {
+                                     "contract_addr": "'"${NEUTRON_VAULT_ADDRESS}"'",
+                                     "new_code_id": '"${NEUTRON_VAULT_CODE_ID}"',
+                                     "msg": "'"${MIGRATE_MSG_BASE64}"'"
+                                 }
+                             }
+      },
+      {
+                                   "wasm": {
+                                       "migrate": {
+                                           "contract_addr": "'"${DISTIBUTION_ADDRESS}"'",
+                                           "new_code_id": '"${DISTIBUTION_CODE_ID}"',
+                                           "msg": "'"${MIGRATE_MSG_BASE64}"'"
+                                       }
+                                   }
+      },
+      {
+                                    "wasm": {
+                                        "migrate": {
+                                            "contract_addr": "'"${RESERVE_ADDRESS}"'",
+                                            "new_code_id": '"${RESERVE_CODE_ID}"',
+                                            "msg": "'"${MIGRATE_MSG_BASE64}"'"
+                                        }
+                                    }
+      },
+      {
+                                          "wasm": {
+                                              "migrate": {
+                                                  "contract_addr": "'"${VOTING_REGISTRY_ADDRESS}"'",
+                                                  "new_code_id": '"${VOTING_REGISTRY_CODE_ID}"',
+                                                  "msg": "'"${MIGRATE_MSG_BASE64}"'"
+                                              }
+                                          }
+      },
+      {
+                                                "wasm": {
+                                                    "migrate": {
+                                                        "contract_addr": "'"${SUBDAO_SECURITY_CORE_ADDRESS}"'",
+                                                        "new_code_id": '"${SUBDAO_SECURITY_CORE_CODE_ID}"',
+                                                        "msg": "'"${MIGRATE_MSG_BASE64}"'"
+                                                    }
+                                                }
+      },
+      {
+                                                "wasm": {
+                                                    "migrate": {
+                                                        "contract_addr": "'"${SUBDAO_SECURITY_PRE_PROPOSE_ADDRESS}"'",
+                                                        "new_code_id": '"${SUBDAO_SECURITY_PRE_PROPOSE_CODE_ID}"',
+                                                        "msg": "'"${MIGRATE_MSG_BASE64}"'"
+                                                    }
+                                                }
+      },
+      {
+                                                "wasm": {
+                                                    "migrate": {
+                                                        "contract_addr": "'"${SUBDAO_SECURITY_PROPOSE_ADDRESS}"'",
+                                                        "new_code_id": '"${SUBDAO_SECURITY_PROPOSE_SINGLE_CODE_ID}"',
+                                                        "msg": "'"${MIGRATE_MSG_BASE64}"'"
+                                                    }
+                                                }
+       }
+
 ]'
 
 echo $MIGRATE_MSGS | jq . > migrate_proposal.json
+

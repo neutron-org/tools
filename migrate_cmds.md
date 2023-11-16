@@ -15,4 +15,4 @@ neutrond tx wasm execute neutron1ryhxe5fzczelcfmrhmcw9x2jsqy677fw59fsctr09srk24l
 
 
 // migrate lockdrop users (execute 3 times: till you get an error)
-neutrond tx wasm execute neutron1ryhxe5fzczelcfmrhmcw9x2jsqy677fw59fsctr09srk24lt93eszwlvyj '{"migrate_from_xyk_to_cl": {"migrate_users": {"limit":1}}}' --keyring-backend=test --from=demowallet1 --chain-id=neutron-1 --gas auto --gas-adjustment 1.5 --gas-prices 0.025untrn  --broadcast-mode=block
+neutrond tx wasm execute neutron1ryhxe5fzczelcfmrhmcw9x2jsqy677fw59fsctr09srk24lt93eszwlvyj '{"migrate_from_xyk_to_cl": {"migrate_users": {"limit":300}}}' --keyring-backend=test --from=demowallet1 --chain-id=neutron-1 --gas auto --gas-adjustment 1.5 --gas-prices 0.025untrn  --broadcast-mode=block
