@@ -14,6 +14,6 @@ PROPOSAL_MSG='{
         }
     }
 }'
-.
-neutrond tx wasm execute $PRE_PROPOSE_CONTRACT_ADDRESS "$PROPOSAL_MSG" --from demowallet1 \
-    --gas 5000000 --gas-prices 0.0025untrn --amount 1000untrn --chain-id=test-1 --broadcast-mode block
+
+neutrond tx wasm execute $PRE_PROPOSE_CONTRACT_ADDRESS "$PROPOSAL_MSG" --from neutrond_mainnet_rehearsal \
+    --gas 5000000 --gas-prices 0.9untrn --amount 1000000000untrn --chain-id=neutron-1 --broadcast-mode sync --keyring-backend test --node http://37.27.55.219:26657
