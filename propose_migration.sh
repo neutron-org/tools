@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PRE_PROPOSE_CONTRACT_ADDRESS=neutron1hulx7cgvpfcvg83wk5h96sedqgn72n026w6nl47uht554xhvj9nsgs8v0z
+PRE_PROPOSE_CONTRACT_ADDRESS=neutron1fyhj2gq9k4dduahlyy46ffy22ad7lagglcec2acacyzjsd6w5n7qdx5hn4
 MIGRATION_MSGS=$(cat migrate_proposal_for_dao.json)
 
 PROPOSAL_MSG='{
